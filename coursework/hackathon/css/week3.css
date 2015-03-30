@@ -1,0 +1,256 @@
+html,body {
+  height:100%;
+  width: 100%;
+}
+
+#container{
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.basic{
+  background:url("../img/back.jpg") no-repeat center center;
+  color: #cfcdc0;
+  position: relative;
+  float:left;
+  min-height: 34px;
+  min-width: 35px;
+  margin: 0;
+  font:20px verdana;
+  text-align: center;
+  z-index: -1;
+}
+
+.imgH{
+  background:url(../img/hack.jpg) no-repeat center center;
+  color: #faf6ee;
+  position: absolute;
+  float:left;
+  min-height: 34px;
+  min-width: 35px;
+  margin-left:6px;
+  padding-top: 2px;
+  font: bold 20px verdana ;
+  text-align: center;
+  z-index: 0;
+}
+
+.logo{
+  background: url(../img/logo.png) no-repeat center top;
+  position: absolute;
+  height: 78PX;
+  width: 237px;
+  top: 2%;
+  left: 2%;
+  margin: 10px;
+  z-index: 99;
+}
+
+.footer{
+  position: absolute;
+  bottom: 1px; 
+  left: 40%;
+  color: gray;
+  text-align: center center;
+  font: 14px verdana;
+}
+
+
+
+
+
+
+
+
+
+/*      animation      */
+.wave1
+{
+  background:url("../img/back.jpg") no-repeat center center;
+  color: #cfcdc0;
+  position: relative;
+  float:left;
+  min-height: 34px;
+  min-width: 35px;
+  margin: 0;
+  font:20px verdana;
+  text-align: center;
+  z-index: -1;
+  animation:wave 2s;
+  -moz-animation:wave 2s; /* Firefox */
+  -webkit-animation:wave 2s; /* Safari and Chrome */
+  -o-animation:wave 2s; /* Opera */
+}
+@keyframes wave
+{
+  from {background:url(../img/hack.jpg) no-repeat center center;width: 37px;}
+  to {background:url(../img/back.jpg) no-repeat center center;}
+}
+
+@-moz-keyframes wave /* Firefox */
+{
+  from {background:url(../img/hack.jpg) no-repeat center center;width: 37px;}
+  to {background:url(../img/back.jpg) no-repeat center center;}
+}
+
+@-webkit-keyframes wave /* Safari and Chrome */
+{ 
+  from {background:url(../img/hack.jpg) no-repeat center center;width: 37px;}
+  to {background:url(../img/back.jpg) no-repeat center center;}
+}
+
+@-o-keyframes wave /* Opera */
+{ 
+  from {background:url(../img/hack.jpg) no-repeat center center;width: 37px;}
+  to {background:url(../img/back.jpg) no-repeat center center;}
+}
+
+
+
+.wave2
+{
+  background:url("../img/back.jpg") no-repeat center center;
+  color: #cfcdc0;
+  position: relative;
+  float:left;
+  min-height: 34px;
+  min-width: 35px;
+  margin: 0;
+  font:20px verdana;
+  text-align: center;
+  z-index: -1;
+  animation:waveA 2s;
+  -moz-animation:waveA 2s; /* Firefox */
+  -webkit-animation:waveA 2s; /* Safari and Chrome */
+  -o-animation:waveA 2s; /* Opera */
+}
+@keyframes waveA
+{
+  from {background:url(../img/pressed1.jpg) no-repeat center center;width: 37px;}
+  to {background:url(../img/back.jpg) no-repeat center center;}
+}
+
+@-moz-keyframes waveA /* Firefox */
+{
+  from {background:url(../img/pressed1.jpg) no-repeat center center;width: 37px;height: 37px;}
+  to {background:url(../img/back.jpg) no-repeat center center;}
+}
+
+@-webkit-keyframes waveA /* Safari and Chrome */
+{ 
+  from {background:url(../img/pressed1.jpg) no-repeat center center;width: 37px;height: 37px;}
+  to {background:url(../img/back.jpg) no-repeat center center;}
+}
+
+@-o-keyframes waveA /* Opera */
+{ 
+  from {background:url(../img/pressed2.jpg) no-repeat center center; width: 37px;height: 37px;}
+  to {background:url(../img/back.jpg) no-repeat center center;}
+}
+
+.wave3
+{
+  background:url("../img/back.jpg") no-repeat center center;
+  color: #cfcdc0;
+  position: relative;
+  float:left;
+  min-height: 34px;
+  min-width: 35px;
+  margin: 0;
+  font:20px verdana;
+  text-align: center;
+  z-index: -1;
+  animation:waveB 2s;
+  -moz-animation:waveB 2s; /* Firefox */
+  -webkit-animation:waveB 2s; /* Safari and Chrome */
+  -o-animation:waveB 2s; /* Opera */
+}
+@keyframes waveB
+{
+  from {background:url(../img/pressed2.jpg) no-repeat center center;width: 37px;}
+  to {background:url(../img/back.jpg) no-repeat center center;}
+}
+
+@-moz-keyframes waveB /* Firefox */
+{
+  from {background:url(../img/pressed2.jpg) no-repeat center center;width: 37px;}
+  to {background:url(../img/back.jpg) no-repeat center center;}
+}
+
+@-webkit-keyframes waveB /* Safari and Chrome */
+{ 
+  from {background:url(../img/pressed2.jpg) no-repeat center center;width: 37px;}
+  to {background:url(../img/back.jpg) no-repeat center center;}
+}
+
+@-o-keyframes waveB /* Opera */
+{ 
+  from {background:url(../img/pressed2.jpg) no-repeat center center;width: 37px;}
+  to {background:url(../img/back.jpg) no-repeat center center;}
+}
+
+
+
+
+
+
+
+.imgHanimation{        //hackthon animation. shine
+  background:url(../img/hack.jpg) no-repeat center center;
+  color: #faf6ee;
+  position: absolute;
+  float:left;
+  min-height: 34px;
+  min-width: 35px;
+  margin-left:6px;
+  padding-top: 2px;
+  font: bold 20px verdana ;
+  text-align: center;
+  z-index: 0;
+  animation:shine 2s;
+  -moz-animation:shine 2s; /* Firefox */
+  -webkit-animation:shine 2s; /* Safari and Chrome */
+  -o-animation:shine 2s; /* Opera */
+}
+@keyframes shine{
+    0%   {background:url(../img/pressed2.jpg) no-repeat center center;}
+    15%  {background: url(../img/hack.jpg) no-repeat center center;}
+    20%  {background:url(../img/pressed2.jpg) no-repeat center center;}
+    40% {background: url(../img/hack.jpg) no-repeat center center;}
+    50%  {background:url(../img/pressed2.jpg) no-repeat center center;}
+    60% {background: url(../img/hack.jpg) no-repeat center center;}
+    80%  {background:url(../img/pressed2.jpg) no-repeat center center;}
+    100%  {background: url(../img/hack.jpg) no-repeat center center;}
+}
+@-moz-keyframes shine{
+    0%   {background:url(../img/pressed2.jpg) no-repeat center center;}
+    15%  {background: url(../img/hack.jpg) no-repeat center center;}
+    20%  {background:url(../img/pressed2.jpg) no-repeat center center;}
+    40% {background: url(../img/hack.jpg) no-repeat center center;}
+    50%  {background:url(../img/pressed2.jpg) no-repeat center center;}
+    60% {background: url(../img/hack.jpg) no-repeat center center;}
+    80%  {background:url(../img/pressed2.jpg) no-repeat center center;}
+    100%  {background: url(../img/hack.jpg) no-repeat center center;}
+}
+@-webkit-keyframes shine{
+    0%   {background:url(../img/pressed2.jpg) no-repeat center center;}
+    15%  {background: url(../img/hack.jpg) no-repeat center center;}
+    20%  {background:url(../img/pressed2.jpg) no-repeat center center;}
+    40% {background: url(../img/hack.jpg) no-repeat center center;}
+    50%  {background:url(../img/pressed2.jpg) no-repeat center center;}
+    60% {background: url(../img/hack.jpg) no-repeat center center;}
+    80%  {background:url(../img/pressed2.jpg) no-repeat center center;}
+    100%  {background: url(../img/hack.jpg) no-repeat center center;}
+}
+@-o-keyframes shine{
+    0%   {background:url(../img/pressed2.jpg) no-repeat center center;}
+    15%  {background: url(../img/hack.jpg) no-repeat center center;}
+    20%  {background:url(../img/pressed2.jpg) no-repeat center center;}
+    40% {background: url(../img/hack.jpg) no-repeat center center;}
+    50%  {background:url(../img/pressed2.jpg) no-repeat center center;}
+    60% {background: url(../img/hack.jpg) no-repeat center center;}
+    80%  {background:url(../img/pressed2.jpg) no-repeat center center;}
+    100%  {background: url(../img/hack.jpg) no-repeat center center;}
+}
+
