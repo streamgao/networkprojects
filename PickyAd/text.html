@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>PickyAd--STREAM GAO</title>
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="css/Dialog.css" />
+    <link rel="stylesheet" href="css/reset.css" />
+</head>
+
+<body>
+
+<div id="container">
+    <div id="title" class="title">Unknown Name
+            <div class="gold">ad</div>
+    </div>
+    <div class="subcontainer">
+        <div class="questions">
+
+            <video id="video" controls>
+                <source id="source" src="https://s3-us-west-2.amazonaws.com/video-gao/video1.mp4" type="video/mp4">
+                Congradulations!! Your browser does not support the video tag.
+            </video>
+
+            <div class="answerList">
+                <div class="answer">
+                    <div class="rightAnswer" id="right"></div>
+                </div>
+                <div class="line"> </div>
+                <div id="list">
+                    <div class="list" id="0" onclick="haha();"></div>
+                    <div class="list" id="1"></div>
+                    <div class="list" id="2"></div>
+                    <div class="list" id="3"></div>
+                    <div class="list" id="4"></div>
+                    <div class="list" id="5"></div>
+                    <div class="list" id="6"></div>
+                    <div class="list" id="7"></div>
+                    <div class="list" id="8"></div>
+                </div>
+            </div>
+        </div>   <!--question-->
+
+    </div>
+    <footer class="footer"> @2014 by Stream Gao. ITP</footer>
+</body>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="js/jquery.easing.1.3.js"></script>
+<script src="js/Dialog.js"></script>
+<!--script type="text/javascript" src="js/control.js"> </script-->
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+//console.log("akdshfkj;a ");
+
+});
+
+function haha(){
+    //alert("hahaha");
+        document.getElementById("video").style.width= 0 + "px";
+         $("#video").animate({
+             width:"45%",
+                }, 'slow'    );
+     }
+</script>
+
+
+
+
+
+</html>

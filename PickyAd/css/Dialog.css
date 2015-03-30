@@ -1,0 +1,104 @@
+﻿#DialogLayer
+{
+    position:absolute;
+    left:0;
+    top:0;
+    z-index:10;
+    background-color:#333333;
+    filter:alpha(Opacity=80);
+    -moz-opacity:0.8;
+    opacity: 0.8;
+}
+
+#Dialog
+{
+    position:absolute;
+    box-shadow:8px 8px 8px rgba(6, 73, 94, .8);
+    background-color:#c9bf7d;
+    z-index:600;
+}
+#Dialog #Title
+{
+    margin:0;
+    width:100%;
+    height:80px;
+    color:#FFFFFF;
+    font-family:gill sans,helvetica;
+    font-size:60px;
+    text-align:center;
+    cursor:move;
+    line-height:180px;
+}
+
+#Dialog #Container
+{
+    /*padding:0px 5px 5px 5px;
+    width:390px;
+    height:355px;*/
+}
+#Dialog #Container table,#Dialog #Container iframe
+{
+    width:100%;
+    height:20%;
+}
+#Dialog #Container table td
+{
+    vertical-align:middle;
+    top: -30px;
+    color: #FFFFFF;
+    font-family: gill sans, helvetica;
+    font-size: 30px;
+    text-align: center;
+    line-height: 0px;
+}
+
+#Dialog #Container table #BtnLine
+{
+    height:40px;
+    text-align:center;
+}
+
+#Dialog #Container table #BtnLine input
+{
+    -moz-user-select: none;
+    background-color:#d0a15a;
+    margin-top: -60px;
+    border: none !important;
+    top: -50px;
+    z-index: 1;
+    font-family: gill sans,helvetica;
+    color:#FFFFFF;
+    cursor:default;
+    font-size:50px;
+    height:70px;
+    line-height:27px;
+    min-width:300px;
+    text-align:center;
+}
+
+#Dialog #Container table #BtnLine input:hover
+{
+    background-color: #f5dab2;
+    background-image: -moz-linear-gradient(center top , #f5dab2, #F1F1F1);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    color: #d38b1f;
+    cursor: pointer;
+}
+#Dialog #Container table #BtnLine input:focus
+{
+    border: 1px solid #4D90FE;
+    outline: medium none;
+}
+
+
+#Dialog #Close
+{
+    position:absolute;
+    right:7px;
+    top:7px;
+    height:21px;
+    line-height:21px;
+    width:21px;
+    cursor:pointer;
+    display:block;
+}

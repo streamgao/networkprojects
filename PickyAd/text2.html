@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>PickyAd--STREAM GAO</title>
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="css/reset.css" />
+</head>
+
+<body>
+<?php
+// define variables and set to empty values
+$nameErr =  $comment = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+
+
+
+
+?>
+
+
+
+
+
+<div class="subcontainer">
+	 <br> <br> 
+	<h2>
+	Hi! say something about the game. What do you think of it? Any ideas to make it more interesting or useful?</h2>
+	<br>
+
+	<form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+   		 Name: <input type="text" name="name" value="<?php echo $name;?>"><br> <br>
+   		 <textarea rows="20" cols="90" name="comment">  <?php echo $comment;?>
+		Enter your comment here...</textarea>    <br>
+ 		<input type="submit"  name="submit" value="Submit">
+	</form>
+
+<br> <br><br> <br><br> <br><br> <br><br> <br>
+</div>
+
+</body>
+</html>
+
+
+
+
+
+/**
+ * Created by IntelliJ IDEA.
+ * User: stream
+ * Date: 10/15/14
+ * Time: 9:24 AM
+ */
