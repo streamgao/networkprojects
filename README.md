@@ -1,2 +1,2 @@
-# network projects did at ITP
+Network projects finished at ITP
 By Stream Gao
