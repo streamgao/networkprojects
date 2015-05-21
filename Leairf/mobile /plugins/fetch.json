@@ -1,0 +1,20 @@
+{
+    "com.megster.cordova.rfduino": {
+        "source": {
+            "type": "registry",
+            "id": "com.megster.cordova.rfduino"
+        }
+    },
+    "org.apache.cordova.file": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.file"
+        }
+    },
+    "org.apache.cordova.console": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.console"
+        }
+    }
+}

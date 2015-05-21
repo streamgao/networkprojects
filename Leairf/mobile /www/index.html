@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+            <meta charset="utf-8" />
+            <meta name="format-detection" content="telephone=no" />
+            <meta name="msapplication-tap-highlight" content="no" />
+            <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+            <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi " />
+            <title>hahhahah</title>
+            <link rel="stylesheet" href="./css/style.css" type="text/css">
+            <link rel="stylesheet" href="./css/ez.css" type="text/css">
+            <link rel="stylesheet" href="./css/index.css" type="text/css">
+            <link rel="stylesheet" href="./css/bootstrap-delete.css" type="text/css">
+            <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Titillium+Web" type="text/css">
+            <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:100" type="text/css">
+            <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Quicksand'type='text/css">
+            <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+            <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+            <script type="text/javascript" charset="utf-8" src="js/index.js"></script>
+            <script type="text/javascript" charset="utf-8">
+                app.initialize();
+            </script>
+   </head>
+
+<body>
+    <div id="container">
+        
+        <div class="clickmenu hidden-sm" id="graphicon"></div>
+        
+        <div class="sideleftmenu ez-fl ez-negmr ez-25 hidden-xs">
+            <nav id='sidebar'>
+                <ul class="sidemenu">
+                    <li class='home'><a href='#'>Home</a></li>
+                    <li><a href='./'>Real-time Data</a></li>
+                    <li><a href='./graph'>Line Graph</a></li>
+                </ul>
+            </nav>
+        </div>
+        
+        <div class="maindisplay ez-last ez-oh">
+            <ul class="datas">
+                <br>
+                <h2>Air Quality</h2>
+                <li>
+                    <ul class="ez-fl ez-33"> <div id="aqemoji" class="emoji" ></div>
+                    </ul>
+                    <ul class="ez-oh verticlemiddle">
+                        <br><p id="aqnumber"> 39 </p>
+                        <p id="aqdescription">Light Polluted</p>
+                    </ul>
+                </li>
+                
+                <h3>Temperature</h3>
+                <h4> <span id="tempCelsius">29</span>&nbsp;&deg;C<br/></h4>
+                <h4> <span id="tempFahrenheit">84.2</span>&nbsp;&deg;F</h4>
+                
+                
+                
+            </ul>
+            <br><br>
+            <div id="syncing" class="blink">  Syncing ...
+                <div id="loading"></div>
+            </div>
+            
+            <div id="lastSynced">Last Synced at 18.30pm Wednesday, April 1, 2015</div>
+            <div id="sync" class="btn">SYNC </div>
+        </div>
+
+            
+        
+        <footer class="footer" style="color:#1f3952!important; text-align:center center;"> @2015 by Stream Gao. ITP</footer>
+    </div>
+</body>
+
+<script type="text/javascript">
+    document.getElementById("graphicon").addEventListener("touchend",function(){
+                                                          window.open("./graph.html","_self");
+    });
+</script>
+</html>
