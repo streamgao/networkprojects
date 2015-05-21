@@ -1,0 +1,21 @@
+{
+  "name": "airDetect",
+  "version": "1.0.0",
+  "description": "iair",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.heroku.com/iair.git"
+  },
+  "author": "Stream",
+  "license": "ISC",
+  "dependencies": {
+    "express-session": "^1.11.1",
+    "express-stormpath": "^1.0.4",
+    "mongodb-uri": "^0.9.7",
+    "mongoose": "^4.0.1"
+  }
+}

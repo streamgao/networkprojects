@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="./css/style.css" type="text/css">
+  <link rel="stylesheet" href="./css/ez.css" type="text/css">
+  <link rel="stylesheet" href="./css/bootstrap-delete.css" type="text/css">
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+  <script type="text/javascript" src="./js/control.js"> </script>
+</head>
+
+<body>
+<div id="container">    
+        
+    <div class="clickmenu hidden-sm" id="graphicon"></div>
+    <!--div class="clickmenu"><a href="./"> &nbsp; </a></div-->
+
+    <div class="sideleftmenu ez-fl ez-negmr ez-25 hidden-xs">
+      <nav id='sidebar'>
+        <ul class="sidemenu">
+          <li class='home'><a href='./'>Home</a></li>
+          <li><a href='./'>Real-time Data</a></li>
+          <li><a href='./graph'>Line Graph</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="maindisplay ez-last ez-oh">
+      <ul class="datas">
+
+        <h2>History</h2><br>
+        <!--div class="chart"></div-->
+        <svg class="chart"></svg>
+   
+      </ul> 
+    </div>
+
+      <footer class="footer" style="color:#1f3952!important; text-align:center center;"> @2015 by Stream Gao. ITP</footer>
+    </div> 
+
+</body>
+
+<script>
+makeCorsRequest();
+document.getElementById("graphicon").addEventListener("click",function(){
+  window.open("./","_self");
+});
+
+</script>
+
+
+</html>

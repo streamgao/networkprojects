@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Air Quality History</title>
+</head>
+<body>
+
+<h1>Air Quality History</h1>
+
+<ul>
+<% histories.forEach(function(aqhistory){ %>
+  <li>
+    <div class='dragon'>
+      <div class='aqi'>Air Quality Index: <%= aqhistory.aqi %></div>
+      <div class='from'>Date: <%= aqhistory.date %></div>
+    </div>
+  </li>
+<% }); %>
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,291 @@
+html,
+button,
+input,
+select,
+textarea,
+table{
+    font-family: 'Roboto', gill sans mt,helvetica,sans-serif;
+    border: none;
+}
+
+h2,h3,h4,p{
+    text-align: left;
+    color:#804d0b;
+}
+
+h1{
+    color:#804d0b;
+    font-size: 24px;
+    line-height: 90%;
+}
+
+h2,h3,h4{
+    color: #804d0b;
+    font-family: 'Quicksand', sans-serif;
+    line-height: 3px;
+}
+h2{
+    font-size: 3em;
+}
+h3{
+    font-size: 2.1em;
+}
+h4{
+    font-size: 2em;
+}
+
+
+p{
+    color:#804d0b;
+    line-height: 12px;
+    font-family: 'Quicksand',sans-serif;
+}
+
+
+body {
+    font-size: 1em;
+    line-height: 1.4;
+    background: url(../img/back.jpg) center center !important;
+    background-size: 1%,1%;
+    color: #804d0b;
+}
+
+html,body {
+    height:100%;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+
+a {
+    color:#804d0b;
+    text-decoration: none;
+}
+
+a:hover 
+{
+     color:#cc9b5c;
+     text-decoration:none; 
+     cursor:pointer;  
+}
+ul,li{
+    list-style-type: none;
+}
+
+form{
+    display: block;
+    margin: 1em;
+}
+
+.footer{
+    clear: both;
+    display: inline-block;
+    margin: 0px;
+    padding: 0px;
+    position:relative; 
+    bottom: 1px !important;
+}
+
+
+
+#container{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: scroll;
+    background-size: 1%,1%;
+    background-repeat:repeat;
+}
+
+.sideleftmenu{
+    width: 100%;
+    min-height: 100vh !important;
+    display: block;
+    float: left;
+    position: relative;
+    box-shadow: 1px 0px 0px #804d0b;
+}
+
+
+#sidebar{
+    width: 100%;
+    min-height: 105vh !important;
+    float:left;
+    top:0;
+    margin: 0 !important;
+    display:block;
+    background: url(../img/back.jpg) center center !important;
+}
+
+.sidemenu{
+    height: 100%;
+    text-align: left;
+    margin-top: 30%;
+}
+
+.home{
+    height: 100px;
+    padding-bottom: 0.1em;
+    /*background: #71b3c4;*/
+}
+
+.sidemenu li{
+    height: 3em;
+    box-shadow: 0px 1px 0px #804d0b;
+    margin-left: -40px;
+    border: 0px;
+    width: inherit;
+
+    font-family: 'Titillium Web', sans-serif;
+    font-size: 1.4em;
+    text-indent: 20px;
+    line-height: 4em;
+}
+
+.sidemenu li:hover{
+    background-color: white;
+    color: #69a2a0;
+    cursor:pointer;
+}
+
+
+
+.maindisplay{
+    min-height: 100vh !important;
+    z-index: -1;
+    display: block;
+}
+
+.datas{
+    width: 80%;
+    height: 70vh;
+    left: 10%;
+    top: 50px !important;
+    position: relative;
+    padding: 0px;
+    margin: 0px;
+}
+
+
+.datas li{
+    background: white;
+    opacity: 0.5;
+    height: 200px;
+    width: 100%;
+    padding: 0px;
+    margin-bottom: 50px;
+    text-indent: 50px;
+    vertical-align: middle;
+}
+
+.emoji{
+    height: 180px;
+    width: 180px;
+    margin-left: 10px;
+}
+
+.clickmenu{
+    height: 30px;
+    width: 30px;
+    position: absolute;
+    top: 5%;
+    left: 2%;
+    cursor: pointer;
+}
+#graphicon{
+    background: url(../img/lineGraph.png)center center no-repeat;
+    background-size: 100% 100%;
+}
+
+.verticlemiddle{
+    vertical-align: middle;
+    position: relative;
+    display: block;
+    top: 60%;
+}
+
+
+#aqemoji{
+    background: url(../img/light.png) center center no-repeat;
+    margin: 10px;
+    background-size: contain;
+}
+#clemoji{
+    background: url(../img/cloudy.png) center center no-repeat;
+    background-size: 100% 100%;
+}
+
+#sync{
+    background: url(../img/SYNCbutton.png) center center no-repeat;
+    background-size: contain;
+    border: 0 !important;
+    color: white;
+    font-size: 1.5em;
+    cursor: pointer;
+    margin-top: 2px;
+}
+
+#loading{
+    height:30px;
+    width:100%;
+    background:url(../img/loading.gif) center center no-repeat;
+    background-size: auto 100%;
+}
+#syncing{
+    height:50px;
+}
+
+
+
+
+/*-----------for graph!-------------*/
+.chart{
+    overflow-y: scroll !important;
+}
+
+.chart div {
+    font: 10px sans-serif;
+    background-color: #73a2aa;
+    text-align: right;
+    padding: 3px;
+    margin: 1px;
+    color: white;
+    overflow-y: scroll !important;
+}
+
+.chart rect {
+  fill: #804d0b;
+  overflow-y: scroll !important;
+}
+
+.chart text {
+  fill: white;
+  color: black;
+  line-height: 1.2;
+  font: 10px sans-serif;
+  text-anchor: end;
+}
+
+.bar {
+  fill: #804d0b;
+  z-index: 1;
+}
+
+.axis text {
+  font: 10px sans-serif;
+  color: white;
+  z-index: 1;
+}
+
+.axis path,
+.axis line {
+  fill: #fff;
+  stroke: #000;
+  shape-rendering: crispEdges;
+  z-index: 1;
+}
+
+.x.axis path {
+  stroke: #000;
+}

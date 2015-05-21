@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta charset="utf-8" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="msapplication-tap-highlight" content="no" />
+	<!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+	<title>iAir</title>
+	<link rel="stylesheet" href="./css/style.css" type="text/css">
+	<link rel="stylesheet" href="./css/ez.css" type="text/css">
+	<link rel="stylesheet" href="./css/bootstrap-delete.css" type="text/css">
+	<link href='http://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Roboto:100' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet' type='text/css'>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script type="text/javascript" src="./js/control.js"> </script>
+</head>
+
+
+<body>
+	<div id="container">
+		<div class="clickmenu hidden-sm" id="graphicon"></div>
+
+		<div class="sideleftmenu ez-fl ez-negmr ez-25 hidden-xs">
+			<nav id='sidebar'>
+				<ul class="sidemenu">
+					<li class='home'><a href='#'>Home</a></li>
+					<li><a href='./'>Real-time Data</a></li>
+					<li><a href='./graph'>Line Graph</a></li>
+				</ul>
+			</nav>
+		</div>
+
+		<div class="maindisplay ez-last ez-oh">
+			<ul class="datas">
+
+				<h2>Air Quality</h2>
+				<li>
+					<ul class="ez-fl ez-33"> <div id="aqemoji" class="emoji" ></div>
+					</ul>
+					<ul class="ez-oh verticlemiddle">
+						<p id="aqnumber"> 369 </p>
+						<p id="aqdescription">Light Polluted</p>
+					</ul>
+				</li>
+
+				<h3>Temperature</h3>
+				<h4> <span id="tempCelsius">29</span>&nbsp;&deg;C<br/></h4>
+                <h4> <span id="tempFahrenheit">84.2</span>&nbsp;&deg;F</h4>
+
+			</ul>
+
+		</div>
+
+
+		<footer class="footer" style="color:#1f3952!important; text-align:center center;"> @2015 by Stream Gao. ITP</footer>
+	</div>     
+
+</body>
+	<script type="text/javascript">
+		document.getElementById("graphicon").addEventListener("click",function(){
+  			window.open("./graph","_self");
+		});
+	</script>
+</html>
