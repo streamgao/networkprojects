@@ -1,15 +1,7 @@
 /*
-This RFduino sketch demonstrates a full bi-directional Bluetooth Low
-Energy 4 connection between an iPhone application and an RFduino.
-This sketch also demonstrates how to select a slower connection
-interval, which will slow down the response rate, but also drastically
-reduce the power consumption of the RFduino.
-
-This sketch works with the rfduinoLedButton iPhone application.
-
-The button on the iPhone can be used to turn the green led on or off.
-The button state of button 1 is transmitted to the iPhone and shown in
-the application.
+This RFduino sketch demonstrates a Bluetooth LowEnergy connection between an iPhone application and an RFduino.
+This sketch also demonstrates how to get air quality / temperature data from the sensors.
+Author: Stream Gao
 */
 
 #include <RFduinoBLEiAir.h>
@@ -45,16 +37,12 @@ void loop() {
   // sample once per second
   RFduino_ULPDelay( velocity );
   
-  
   sensorValue = analogRead(5);
   temp = RFduino_temperature(CELSIUS);
   sensorValue = sensorValue+temp/100; 
   Serial.println(sensorValue);
   
   RFduinoBLE.sendFloat(sensorValue);    // send the sample to the iPhone
-
-  //connection interval the iPhone actually selected after a button press
-  int connInterval = RFduinoBLE.getConnInterval();
   
   Serial.print("digitalread:"); 
   Serial.println(digitalRead(SWITCH));
@@ -84,12 +72,10 @@ void RFduinoBLE_onConnect()
 
 void RFduinoBLE_onDisconnect()
 {
-  //digitalWrite(led, LOW);
-  //velocity=INFINITE;
+  velocity=INFINITE;
   ledoff();
   Serial.println("disconnect!");
 }
-
 
 
 void RFduinoBLE_onReceive(char *data, int len)
