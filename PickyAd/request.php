@@ -3,7 +3,7 @@
 $user_name="stream";
 $password="gaoxi123";
 $database="pickyad";
-$hostname="aaglnrhc6ky1th.ch5sjbwjm96s.us-west-2.rds.amazonaws.com";
+$hostname="aa1bv18u0lyspzr.ch5sjbwjm96s.us-west-2.rds.amazonaws.com";
 
 $connect_db = mysql_connect($hostname, $user_name , $password);
 $find_db = mysql_select_db($database);
@@ -88,9 +88,9 @@ class QuestionAction
             while ($field = mysql_fetch_row($result)) {
 
                 $answer_id = $field[0];
-                $answer_title = $field[2];
+                $answer_title = $field[4];
                 $answer_right = $field[3];
-                $answer_logo = $field[4];
+                $answer_logo = $field[2];
 
                 $response[$res_count] = array(
                     "answer_id" => $answer_id,

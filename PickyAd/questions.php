@@ -3,7 +3,7 @@
 $user_name="stream";
 $password="gaoxi123";
 $database="pickyad";
-$hostname="aaglnrhc6ky1th.ch5sjbwjm96s.us-west-2.rds.amazonaws.com";
+$hostname="aa1bv18u0lyspzr.ch5sjbwjm96s.us-west-2.rds.amazonaws.com";
 
 $connect_db = mysql_connect($hostname, $user_name , $password);
 $find_db = mysql_select_db($database);
@@ -25,7 +25,7 @@ if($find_db) {
     if($res = @mysql_query($query) ){
         echo"Thanks for your comments!";
     }else{
-        echo"Sorry there is something wrong......";
+        echo"Sorry, insert failed. There is something wrong......";
     }
 }
 
