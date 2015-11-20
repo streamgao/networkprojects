@@ -1,0 +1,67 @@
+{
+    "name": "Stereotyping",
+    "version": "1.0",
+    "manifest_version": 2,
+    "description": "Stereotyping tool for google image search",
+    "content_scripts": [
+        {
+            "matches": [
+                "http://www.google.com/search*",
+                "https://www.google.com/search*",
+                "https://www.google.com/search*q=ceo*",
+                "https://www.google.com/search*q=business*" //https://www.google.com/search?*q=ceo&oq=ceo*
+            ],
+            "js": [
+                "scripts/jquery.js",
+                "data/replace.js",
+                "scripts/content_script.js"
+            ],
+            "css": ["style.css"]
+        }
+    ],
+    //"content_security_policy": "script-src 'self' http://localhost; object-src 'self' http://localhost",
+    //"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+    "content_security_policy": "script-src 'self' https://www.google.com; object-src 'self' https://www.google.com ",
+    "incognito": "split",
+    "offline_enabled": false,
+    "permissions": [
+        "activeTab",
+        "tabs",
+        "http://localhost/*",
+        "http://*/"
+    ],
+    "update_url": "http://path/to/updateInfo.xml",
+    "web_accessible_resources": [
+        "data/replace.json",
+        "manifest.json"
+    ],
+
+    "browser_action": {
+        "default_icon": "icon.png"
+    }
+}
+
+
+/*
+{
+    "name": "Basic replace",
+    "version": "1.0",
+    "manifest_version": 2,
+    "description": "Basic replace",
+    "content_scripts": [ 
+      {
+        "matches": [
+          "http://www.nytimes.com/*",
+          "http://processing.org/*"
+        ],
+        "js": [
+          "scripts/jquery.js",
+          "scripts/content_script.js"
+        ]
+      }
+    ],
+    "web_accessible_resources": [
+        "data/new_lines.txt"
+    ]
+}
+*/
