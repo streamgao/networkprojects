@@ -19,5 +19,8 @@ io.on('connect', function(socket){
     socket.broadcast.emit('ondrag',msg); 
   });//on colorchoice
 
+
+
+
 });//connect
 

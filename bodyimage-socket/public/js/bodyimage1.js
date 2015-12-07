@@ -10,7 +10,7 @@ var index = 1;
 var totalwiped;
 var ratiox = 1;
 var ratioy = 1;
-var ratioimgs = 1;
+var ratioimgx = 1;
 var ratioimgy = 1;
 var mousedown;
 var alreadyondata = false;
@@ -37,27 +37,29 @@ function initvariables(){
  	for(var i=0; i<7; i++){
 	    imgs[i] = new Image();
 		imgs[i].src='img/'+i+'.jpg';
-   	    
+   	   
    	    //for method 3
    	    /*fakecanvas[i] = document.createElement('canvas');
 		fakecanvas[i].width = 5*maincanvas.width;
 		fakecanvas[i].height = 5*maincanvas.height;
 		fakectx[i] = fakecanvas[i].getContext("2d");
-
   		imgs[i].onload = function(){
   			fakectx[i].drawImage(imgs[i],0,0,imgs[i].width, imgs[i].height);
   		};*/
     }
     document.body.appendChild(imgs[0]);
-    ctx.drawImage(imgs[0], 0, 0);
+    imgs[0].width = maincanvas.width;
+    imgs[0].height = maincanvas.height;
+    ctx.drawImage(imgs[0],0, 0, imgs[0].naturalWidth, imgs[0].naturalHeight,
+    	0,0,maincanvas.width, maincanvas.height);
 
     // imgs[0].onload = function() {
     //    ctx.drawImage(fakecanvas[0], 0, 0,maincanvas.width, maincanvas.height);
     // };
     
     //init brushsize and pix cutting unit
-    dividenum = 15;
-    brushsize = $('#maincanvas').width() / dividenum;   //50
+    dividenum = 10;
+    brushsize = Math.floor($('#maincanvas').width() / dividenum);   //50
     wipex = 0; wipey = 0;
 	ratiox = maincanvas.width / $('#maincanvas').width();
 	ratioy = maincanvas.height / $('#maincanvas').height();
@@ -71,7 +73,7 @@ function initvariables(){
 var init = function() {   //receiver
 	maincanvas = document.getElementById("maincanvas");
 	maincanvas.height= $(window).height();
-   	maincanvas.width = $(window).width();;
+   	maincanvas.width = $(window).width();
     ctx = maincanvas.getContext("2d");
 
     initvariables();
@@ -84,13 +86,18 @@ var init = function() {   //receiver
     		if( alreadyondata ){
     			var data = [e.clientX, e.clientY];
     			socket.emit('ondrag',data);
-
     			dragwipe(e.clientX, e.clientY); 
     		}else{//if not connecting to peers
 				console.log("haven't connect to anyone!");
 			}
     	}//if draging, else do nothing 
     });//mousemove
+
+    /*for mobile*/
+    maincanvas.addEventListener('mousedown', function(){mousedown =true;});
+  	maincanvas.addEventListener('mouseup', function(){mousedown =false;});
+
+
 }; //init
 
 $('document').ready(  init  );
@@ -99,11 +106,6 @@ $('document').ready(  init  );
 var dragwipe = function(evtx, evty){
 		wipex = Math.floor( evtx / brushsize );
 		wipey = Math.floor( evty / brushsize );
-
-
-		ratioimgx = imgs[index].naturalWidth / $('#maincanvas').width(); //naturalHeight
-		ratioimgy = imgs[index].naturalHeight / $('#maincanvas').height();
-		//console.log(ratioimgx+'ratioimgx '+ratioimgy);
 
 		if ( totalwiped < 0.8 * pixmatrix.length * pixmatrix[0].length ) {  //current image
 				if ( pixmatrix[wipex][wipey]==-1 ) { // if haven't draw this pixel
@@ -128,9 +130,43 @@ ctx.drawImage( quacanvas, 0,0, downsampletime*brushsize*ratiox, downsampletime*b
 */
 
 //method 2:
-	ctx.drawImage( imgs[index], 
-     	 evtx*ratioimgx, evty*ratioimgy, brushsize*ratioimgx, brushsize*ratioimgy,
-		 evtx*ratiox, evty*ratioy, brushsize*ratiox, brushsize*ratioy);
+	ctx.globalAlpha = 1;
+
+	ratioimgx = imgs[index].naturalWidth / maincanvas.width; //naturalHeight
+	ratioimgy = imgs[index].naturalHeight / maincanvas.height;
+
+	// ctx.drawImage( imgs[index], 
+ //     	 evtx*ratioimgx, evty*ratioimgy, brushsize*ratioimgx, brushsize*ratioimgy,
+	// 	 evtx*ratiox, evty*ratioy, brushsize*ratiox, brushsize*ratioy);
+
+	var tmpcanvas = document.createElement('canvas');
+	var tmpCtx = tmpcanvas.getContext('2d');
+
+	tmpCtx.save();
+    tmpCtx.beginPath();
+    tmpCtx.arc(brushsize*ratioimgy/4, brushsize*ratioimgy/4, brushsize*ratioimgy/4, 0, Math.PI * 2);
+    tmpCtx.closePath();
+    tmpCtx.clip();
+
+   //  tmpCtx.drawImage(imgs[index], evtx*ratioimgx+brushsize*ratioimgy/4, evty*ratioimgy+brushsize*ratioimgy/4, 
+   //  	brushsize*ratioimgx, brushsize*ratioimgy,
+	 	// 0,0, brushsize*ratiox, brushsize*ratioy);
+    
+    tmpCtx.drawImage(imgs[index], 
+    	(evtx-brushsize*ratioimgy/4)*ratioimgx, (evty-brushsize*ratioimgy/4)*ratioimgy, 
+    	brushsize*ratioimgx, brushsize*ratioimgy,
+	 	0,0, brushsize, brushsize);
+
+
+    tmpCtx.closePath();
+    tmpCtx.restore();
+	
+	 ctx.drawImage( tmpcanvas, 0,0, brushsize, brushsize,
+	 	evtx-brushsize*ratioimgy/4, evty-brushsize*ratioimgy/4, brushsize, brushsize);
+
+// ctx.beginPath();
+// ctx.arc(75, 75, 50, 0, 2 * Math.PI);
+// ctx.stroke();
 
 //method 3:
 		// ctx.drawImage( fakecanvas[index], evtx*ratioimgx, evty*ratioimgy, brushsize*ratioimgx, brushsize*ratioimgy,

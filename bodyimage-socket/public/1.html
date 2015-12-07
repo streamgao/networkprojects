@@ -2,7 +2,7 @@
 	<head>
 		<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 		<script type="text/javascript" src="/socket.io/socket.io.js"></script>
-		<script type="text/javascript" src="js/p5.js"></script>
+		<!--script type="text/javascript" src="js/p5.js"></script-->
 		<style type="text/css">
 			canvas, img {
 			    image-rendering: optimizeQuality;
@@ -17,26 +17,29 @@
 				width: 100%;
 				opacity:1;
 				position: absolute;
-				cursor: url(img/cursor0.png), auto;
+				cursor: url(img/cursor.png), auto;
+			}
+
+			.footer{
+				position: absolute;
+				bottom: 2%;
+				left: 45%;
+				z-index: 11;
+				float: left;
+				font-ssize: 12px;
+				color: gray;
 			}
 		</style>
 	</head>
 	
 	<body>
-		<!--img id="body6" class = "bodyimage" src="img/6.jpg" >
-		<img id="body5" class = "bodyimage" src="img/5.jpg" >
-		<img id="body4" class = "bodyimage" src="img/4.jpg" >
-		<img id="body3" class = "bodyimage" src="img/3.jpg" >
-		<img id="body2" class = "bodyimage" src="img/2.jpg" >
-		<img id="body1" class = "bodyimage" src="img/1.jpg" >
-		<img id="body0" class = "bodyimage" src="img/0.jpg" -->
-		
 		<canvas id="maincanvas"></canvas>
 		<!--
 		<div id="fake" style="height:100%;width:100%; top:20; left:20;position:fixed; z-index = -10; background:gray; opacity:0;" draggable = "true" >adsfasdf </div>
 		-->
+		<div class="footer">© Copyright 2015  Stream Gao</div>
 	</body>
 	
-	<script type="text/javascript" src="js/bodyimage1.js"></script>
+	<script type="text/javascript" src="js/bodyimage2.js"></script>
 </html>
 
