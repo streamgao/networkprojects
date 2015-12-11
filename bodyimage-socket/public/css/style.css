@@ -1,3 +1,69 @@
 /**************/
 /* Custom CSS */
-/**************/
+h4{
+  padding: 10px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.camera {
+  width: 100%;
+  position: relative;
+  display: block;
+  text-align: center;
+  height: 415px;
+}
+
+.buttons{
+  margin: 0 auto;
+  display: inline-block;
+  opacity: 0;
+  padding: 10px;
+}
+
+#video{
+  z-index: -2;
+  position: absolute;
+  left: 28%;
+}
+
+#clmcanvas{
+  position: absolute;
+  z-index: 1;
+  left: 28%;
+}
+
+#maskstandard{
+  margin: 0 auto;
+  color: grey;
+  background: url(../img/faceoutline.png) center center no-repeat;
+  background-size: 100% 100%;
+  text-align: center;
+  z-index: 10;
+  position: absolute;
+  top: 10px;
+  left: 39%;
+  height: 350px;
+  width: 290px;
+}
+
+.output {
+  width: 100%;
+  position: relative;
+  display: block;
+  text-align: center;
+}
+
+#outputphoto{
+	margin: 0 auto;
+	display: inline-block;
+	width: 500px;
+}
+
+
+#outputcanvas {
+  display:block;
+  margin: 0 auto;
+  text-align: center;
+}
+

@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+  <title>Take a profile here!</title>
+  <meta charset='utf-8'>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+</head>
+
+<body>
+    <script src="/js/clmtrackerjs/js/utils.js"></script>
+    <script src="/js/clmtrackerjs/clmtrackr.js"></script>
+    <script src="/js/clmtrackerjs/models/model_pca_20_svm.js"></script>
+
+    <script src="/js/clmtrackerjs/js/dat.gui.min.js"></script>
+    <script src="/js/clmtrackerjs/js/numeric-1.2.6.min.js"></script>
+    <script src="/js/clmtrackerjs/js/mosse.js"></script>
+    <script src="/js/clmtrackerjs/js/jsfeat-min.js"></script>
+    <script src="/js/clmtrackerjs/js/frontalface.js"></script>
+    <script src="/js/clmtrackerjs/js/jsfeat_detect.js"></script>
+    <script src="/js/clmtrackerjs/js/left_eye_filter.js"></script>
+    <script src="/js/clmtrackerjs/js/right_eye_filter.js"></script>
+    <script src="/js/clmtrackerjs/js/nose_filter.js"></script>
+    <script src="js/clmtrackerjs/models/model_pca_20_svm.js"></script>
+    <script src="/js/clmtrackerjs/js/clm.js"></script>
+    <script src="/js/clmtrackerjs/js/svmfilter_webgl.js"></script>
+    <script src="/js/clmtrackerjs/js/svmfilter_fft.js"></script>
+    <script src="/js/clmtrackerjs/js/mossefilter.js"></script>
+    <script src="/js/clmtrackerjs/js/Stats.js"></script>
+
+    <script src="/js/clmtrackerjs/js/jquery.imgareaselect.pack.js"></script>
+    <!--script src="/js/clmtrackerjs/js/BlobBuilder.min.js"></script-->
+    <script src="/js/clmtrackerjs/js/Filesaver.min.js"></script>
+
+
+<div class="contentarea">
+  <div class="camera">
+        <video id="video" >Video stream not available</video>
+        <div id="maskstandard"> Put your ^.^ here<br>If it does not works well, expose your sexy neck please</div>
+        <canvas id="clmcanvas" width="368" height="288"></canvas>   
+  </div>
+  <div class="camera" style="height:40px !important" >
+      <button class="buttons" id="startbutton" style="opacity: 1 !important">&nbsp Take A Photo &nbsp</button> 
+  </div>
+<div id="positions"></div>
+
+
+
+  <canvas id="outputcanvas"></canvas>
+  <div class="output">
+    <!--img id="outputphoto" alt="The screen capture will appear in this box."--> 
+    <br>
+    <button class="buttons" id="imgtgtbtn">&nbsp Target Face &nbsp</button> 
+    <button class="buttons" id="retouchbtn">&nbsp Start retouching &nbsp</button>
+    <button class="buttons" id="sendbtn">&nbsp Send this one &nbsp</button>  
+  </div>
+
+  <script type="text/javascript"  src="js/photo.js"></script>
+  <!--script src ="js/retouch.js"></script-->
+</div>
+</body>
+</html>

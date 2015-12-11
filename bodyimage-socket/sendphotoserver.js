@@ -1,47 +1,35 @@
-var express = require('express');
-var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
-var fs = require('fs');
-var connected = false;
+var http = require('http'),
+    io = require('socket.io'),
+    sys = require('sys'),
+    express = require('express'),
+    fs = require('fs');
+
+var port = 8000;
 
 
+
+var app = express();
 app.use(express.static(__dirname + '/public'));
 
-http.listen(3000, function(){
-  console.log('listening on :3000');
-});
+// http.listen(3000, function(){
+//   console.log('listening on :3000');
+// });
 
 
-io.on('connect', function(socket){
-  connected = true;
+// //app.use(express.errorHandler({showStack: true, dumpExceptions: true}));
 
-  socket.on('ondrag',function(msg){
-    console.log('ondrag:'+msg);
-    //io.sockets.emit('colors',msg);
-    socket.broadcast.emit('ondrag',msg); 
-  });//on colorchoice
- 
-  socket.on('ondragsender',function(msg){
-    console.log('ondragsender:'+msg);
-    //io.sockets.emit('colors',msg);
-    socket.broadcast.emit('ondragsender',msg); 
-  });
-  socket.on('nextlayer',function(msg){
-    socket.broadcast.emit('nextlayer',msg); 
-  });
+var socket = io.listen(http.createServer(app).listen(port));
+sys.log('Server started. Listening on http://localhost:' + port + '/')
 
+// connection message/event is received
+socket.sockets.on('connection', function (client) {
+    var connected = true;
 
+    // never mind this. Just poking around.
+    client.emit('setID', client.id);
 
-
-  socket.on('receiveprofile',function(){
-    console.log("ondrag");
-  });//receiveprofile
-
-    // // never mind this. Just poking around.
-    socket.emit('setID', socket.id);
     // image message received...yeah some refactoring is required but have fun with it...
-    socket.on('user image', function (msg) {
+    client.on('user image', function (msg) {
         var base64Data = decodeBase64Image(msg.imageData);
         // if directory is not already created, then create it, otherwise overwrite existing image
         fs.exists(__dirname + "/" + msg.imageMetaData, function (exists) {
@@ -66,19 +54,15 @@ io.on('connect', function(socket){
             }
         });
         // I'm sending image back to client just to see and a way of confirmation. You can send whatever.
-        socket.emit('user image', msg.imageData);
+        client.emit('user image', msg.imageData);
     });
 
-    socket.on('message', function (m) {
+    client.on('message', function (m) {
     });
 
-    socket.on('disconnect', function () {
+    client.on('disconnect', function () {
         connected = false;
     });
-
-
-});//connect
-
 
 
     //TODO: function to decode base64 to binary
@@ -92,3 +76,5 @@ io.on('connect', function(socket){
         response.data = new Buffer(matches[2], 'base64');
         return response;
     }
+});
+

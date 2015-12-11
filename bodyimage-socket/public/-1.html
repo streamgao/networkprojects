@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
 	<head>
+		<title> Receive For Big Screen -- BODY IMAGE </title>
 		<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 		<script type="text/javascript" src="/socket.io/socket.io.js"></script>
 		<!--script type="text/javascript" src="js/p5.js"></script-->
@@ -30,17 +31,22 @@
 				font-ssize: 12px;
 				color: gray;
 			}
+			#flowcursor{
+				background: url(img/cursor.png), center center no-repeat;
+				background-size: 100% 100%;
+				width: 50px;
+				height: 50px;
+				position: absolute;
+				z-index: 100;
+			}
 		</style>
 	</head>
 	
 	<body>
 		<canvas id="maincanvas"></canvas>
-		<!--
-		<div id="fake" style="height:100%;width:100%; top:20; left:20;position:fixed; z-index = -10; background:gray; opacity:0;" draggable = "true" >adsfasdf </div>
-		-->
 		<div class="footer">© Copyright 2015  Stream Gao</div>
 	</body>
 	
-	<script type="text/javascript" src="js/bodyimage2.js"></script>
+	<script type="text/javascript" src="js/bi_receiver.js"></script>
 </html>
 
