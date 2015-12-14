@@ -116,7 +116,7 @@ var dragwipe = function(evtx, evty){
 		wipex = Math.floor( evtx / brushsize );
 		wipey = Math.floor( evty / brushsize );
 
-		if ( totalwiped < 0.8 * pixmatrix.length * pixmatrix[0].length ) {  //current image
+		if ( totalwiped < 0.7 * pixmatrix.length * pixmatrix[0].length ) {  //current image
 			if ( pixmatrix[wipex][wipey]==-1 ) { // if haven't draw this pixel
 				totalwiped++;
 				totalwiped = totalwiped% (pixmatrix.length * pixmatrix[0].length);

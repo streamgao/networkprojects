@@ -16,9 +16,11 @@
 			#maincanvas{
 				height: 100%;
 				width: 100%;
-				opacity:1;
 				position: absolute;
+				top: 0;
+				left: 0;
 				cursor: url(img/cursor.png), auto;
+				opacity:1;
 			}
 
 			.footer{
@@ -27,17 +29,38 @@
 				left: 45%;
 				z-index: 11;
 				float: left;
-				font-ssize: 12px;
+				font-size: 12px;
 				color: gray;
+			}
+
+			#overlaycanvas{
+				height: 100%;
+				width: 100%;
+				position: absolute;
+				top: 0;
+				left: 0;
+				z-index: 2 !important;
+				cursor: url(img/cursor.png), auto;
+			}
+
+			#comparison{
+				height: 100%;
+				width: 100%;
+				position: absolute;
+				top: 0;
+				left: 0;
+				z-index: -10;
+				background: url(img/iza_gif.gif) center center no-repeat;
+				background-size: 100% 100%;
 			}
 		</style>
 	</head>
 	
 	<body>
 		<canvas id="maincanvas"></canvas>
-		<!--
-		<div id="fake" style="height:100%;width:100%; top:20; left:20;position:fixed; z-index = -10; background:gray; opacity:0;" draggable = "true" >adsfasdf </div>
-		-->
+		<canvas id="overlaycanvas"></canvas>
+
+		<!--div id="comparison"></div-->
 		<div class="footer">© Copyright 2015  Stream Gao</div>
 	</body>
 	

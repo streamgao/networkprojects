@@ -1,58 +1,27 @@
+function distance(x,y){
+    var dx= x[0]-y[0];
+    var dy= x[1]-y[1];
+    return Math.sqrt(dx*dx-dy*dy).toFixed(2);
+}
 
-  function displaymyvideo(){  //width
-    window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
-    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-    if (navigator.getUserMedia) {
-      navigator.getUserMedia({  video:true, audio:false}, function(stream) {
-        my_stream = stream;
+//float scaleRatio;// 缩放系数，0无缩放，大于0则放大
+// float radius;// 缩放算法的作用域半径
+// vec2 leftEyeCenterPosition; // 左眼控制点，越远变形越小
+// vec2 rightEyeCenterPosition; // 右眼控制点
+// aspectRatio; // 所处理图像的宽高比
+function eyebigger (centerPostion,currentPosition, radius, scaleRatio, aspectRatio) {
+    var positionToUse = currentPosition;
+    var currentPositionToUse = [currentPosition[0], currentPosition[1]*aspectRatio+0.5*(1-aspectRatio)];
+    var centerPostionToUse = [centerPostion[0], centerPostion[1]*aspectRatio+0.5 *(1-aspectRatio)];
+    var r = distance(currentPositionToUse, centerPostionToUse);
 
-        videoInput.src = window.URL.createObjectURL(stream) || stream;
-
-        videoInput.play();
-      }, function(err) {
-        console.log('Failed to get local stream' ,err);
-      });
-    } 
-  }//displaymyvideo
-
-    var videoInput = document.getElementById('video');
-    displaymyvideo();
-
-
-    var ctracker = new clm.tracker();
-    ctracker.init(pModel);
-    ctracker.start(videoInput);
-    
-    function positionLoop() {
-      requestAnimationFrame(positionLoop);
-      var positions = ctracker.getCurrentPosition();
-      // do something with the positions ...
-      // print the positions
-      var positionString = "";
-      if (positions) {
-        for (var p = 0;p < 10;p++) {
-          positionString += "featurepoint "+p+" : ["+positions[p][0].toFixed(2)+","+positions[p][1].toFixed(2)+"]<br/>";
-          var newdiv = document.createElement('div');
-          newdiv.innerHTML = "**";
-          //newdiv.style
-        }
-        document.getElementById('positions').innerHTML = positionString;
-      }
-    }//positionLoop()
-
-    positionLoop();
-    
-    var canvasInput = document.getElementById('canvas');
-    var cc = canvasInput.getContext('2d');
-    function drawLoop() {
-      requestAnimationFrame(drawLoop);
-      cc.clearRect(0, 0, canvasInput.width, canvasInput.height);
-      ctracker.draw(canvasInput);
+    if(r<radius){
+         var alpha = 1.0 - scaleRatio * Math.pow(r / radius - 1.0, 2.0);
+         positionToUse[0] = Math.round((centerPostion[0] + alpha*(currentPosition - centerPostion)));
+         positionToUse[1] = Math.round((centerPostion[1] + alpha*(currentPosition - centerPostion)));
     }
-    drawLoop();
-
-
-
-
+      
+    return positionToUse; 
+}
 
 

@@ -1,5 +1,6 @@
 var connection;
 var maincanvas,ctx;
+var overlaycanvas, overlayctx;
 var imgs = [];
 var fakecanvas =[];
 var fakectx = [];
@@ -17,6 +18,7 @@ var alreadyondata = false;
 var flowcursor;
 
 var img;
+var poster;
 
 function initpixandwipe(){
 	totalwiped = 0;
@@ -29,6 +31,26 @@ function initpixandwipe(){
     console.log("initpixandwipe");
 }
 
+function initposter(){
+  overlaycanvas = document.getElementById("overlaycanvas");
+  overlayctx=overlaycanvas.getContext('2d');
+
+  overlaycanvas.width=maincanvas.width;
+  overlaycanvas.height = maincanvas.height;
+
+  poster = new Image();
+  poster.src='img/blemish.png';
+  poster.width = overlaycanvas.width;
+  poster.height = overlaycanvas.height;
+
+  poster.onload= function(){
+    overlayctx.drawImage(poster,0,0, poster.naturalWidth, poster.naturalHeight, 
+                    0,0, maincanvas.width, maincanvas.height);
+  };//onload
+}
+
+
+
 function initvariables(){
  	index = 1;
  	totalwiped = 0;
@@ -38,14 +60,13 @@ function initvariables(){
  	for(var i=0; i<7; i++){
 	    imgs[i] = new Image();
 		imgs[i].src='img/'+i+'.jpg';
-   	   
     }
-    document.body.appendChild(imgs[0]);
     imgs[0].width = maincanvas.width;
     imgs[0].height = maincanvas.height;
-    ctx.drawImage(imgs[0],0, 0, imgs[0].naturalWidth, imgs[0].naturalHeight,
-    	0,0,maincanvas.width, maincanvas.height);
-
+    imgs[0],onload = function(){
+        ctx.drawImage(imgs[0],0, 0, imgs[0].naturalWidth, imgs[0].naturalHeight,
+                   0,0,maincanvas.width, maincanvas.height);
+    };
 
     dividenum = 12;
     brushsize = Math.ceil($('#maincanvas').width() / dividenum);   //50
@@ -69,6 +90,7 @@ var init = function() {   //receiver
     document.getElementsByTagName('body')[0].appendChild(flowcursor);
 
     initvariables();
+    initposter();
     setupSocket();
 }; //init
 
@@ -130,13 +152,13 @@ function setupSocket() {
 
 		socket.on('ondragsender',function(dragdata){ // when receive color submission
             console.log("ondragsender"+dragdata);
-            console.log(dragdata[0]+356+"," +dragdata[1]);
+            console.log(dragdata[0]+320+"," +dragdata[1]);
 
-			dragwipe( (dragdata[0]+356), dragdata[1] );
-            var newx = dragdata[0]+356;
+			dragwipe( (dragdata[0]+320), dragdata[1] );
+            var newx = dragdata[0]+320;
             var newy =  dragdata[1] ;
-            flowcursor.style.left=newx+"px";
-            flowcursor.style.top=newy+"px";
+            flowcursor.style.left=newx-brushsize/4+"px";
+            flowcursor.style.top=newy-brushsize/4+"px";
             //flowcursor.css({"left": newx+"px", "top":dragdata[1]+"px"});
 		});	//on dragsender
 

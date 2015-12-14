@@ -34,27 +34,29 @@
 
 
 <div class="contentarea">
+  <div id="positions" style="position:absolute; left:0; top:0;width:20%;"></div>
   <div class="camera">
         <video id="video" >Video stream not available</video>
         <div id="maskstandard"> Put your ^.^ here<br>If it does not works well, expose your sexy neck please</div>
         <canvas id="clmcanvas" width="368" height="288"></canvas>   
   </div>
-  <div class="camera" style="height:40px !important" >
+  <div class="camera" style="height:55px !important" >
+      <div id="status"></div>
       <button class="buttons" id="startbutton" style="opacity: 1 !important">&nbsp Take A Photo &nbsp</button> 
   </div>
-<div id="positions"></div>
-
 
 
   <canvas id="outputcanvas"></canvas>
+  <canvas id="overlay"></canvas>
   <div class="output">
     <!--img id="outputphoto" alt="The screen capture will appear in this box."--> 
     <br>
-    <button class="buttons" id="imgtgtbtn">&nbsp Target Face &nbsp</button> 
+    <!--button class="buttons" id="imgtgtbtn">&nbsp Target Face &nbsp</button--> 
     <button class="buttons" id="retouchbtn">&nbsp Start retouching &nbsp</button>
     <button class="buttons" id="sendbtn">&nbsp Send this one &nbsp</button>  
+    <div id="convergence"></div>
   </div>
-
+  <script type="text/javascript"  src="js/retouch.js"></script>
   <script type="text/javascript"  src="js/photo.js"></script>
   <!--script src ="js/retouch.js"></script-->
 </div>
