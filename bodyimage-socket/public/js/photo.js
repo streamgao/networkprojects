@@ -35,20 +35,17 @@ function getposition(element){
 function clearphoto() {
     outputctx.fillStyle = "#AAA";
     outputctx.fillRect(0, 0, outputcanvas.width, outputcanvas.height);
-
     var data = outputcanvas.toDataURL('image/png');
-    //outputphoto.setAttribute('src', data);
     outputphoto.src=data;
 }
 
 function takepicture() {
+    overlayCC.clearRect(0,0,overlaycanvas.width, overlaycanvas.height);
     if (width && height) {
       outputcanvas.width = width;
       outputcanvas.height = height;
       outputctx.drawImage(video, 0, 0, width, height);
-
       var data = outputcanvas.toDataURL('image/png');
-      //outputphoto.setAttribute('src', data);
       outputphoto.src=data;
     } else {
       clearphoto();
@@ -172,31 +169,42 @@ function targetFace(){
 
 
 function retoucheyes(){
-
-  var radius = distance(targetpositions[25], targetpositions[23])/2;
-  var scaleRatio = 3;
-  var aspectRatio = radius*2/(targetpositions[26][1]-targetpositions[24][1]);
-  aspectRatio.toFixed(2);
-
+  var scaleRatio = 7;
+  var radius = distance(targetpositions[25], targetpositions[23])/2 *1.4 ;
   var leftlimit = targetpositions[23][0];
   var rightlimit = targetpositions[25][0];
   var toplimit = targetpositions[24][1];
   var bottomlimit = targetpositions[26][1];
+  var centerPostion = targetpositions[27];
 
-  var centerPostion = [targetpositions[27][0], targetpositions[27][1]];
-
-  for (var i = toplimit; i < bottomlimit; i+=retouchunit) { //line by line
-      for (var j = leftlimit; j <rightlimit; j+=retouchunit) {
-           var positionToUse = eyebigger(centerPostion, [j,i], radius, scaleRatio, aspectRatio);
-           
-           console.log("current:"+[j,i]);
-           console.log(positionToUse);
-
-           var replace= outputctx.getImageData(j,i,retouchunit,retouchunit);
-           outputctx.putImageData(replace,positionToUse[0],positionToUse[1]);
+  //left eye
+  for (var i = toplimit-7; i < bottomlimit+7; i+=retouchunit/2) { //line by line
+      for (var j = leftlimit-30; j <rightlimit; j+=retouchunit/2) { //row by row
+           var positionToUse = eyebigger(centerPostion, [j,i], radius, scaleRatio);
+           if(  distance(positionToUse,centerPostion) < radius ) {
+              var replace= outputctx.getImageData(j,i,retouchunit/2,retouchunit/2);
+              overlayCC.putImageData(replace,positionToUse[0],positionToUse[1]);
+           }
       }
   }
 
+  radius = distance(targetpositions[28], targetpositions[30])/2 *1.4 ;
+  leftlimit = targetpositions[30][0];
+  rightlimit = targetpositions[28][0];
+  toplimit = targetpositions[29][1];
+  bottomlimit = targetpositions[31][1];
+  centerPostion = targetpositions[32];
+
+  //right eye
+  for (var i = toplimit-7; i < bottomlimit+7; i+=retouchunit/2) { //line by line
+      for (var j = leftlimit; j <rightlimit+30; j+=retouchunit/2) { //row by row
+           var positionToUse = eyebigger(centerPostion, [j,i], radius, scaleRatio);
+           if(  distance(positionToUse,centerPostion) < radius ) {
+              var replace= outputctx.getImageData(j,i,retouchunit/2,retouchunit/2);
+              overlayCC.putImageData(replace,positionToUse[0],positionToUse[1]);
+           }
+      }
+  }
 }//retouch eyes
 
 
@@ -208,36 +216,19 @@ function distance(p1,p2){
     return Math.sqrt(dx*dx + dy*dy).toFixed(2);
 }
 
-//float scaleRatio;// 缩放系数，0无缩放，大于0则放大
-// float radius;// 缩放算法的作用域半径
-// aspectRatio; // 所处理图像的宽高比
-/*
-ScaleFactor = 1 - XY / PowRadius
-ScaleFactor = 1 - Strength / 100 * ScaleFactor              '   按照这种关系计算取样点的位置
-PosX = OffsetX * ScaleFactor + PointX
-PosY = OffSetY * ScaleFactor + PointY
-*/
-
-function eyebigger (centerPostion, currentPosition, radius, scaleRatio, aspectRatio) {
+function eyebigger (centerPostion, currentPosition, radius, scaleRatio) {
     var offsetradius = distance(centerPostion, currentPosition);
     var positionToUse= currentPosition;
 
     if(offsetradius<radius){   // if in the circle
-         var alpha = 1.0 - scaleRatio * Math.pow(offsetradius/radius - 1.0, 2.0);
+         var alpha = 1 - Math.pow(offsetradius/radius, 1.0);
+         alpha = 1+scaleRatio/100/alpha;
+
          positionToUse[0] = centerPostion[0] + alpha*(currentPosition[0] - centerPostion[0]);
          positionToUse[1] = centerPostion[1] + alpha*(currentPosition[1] - centerPostion[1]);
-         
-         // var ScaleFactor = 1 - offsetradius*offsetradius/radius/radius;
-         // ScaleFactor = 1-scaleRatio/100*ScaleFactor;
     }
-      
     return positionToUse; 
 }
-
-
-
-
-
 
 
 
