@@ -143,7 +143,7 @@ var dragwipe = function(evtx, evty){
 			 	// 0,0, brushsize*ratiox, brushsize*ratioy);
 		    
 		    tmpCtx.drawImage(imgs[index], 
-		    	(evtx-brushsize*ratioimgy/4)*ratioimgx, (evty-brushsize*ratioimgy/4)*ratioimgy, 
+		    	(evtx-brushsize*ratioimgy/8)*ratioimgx, (evty-brushsize*ratioimgy/8)*ratioimgy, 
 		    	brushsize*ratioimgx, brushsize*ratioimgy,
 			 	0,0, brushsize, brushsize);
 
@@ -152,7 +152,7 @@ var dragwipe = function(evtx, evty){
 		    tmpCtx.restore();
 			
 			ctx.drawImage( tmpcanvas, 0,0, brushsize, brushsize,
-			 	evtx-brushsize*ratioimgy/4, evty-brushsize*ratioimgy/4, brushsize, brushsize);
+			 	evtx-brushsize*ratioimgy/8, evty-brushsize*ratioimgy/8, brushsize, brushsize);
 
 
 		}else{ //switch

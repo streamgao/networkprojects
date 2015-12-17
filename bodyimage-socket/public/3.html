@@ -4,7 +4,10 @@
   <title>Take a profile here!</title>
   <meta charset='utf-8'>
   <link rel="stylesheet" type="text/css" href="css/style.css">
+  <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.js"></script>
   <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+  <script type="text/javascript" src="js/glfx.js"></script>
 </head>
 
 <body>
@@ -27,18 +30,17 @@
     <script src="/js/clmtrackerjs/js/svmfilter_fft.js"></script>
     <script src="/js/clmtrackerjs/js/mossefilter.js"></script>
     <script src="/js/clmtrackerjs/js/Stats.js"></script>
-
     <script src="/js/clmtrackerjs/js/jquery.imgareaselect.pack.js"></script>
     <!--script src="/js/clmtrackerjs/js/BlobBuilder.min.js"></script-->
     <script src="/js/clmtrackerjs/js/Filesaver.min.js"></script>
 
 
 <div class="contentarea">
-  <div id="positions" style="position:absolute; left:0; top:0;width:20%;"></div>
+  <!--div id="positions" style="position:absolute; left:0; top:0;width:20%;"></div-->
   <div class="camera">
         <video id="video" >Video stream not available</video>
         <div id="maskstandard"> Put your ^.^ here<br>If it does not works well, expose your sexy neck please</div>
-        <canvas id="clmcanvas" width="368" height="288"></canvas>   
+        <canvas id="clmcanvas" width="900" height="704"></canvas>   
   </div>
   <div class="camera" style="height:55px !important" >
       <div id="status"></div>
@@ -52,10 +54,16 @@
     <!--img id="outputphoto" alt="The screen capture will appear in this box."--> 
     <br>
     <!--button class="buttons" id="imgtgtbtn">&nbsp Target Face &nbsp</button--> 
-    <button class="buttons" id="retouchbtn">&nbsp Start retouching &nbsp</button>
-    <button class="buttons" id="sendbtn">&nbsp Send this one &nbsp</button>  
-    <div id="convergence"></div>
+    <button class="buttons" id="retouchbtn">&nbsp Start Retouching &nbsp</button>
+    <button class="buttons" id="sendbtn"></button> 
+    <input type="text" class="buttons" id="name" value="Your Name"/>
+    <input type="text" class="buttons" id="postername" value="Name the Poster"/>
   </div>
+
+  <canvas id="tosendoriginal" class="readytosend" ></canvas>
+  <canvas id="tosendretouched" class="readytosend"></canvas>
+
+
   <script type="text/javascript"  src="js/retouch.js"></script>
   <script type="text/javascript"  src="js/photo.js"></script>
   <!--script src ="js/retouch.js"></script-->

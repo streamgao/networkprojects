@@ -13,6 +13,17 @@ http.listen(3000, function(){
 });
 
 
+var singleone = function(id, name, postername, ori, retouched){
+    this.id=id;
+    this.name=name;
+    this.postername = postername;
+    this.original = ori;
+    this.retouched=retouched;
+};
+var peoples = [];
+var send = [];
+
+
 io.on('connect', function(socket){
   connected = true;
 
@@ -32,17 +43,45 @@ io.on('connect', function(socket){
   });
 
 
-
-
   socket.on('receiveprofile',function(){
     console.log("ondrag");
   });//receiveprofile
 
-    // // never mind this. Just poking around.
-    socket.emit('setID', socket.id);
+
+
+
+
+  socket.on('retouchdata',function(msg){
+    console.log(peoples);
+    //var single= new singleone(msg.id, msg.name, msg.original, msg.retouched);
+    peoples.push(msg);
+    socket.emit('receiveimagedata',peoples);
+  });
+
+  socket.on('requestinitimgs',function(d){
+    socket.emit('requestinitimgs',peoples);
+  });
+
+
+  socket.on('requestwipeimgs',function(d){
+    send=[];
+    for(var i=d;i<peoples.length;i++ ){ // every time send 3 people's images = 6
+        if(peoples[i]){
+            send.push(peoples[i]);
+        }
+    }//for
+    socket.emit('requestwipeimgs',send);
+  });
+
+  socket.on('eyeswindow',function(value){
+    io.sockets.emit('eyeswindow',value);
+  });
+
+
     // image message received...yeah some refactoring is required but have fun with it...
     socket.on('user image', function (msg) {
         var base64Data = decodeBase64Image(msg.imageData);
+        console.log(base64Data);
         // if directory is not already created, then create it, otherwise overwrite existing image
         fs.exists(__dirname + "/" + msg.imageMetaData, function (exists) {
             if (!exists) {
@@ -54,9 +93,8 @@ io.on('connect', function(socket){
                         throw e;
                     }
                 });
-            }
-        })
-
+            }//if exists
+        });
         // write/save the image
         // TODO: extract file's extension instead of hard coding it
         fs.writeFile(__dirname + "/" + msg.imageMetaData + "/" + msg.imageMetaData + ".jpg", base64Data.data, function (err) {
@@ -67,28 +105,24 @@ io.on('connect', function(socket){
         });
         // I'm sending image back to client just to see and a way of confirmation. You can send whatever.
         socket.emit('user image', msg.imageData);
-    });
-
-    socket.on('message', function (m) {
-    });
+    });//on user image
 
     socket.on('disconnect', function () {
         connected = false;
     });
 
-
 });//connect
 
 
 
-    //TODO: function to decode base64 to binary
-    function decodeBase64Image(dataString) {
-        var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
-            response = {};
-        if (matches.length !== 3) {
-            return new Error('Invalid input string');
-        }
-        response.type = matches[1];
-        response.data = new Buffer(matches[2], 'base64');
-        return response;
+//TODO: function to decode base64 to binary
+function decodeBase64Image(dataString) {
+    var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
+        response = {};
+    if (matches.length !== 3) {
+        return new Error('Invalid input string');
     }
+    response.type = matches[1];
+    response.data = new Buffer(matches[2], 'base64');
+    return response;
+}

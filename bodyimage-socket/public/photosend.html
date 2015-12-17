@@ -11,22 +11,23 @@
     <h3>Status: <span id="status">Waiting</span></h3>
     <hr/>
     <h3>Sending Image and File Name</h3>
+
     Phone #: <input type="text" id="phoneNumber" />
     Image file: <input type="file" id="imageFile" /><br/>
     <div id="selectedImageConainer" style="display: none">
-        Image Selected: <br><img src="" id="imageSelected"
-        style="width: auto; border-width: 10px;"/>
+        Image Selected: <br>
+        <img src="" id="imageSelected" style="width: auto; border-width: 10px;"/>
     </div>
     <hr/>
     My server has named me:  <pre id="IDReceivedMessage"></pre>
     From Server using client.emit  <pre id="imageReceivedMessage"></pre>
-    <img src="" id="imageSentFromServer"
-         style="border-width: 10px;"/><br/>
+    <img src="" id="imageSentFromServer"  style="border-width: 10px;"/><br/>
  
     <script>
       $('#imageFile').on('change', function(e){
           var file = e.originalEvent.target.files[0],
-                  reader = new FileReader();
+            reader = new FileReader();
+
           reader.onload = function(evt){
               $('#imageSelected').attr('src', evt.target.result);
               $('#selectedImageConainer').css('display', '');
@@ -35,7 +36,8 @@
                   'imageData': evt.target.result,
                   'imageMetaData': phoneNum
               }
- 
+              
+              console.log(jsonObject);
               // send a custom socket message to server
               socket.emit('user image', jsonObject);
           };

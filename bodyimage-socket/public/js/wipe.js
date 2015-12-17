@@ -1,7 +1,12 @@
+var socket;
 var connection;
 var maincanvas,ctx;
 var overlaycanvas, overlayctx;
 var imgs = [];
+var names = [];
+var posternames = [];
+var currentinfo;
+var yourname;
 var fakecanvas =[];
 var fakectx = [];
 var pixmatrix = [];
@@ -18,6 +23,7 @@ var alreadyondata = false;
 
 var img;
 var poster;
+var temp;
 
 function initpixandwipe(){
 	totalwiped = 0;
@@ -27,7 +33,6 @@ function initpixandwipe(){
     		pixmatrix[i][j] = -1;
     	}
     }
-    console.log("initpixandwipe");
 }
 
 function initposter(){
@@ -38,7 +43,7 @@ function initposter(){
     overlaycanvas.height = maincanvas.height;
 
     poster = new Image();
-    poster.src='img/blemish.png';
+    poster.src='img/blemish0.png';
     poster.width = overlaycanvas.width;
     poster.height = overlaycanvas.height;
 
@@ -51,34 +56,40 @@ function initposter(){
 function initvariables(){
    	index = 1;
    	totalwiped = 0;
-   	alreadyondata = false;
+    imgs = [];
 
- 	  for(var i=0; i<7; i++){
-	    imgs[i] = new Image();
-		  imgs[i].src='img/'+i+'.jpg';
-     	    //for method 3
-     	    /*fakecanvas[i] = document.createElement('canvas');
-  		fakecanvas[i].width = 5*maincanvas.width;
-  		fakecanvas[i].height = 5*maincanvas.height;
-  		fakectx[i] = fakecanvas[i].getContext("2d");
-    		imgs[i].onload = function(){
-    			fakectx[i].drawImage(imgs[i],0,0,imgs[i].width, imgs[i].height);
-    		};*/
-    }
-    //document.body.appendChild(imgs[0]);
-    imgs[0].width = maincanvas.width;
-    imgs[0].height = maincanvas.height;
-    imgs[0],onload = function(){
-        ctx.drawImage(imgs[0],0, 0, imgs[0].naturalWidth, imgs[0].naturalHeight,
-                   0,0,maincanvas.width, maincanvas.height);
-    };
-    // imgs[0].onload = function() {
-    //    ctx.drawImage(fakecanvas[0], 0, 0,maincanvas.width, maincanvas.height);
-    // };
-    
+    socket.emit('requestinitimgs',0);
+    socket.on('requestinitimgs',function(imgg){
+        for(var i=0; i<imgg.length; i++){
+          imgs[i*2] = new Image();
+          imgs[i*2].src= imgg[i].original;
+          imgs[i*2+1] = new Image();
+          imgs[i*2+1].src= imgg[i].retouched;
+
+          names.push(imgg[i].name);
+          names.push(imgg[i].name);
+          posternames.push(imgg[i].postername);
+          posternames.push(imgg[i].postername);
+        }
+        imgs[0].width = maincanvas.width;
+        imgs[0].height = maincanvas.height;
+
+        var ratioimage = imgs[0].naturalHeight/imgs[0].naturalWidth;
+        //maincanvas.style.width =  ratioimage*100+'%';
+
+        imgs[0].onload = function(){
+            ctx.drawImage(imgs[0],0, 0, imgs[0].naturalWidth, imgs[0].naturalHeight,
+                       0,0,maincanvas.width, maincanvas.height);
+        };
+
+        currentinfo.innerHTML = '<h3>'+imgg[0].postername+'</h3><h4>'+'Before Retouching!</h4>';
+        yourname.innerHTML='<h4>'+imgg[0].name +'</h4>';
+    });//on requestwipeimgs
+
     //init brushsize and pix cutting unit
     dividenum = 10;
     brushsize = Math.ceil($('#maincanvas').width() / dividenum);   //50
+    console.log(brushsize+","+$('#maincanvas').width() );
     wipex = 0; wipey = 0;
 	  ratiox = maincanvas.width / $('#maincanvas').width();
 	  ratioy = maincanvas.height / $('#maincanvas').height();
@@ -86,6 +97,7 @@ function initvariables(){
     //init pix matrix
     initpixandwipe();
     console.log( "Size:"+pixmatrix.length+","+pixmatrix[0].length );
+
  }//initvariables
 
 
@@ -94,10 +106,20 @@ var init = function() {   //receiver
 	  maincanvas.height= $(window).height();
    	maincanvas.width = $(window).width();
     ctx = maincanvas.getContext("2d");
+    currentinfo = document.getElementById('currentinfo');
+    yourname = document.getElementById('yourname');
 
-    initvariables();
-    setupSocket();
-    initposter();
+
+    var retVal = confirm("Get Ready to Wipe!");
+    if( retVal == true ){
+        setupSocket();
+        initvariables();
+        initposter();
+    }
+    else{
+        document.write ("Error!Try to reload the page and select ok.");
+    }
+            
 
    	maincanvas.addEventListener('mousedown', function(){mousedown =true;});
   	maincanvas.addEventListener('mouseup', function(){mousedown =false;});
@@ -167,61 +189,48 @@ var init = function() {   //receiver
 
 $('document').ready(  init  );
 
+
 var dragwipe = function(evtx, evty){
 		wipex = Math.floor( evtx / brushsize );
 		wipey = Math.floor( evty / brushsize );
 
-		if ( totalwiped < 0.7 * pixmatrix.length * pixmatrix[0].length ) {  //current image
+    currentinfo.innerHTML = (index%2==0) ? '<h3>'+posternames[index]+'</h3><h4>'+'Before Retouching</h4>' 
+                : '<h3>'+posternames[index]+'</h3><h4>'+'After Retouching</h4>'; 
+    yourname.innerHTML='<h4>'+names[index]+'</h4>';
+
+		if ( totalwiped < 0.9 * pixmatrix.length * pixmatrix[0].length ) {  //current image
 				if ( pixmatrix[wipex][wipey]==-1 ) { // if haven't draw this pixel
 					totalwiped++;
 					totalwiped = totalwiped% (pixmatrix.length * pixmatrix[0].length);
 					pixmatrix[wipex][wipey] = 1;
 				}
-				//ctx.clearRect(evtx*ratiox, evty*ratioy, brushsize*ratiox, brushsize*ratioy);
 
-//method 1:
-/*var downsampletime = 100;
-var quacanvas = document.createElement('canvas');
-quacanvas.width = downsampletime*brushsize*ratiox;
-quacanvas.height = downsampletime*brushsize*ratioy;
-var quactx = quacanvas.getContext("2d");
+        //method 2:
+      	ctx.globalAlpha = 1;
+      	ratioimgx = imgs[index].naturalWidth / maincanvas.width; //naturalHeight
+      	ratioimgy = imgs[index].naturalHeight / maincanvas.height;
+      	var tmpcanvas = document.createElement('canvas');
+      	var tmpCtx = tmpcanvas.getContext('2d');
+    	  tmpCtx.save();
+        tmpCtx.beginPath();
+        tmpCtx.arc(brushsize*ratioimgy/2, brushsize*ratioimgy/2, brushsize*ratioimgy/2, 0, Math.PI*2);
+        tmpCtx.closePath();
+        tmpCtx.clip();
 
-quactx.drawImage(imgs[index], evtx*ratioimgx, evty*ratioimgy, brushsize*ratioimgx, brushsize*ratioimgy,
-	0,0, downsampletime*brushsize*ratiox, downsampletime*brushsize*ratioy);
-ctx.drawImage( quacanvas, 0,0, downsampletime*brushsize*ratiox, downsampletime*brushsize*ratioy,
-						evtx*ratiox, evty*ratioy, brushsize*ratiox, brushsize*ratioy);
-*/
+        tmpCtx.drawImage(imgs[index], 
+        	(evtx-brushsize*ratioimgy/8)*ratioimgx, (evty-brushsize*ratioimgy/8)*ratioimgy, 
+        	brushsize*ratioimgx, brushsize*ratioimgy, 0,0, brushsize, brushsize);
 
-//method 2:
-  	ctx.globalAlpha = 1;
-  	ratioimgx = imgs[index].naturalWidth / maincanvas.width; //naturalHeight
-  	ratioimgy = imgs[index].naturalHeight / maincanvas.height;
-  	// ctx.drawImage( imgs[index], 
-    //     	 evtx*ratioimgx, evty*ratioimgy, brushsize*ratioimgx, brushsize*ratioimgy,
-  	// 	 evtx*ratiox, evty*ratioy, brushsize*ratiox, brushsize*ratioy);
-  	var tmpcanvas = document.createElement('canvas');
-  	var tmpCtx = tmpcanvas.getContext('2d');
-	  tmpCtx.save();
-    tmpCtx.beginPath();
-    tmpCtx.arc(brushsize*ratioimgy/4, brushsize*ratioimgy/4, brushsize*ratioimgy/4, 0, Math.PI*2);
-    tmpCtx.closePath();
-    tmpCtx.clip();
-   //  tmpCtx.drawImage(imgs[index], evtx*ratioimgx+brushsize*ratioimgy/4, evty*ratioimgy+brushsize*ratioimgy/4, 
-   //  	brushsize*ratioimgx, brushsize*ratioimgy,0,0, brushsize*ratiox, brushsize*ratioy);
-    tmpCtx.drawImage(imgs[index], 
-    	(evtx-brushsize*ratioimgy/8)*ratioimgx, (evty-brushsize*ratioimgy/8)*ratioimgy, 
-    	brushsize*ratioimgx, brushsize*ratioimgy, 0,0, brushsize, brushsize);
+        tmpCtx.closePath();
+        tmpCtx.restore();
+    	  ctx.drawImage( tmpcanvas, 0,0, brushsize, brushsize,
+    	 	   evtx-brushsize*ratioimgy/8, evty-brushsize*ratioimgy/8, brushsize, brushsize);
 
-    tmpCtx.closePath();
-    tmpCtx.restore();
-	  ctx.drawImage( tmpcanvas, 0,0, brushsize, brushsize,
-	 	   evtx-brushsize*ratioimgy/8, evty-brushsize*ratioimgy/8, brushsize, brushsize);
-//method 3:
-		// ctx.drawImage( fakecanvas[index], evtx*ratioimgx, evty*ratioimgy, brushsize*ratioimgx, brushsize*ratioimgy,
-		//  evtx*ratiox, evty*ratioy, brushsize*ratiox, brushsize*ratioy);
 		}else{ //switch
-        if (index==6) {
+        if (index==imgs.length-1) {
             console.log("last one");
+            socket.emit("requestwipeimgs",Math.ceil(imgs.length/2));
+            /*
             setTimeout(function(){ 
                 ctx.drawImage(imgs[0],0, 0, imgs[0].naturalWidth, imgs[0].naturalHeight,
                     0,0,maincanvas.width, maincanvas.height);
@@ -245,13 +254,15 @@ ctx.drawImage( quacanvas, 0,0, downsampletime*brushsize*ratiox, downsampletime*b
             setTimeout(function(){ 
                 ctx.drawImage(imgs[6],0, 0, imgs[0].naturalWidth, imgs[0].naturalHeight,
                     0,0,maincanvas.width, maincanvas.height);
-            }, 6000);
-        }
-				console.log("index++: "+index);
+            }, 6000);*/
+          
+        }//last one
         index++;
+        console.log(index+"index++: "+ index % imgs.length);
         index = index % imgs.length;
         initpixandwipe();
 		}//else change to next image
+
 }//dragwipe
 
 
@@ -265,7 +276,34 @@ function setupSocket() {
 		socket.on('ondrag',function(dragdata){ // when receive color submission
 			dragwipe( dragdata[0], dragdata[1] );
 		});	//on colors	
+
+    socket.on('requestwipeimgs',function(imgg){
+      temp=imgg;
+      var img1,img2;
+      console.log(temp);
+      console.log(imgg[0]);
+        for(var i=0; i<imgg.length; i++){
+          img1 = new Image();
+          img1.src= imgg[i].original;
+          img2 = new Image();
+          img2.src= imgg[i].retouched;
+          imgs.push(img1);
+          imgs.push(img2);
+          names.push(imgg[i].name);
+          names.push(imgg[i].name);
+          posternames.push(imgg[i].postername);
+          posternames.push(imgg[i].postername);
+        }
+
+    });
+
+    socket.on('eyeswindow', function(val){
+       console.log('eyeswindow'+val);
+       document.getElementById("eyeswindow").value=val;
+    });
+
 	});//on connect
+
 
 	socket.on('disconnect', function () {
 		console.log('client disconnected');
@@ -273,3 +311,11 @@ function setupSocket() {
 		//socket.emit('disconnect');
 	});
 }//setupSocket()
+
+
+function eyeswindowonchange(){
+    //var v = document.getElementById("eyeswindow").value;
+    socket.emit('eyeswindow',document.getElementById("eyeswindow").value);
+}
+
+

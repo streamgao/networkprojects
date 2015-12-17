@@ -1,27 +1,25 @@
-function distance(x,y){
-    var dx= x[0]-y[0];
-    var dy= x[1]-y[1];
-    return Math.sqrt(dx*dx-dy*dy).toFixed(2);
+function distance(p1,p2){
+    var dx= p1[0]-p2[0];
+    var dy= p1[1]-p2[1];
+    return Math.sqrt(dx*dx + dy*dy).toFixed(2);
 }
 
-//float scaleRatio;// 缩放系数，0无缩放，大于0则放大
-// float radius;// 缩放算法的作用域半径
-// vec2 leftEyeCenterPosition; // 左眼控制点，越远变形越小
-// vec2 rightEyeCenterPosition; // 右眼控制点
-// aspectRatio; // 所处理图像的宽高比
-function eyebigger (centerPostion,currentPosition, radius, scaleRatio, aspectRatio) {
-    var positionToUse = currentPosition;
-    var currentPositionToUse = [currentPosition[0], currentPosition[1]*aspectRatio+0.5*(1-aspectRatio)];
-    var centerPostionToUse = [centerPostion[0], centerPostion[1]*aspectRatio+0.5 *(1-aspectRatio)];
-    var r = distance(currentPositionToUse, centerPostionToUse);
+function eyebigger (centerPostion, currentPosition, radius, scaleRatio) {
+    var offsetradius = distance(centerPostion, currentPosition);
+    var positionToUse= currentPosition;
+    var offsetx, offsety;
 
-    if(r<radius){
-         var alpha = 1.0 - scaleRatio * Math.pow(r / radius - 1.0, 2.0);
-         positionToUse[0] = Math.round((centerPostion[0] + alpha*(currentPosition - centerPostion)));
-         positionToUse[1] = Math.round((centerPostion[1] + alpha*(currentPosition - centerPostion)));
+    if(offsetradius<radius){   // if in the circle
+         var alpha = 1 - Math.pow(offsetradius/radius, 2.0);
+         alpha = 1+scaleRatio/100/alpha;
+         offsetx = alpha*(currentPosition[0] - centerPostion[0]);
+         offsety = alpha*(currentPosition[1] - centerPostion[1]);
+
+         offsetx = ( Math.abs(offsetx)>radius ) ? offsetx/Math.abs(offsetx) * radius : offsetx;
+         offsety = ( Math.abs(offsetx)>radius ) ? offsety/Math.abs(offsety) * radius : offsety;
+
+         positionToUse[0] = centerPostion[0] + offsetx;
+         positionToUse[1] = centerPostion[1] + offsety;
     }
-      
     return positionToUse; 
 }
-
-

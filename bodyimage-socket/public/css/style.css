@@ -11,7 +11,7 @@ h4{
   position: relative;
   display: block;
   text-align: center;
-  height: 415px;
+  height: 704px;
 }
 
 .buttons{
@@ -24,13 +24,13 @@ h4{
 #video{
   z-index: -2;
   position: absolute;
-  left: 28%;
+  left: 14%;
 }
 
 #clmcanvas{
   position: absolute;
   z-index: 1;
-  left: 28%;
+  left: 14%;
 }
 
 #maskstandard{
@@ -41,10 +41,10 @@ h4{
   text-align: center;
   z-index: 10;
   position: absolute;
-  top: 10px;
-  left: 39%;
-  height: 350px;
-  width: 290px;
+  top: 70px;
+  left: 30%;
+  height: 540px;
+  width: 470px;
 }
 
 .output {
@@ -60,7 +60,6 @@ h4{
 	width: 500px;
 }
 
-
 #outputcanvas {
   display:block;
   margin: 0 auto;
@@ -72,3 +71,13 @@ h4{
   z-index: 20;
   display:block;
 }
+
+
+.readytosend{
+  position: relative;
+  margin: 0 auto;
+  display: inline-block;
+}
+
+
+
