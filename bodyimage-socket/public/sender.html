@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+	<head>
+		<title> Sender For Touch Screen -- BODY IMAGE </title>
+		<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+		<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+		<!--script type="text/javascript" src="js/p5.js"></script-->
+		<style type="text/css">
+			canvas, img {
+			    image-rendering: optimizeQuality;
+			    image-rendering: -moz-crisp-edges;
+			    image-rendering: -webkit-optimize-contrast;
+			    image-rendering: optimize-contrast;
+			    -ms-interpolation-mode: nearest-neighbor;
+			}
+
+			#maincanvas{
+				height: 100%;
+				width: 100%;
+				opacity:1;
+				position: absolute;
+				cursor: url(img/cursor.png), auto;
+			}
+
+			.footer{
+				position: absolute;
+				bottom: 2%;
+				left: 45%;
+				z-index: 11;
+				float: left;
+				font-ssize: 12px;
+				color: gray;
+			}
+			#btn30sec{
+				font-family: gill sans;
+				color: white;
+				height: 50px;
+				text-align: center;
+				text-indent: 0px;
+				position: fixed;
+				z-index: 10;
+				background:grey;
+				top:5%;
+				right:5%;
+				cursor: pointer;
+			}
+
+			#flowcursor{
+				background: url(img/cursor.png), center center no-repeat;
+				background-size: 100% 100%;
+				width: 50px;
+				height: 50px;
+				position: absolute;
+				z-index: 100;
+				opacity: 0;
+			}
+		</style>
+	</head>
+	
+	<body>
+		<canvas id="maincanvas"></canvas>
+		<!--
+		<div id="fake" style="height:100%;width:100%; top:20; left:20;position:fixed; z-index = -10; background:gray; opacity:0;" draggable = "true" >adsfasdf </div>
+		-->
+		<div class="footer">© Copyright 2015  Stream Gao</div>
+		<!--div id="btn30sec"><br style="font-size:2px;">
+			&nbsp See Effects On Big Screen &nbsp 
+		</br></div-->
+	</body>
+	
+	<script type="text/javascript" src="js/bi_sender.js"></script>
+</html>
+

@@ -19,6 +19,7 @@ var flowcursor;
 
 var img;
 var poster;
+var distancetoimage = 320;
 
 function initpixandwipe(){
 	totalwiped = 0;
@@ -55,7 +56,7 @@ function initvariables(){
  	index = 1;
  	totalwiped = 0;
  	alreadyondata = false;
-
+    distancetoimage = 320;
 
  	for(var i=0; i<7; i++){
 	    imgs[i] = new Image();
@@ -79,18 +80,21 @@ function initvariables(){
     console.log( "Size:"+pixmatrix.length+","+pixmatrix[0].length );
  }
 
+function initcursor () {
+    flowcursor = document.createElement('div');
+    flowcursor.setAttribute('id','flowcursor');
+    document.getElementsByTagName('body')[0].appendChild(flowcursor);
+}
 
 var init = function() {   //receiver
 	maincanvas = document.getElementById("maincanvas");
 	maincanvas.height= $(window).height();
    	maincanvas.width = $(window).width();
     ctx = maincanvas.getContext("2d");
-    flowcursor = document.createElement('div');
-    flowcursor.setAttribute('id','flowcursor');
-    document.getElementsByTagName('body')[0].appendChild(flowcursor);
-
+    
     initvariables();
     initposter();
+    initcursor();
     setupSocket();
 }; //init
 
@@ -118,7 +122,7 @@ var dragwipe = function(evtx, evty){
 
     	tmpCtx.save();
         tmpCtx.beginPath();
-        tmpCtx.arc(brushsize*ratioimgy/4, brushsize*ratioimgy/4, brushsize*ratioimgy/4, 0, Math.PI * 2);
+        tmpCtx.arc(brushsize*ratioimgy/4, brushsize*ratioimgy/4, brushsize*ratioimgy/4, 0, Math.PI*2);
         tmpCtx.closePath();
         tmpCtx.clip();
         
@@ -126,7 +130,6 @@ var dragwipe = function(evtx, evty){
         	(evtx-brushsize*ratioimgy/8)*ratioimgx, (evty-brushsize*ratioimgy/8)*ratioimgy, 
         	brushsize*ratioimgx, brushsize*ratioimgy,
     	 	0,0, brushsize, brushsize);
-
 
         tmpCtx.closePath();
         tmpCtx.restore();
@@ -143,6 +146,28 @@ var dragwipe = function(evtx, evty){
 }//dragwipe
 
 
+function dragflowcursor(dragdata0, dragdata1){
+
+    var newx = dragdata0+distancetoimage;
+    var newy =  dragdata1;
+    flowcursor.style.opacity = "0.9";
+    flowcursor.style.left=newx-brushsize/4+"px";
+    flowcursor.style.top=newy-brushsize/4+"px";
+    flowcursor.style.width=brushsize*0.8+"px";
+    flowcursor.style.height=brushsize*0.8+"px";
+
+    var currentpixel = ctx.getImageData(newx,newy,brushsize,brushsize);
+    if (  (currentpixel.data[0]+currentpixel.data[1]+currentpixel.data[2])>600 ){
+        console.log(flowcursor);
+        //flowcursor.style.background='url(img/cursorb.png), center center no-repeat !important';
+        $(flowcursor).css({'background':'url(img/cursorb.png),no-repeat center center', 'backgroundsize':'100% 100%'});
+    }else{
+        //flowcursor.style.background='url(img/cursor.png), center center no-repeat !important';
+        $(flowcursor).css({'background':'url(img/cursor.png),no-repeat center center', 'backgroundsize':'100% 100%'});
+    }
+    flowcursor.style.backgroundsize='100% 100%';
+}
+
 
 function setupSocket() {
 	socket = io().connect('http://localhost:3000/');
@@ -151,14 +176,11 @@ function setupSocket() {
 		alreadyondata = true;
 
 		socket.on('ondragsender',function(dragdata){ // when receive color submission
-            console.log("ondragsender"+dragdata);
-            console.log(dragdata[0]+320+"," +dragdata[1]);
+            //console.log("ondragsender"+dragdata);
+            //console.log(dragdata[0]+distancetoimage+"," +dragdata[1]);
 
-			dragwipe( (dragdata[0]+320), dragdata[1] );
-            var newx = dragdata[0]+320;
-            var newy =  dragdata[1] ;
-            flowcursor.style.left=newx-brushsize/4+"px";
-            flowcursor.style.top=newy-brushsize/4+"px";
+			dragwipe( (dragdata[0]+distancetoimage), dragdata[1] );
+            dragflowcursor(dragdata[0], dragdata[1]);
             //flowcursor.css({"left": newx+"px", "top":dragdata[1]+"px"});
 		});	//on dragsender
 

@@ -158,7 +158,7 @@ var init = function() {   //receiver
           dragwipe(e.pageX, e.pageY); 
         }else{//if not connecting to peers
         console.log("haven't connect to anyone!");
-      }
+        }
       }//if draging, else do nothing 
     });//mousemove
 
