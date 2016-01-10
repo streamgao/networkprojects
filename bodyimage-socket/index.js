@@ -7,6 +7,12 @@ var connected = false;
 
 
 app.use(express.static(__dirname + '/public'));
+//app.set('view engine', 'ejs');
+
+// app.get('/wintershow.html',function(req,res){
+//   console.log(req.ip);
+// });
+
 
 http.listen(3000, function(){
   console.log('listening on :3000');
@@ -27,9 +33,17 @@ var send = [];
 io.on('connect', function(socket){
   connected = true;
 
+  socket.on('requestip',function(){
+    console.log(socket.id);
+    var clientIp = socket.request.connection.remoteAddress;
+    console.log("ip:"+clientIp+","+io.sockets.connected[socket.id]['handshake']['address']);
+
+    io.sockets.connected[socket.id].emit('requestip',clientIp);
+    //io.engine.clients[socket.id].emit('requestip',clientIp);
+    //io.eio.clients[socket.id].emit('requestip',clientIp);
+  });
+
   socket.on('ondrag',function(msg){
-    console.log('ondrag:'+msg);
-    //io.sockets.emit('colors',msg);
     socket.broadcast.emit('ondrag',msg); 
   });//on colorchoice
  
@@ -47,7 +61,42 @@ io.on('connect', function(socket){
     console.log("ondrag");
   });//receiveprofile
 
+  socket.on('choosePerson',function(whichone){
+    //setTimeOut()
+    console.log(socket.id);
+    var clientIp = socket.request.connection.remoteAddress;
+    console.log("chooseperson ip:",clientIp);
 
+    setTimeout(function(){ 
+        //io.sockets.connected[socket.id];
+        if(io.engine === io.eio ){// => true
+          console.log( Object.keys(io.engine.clients)  );
+          //console.log( Object.keys(io.eio.clients)   );
+          for (var i = 0; i< Object.keys(io.engine.clients).length ; i++) {
+               console.log( io.sockets.connected[ Object.keys(io.engine.clients)[i] ]['handshake']['address']);
+               if ( clientIp == io.sockets.connected[ Object.keys(io.engine.clients)[i] ]['handshake']['address'] ) {
+                  console.log('whichone'+whichone);
+                  io.sockets.connected[ Object.keys(io.engine.clients)[i] ].emit('choosePerson',whichone);
+               }
+          }//for
+        }//if true
+
+    }, 500);
+    setTimeout(function(){ 
+        if(io.engine === io.eio ){// => true
+        //   console.log( Object.keys(io.engine.clients)  );
+        //   console.log( Object.keys(io.eio.clients)   );
+          for (var i = 0; i< Object.keys(io.engine.clients).length ; i++) {
+               console.log(io.sockets.connected[ Object.keys(io.engine.clients)[i] ]['handshake']['address']);
+               if ( clientIp == io.sockets.connected[ Object.keys(io.engine.clients)[i] ]['handshake']['address'] ) {
+                  console.log('whichone'+whichone);
+                  io.sockets.connected[ Object.keys(io.engine.clients)[i] ].emit('choosePerson',whichone);
+               }
+          }//for
+        }//if true
+    }, 1000);
+     
+  });//on chooseperson
 
 
 
@@ -78,7 +127,7 @@ io.on('connect', function(socket){
   });
 
 
-    // image message received...yeah some refactoring is required but have fun with it...
+/*    // image message received...yeah some refactoring is required but have fun with it...
     socket.on('user image', function (msg) {
         var base64Data = decodeBase64Image(msg.imageData);
         console.log(base64Data);
@@ -106,12 +155,18 @@ io.on('connect', function(socket){
         // I'm sending image back to client just to see and a way of confirmation. You can send whatever.
         socket.emit('user image', msg.imageData);
     });//on user image
-
+*/
     socket.on('disconnect', function () {
         connected = false;
     });
 
 });//connect
+
+
+function findtheperson(){
+
+}
+
 
 
 

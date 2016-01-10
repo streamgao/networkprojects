@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>This is Real</title>
+	<link rel="stylesheet" type="text/css" href="css/jquery.fullPage.css" />
+	<link rel="stylesheet" type="text/css" href="css/bootstrap-social.css" />
+	<link rel="stylesheet" type="text/css" href="css/examples.css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	<style>
+
+	/* Style for our header texts
+	* --------------------------------------- */
+	h1{
+		font-size: 5em;
+		font-family: arial,helvetica;
+		color: #fff;
+		margin:0;
+		padding:0;
+	}
+
+	p{
+		font-size: 14px;
+	}
+
+	/* Centered texts in each section
+	* --------------------------------------- */
+	.section{
+		text-align:center;
+		overflow: hidden;
+	}
+
+	#myVideo{
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		top:0;
+		right:0;
+		width: 100%;
+		height: 100%;
+		background-size: 100% 100%;
+ 		background-color: black; /* in case the video doesn't fit the whole page*/
+  		background-image: /* our video */;
+  		background-position: center center;
+  		background-size: contain;
+   		object-fit: cover; /*cover video background */
+   		z-index:3;
+	}
+
+	/* Layer with position absolute in order to have it over the video
+	* --------------------------------------- */
+	#section0 .layer{
+		position: absolute;
+		z-index: 4;
+		width: 100%;
+		left: 0;
+		top: 43%;
+	}
+
+	/*solves problem with overflowing video in Mac with Chrome */
+	#section0{
+		overflow: hidden;
+		background-image: url(imgs/tq2.jpg);
+		background-size: cover;
+	}
+	#section0 h2{
+		color:#953a4a;
+	}
+
+	#section2 h2{
+		color:#953a4a;
+	}
+
+	#section2 h1{
+		color:#444;
+	}
+
+	#section4 h1{
+		color:#444;
+	}
+
+	#section5 h1{
+		color:#444;
+	}
+	#section3{
+		background-image: url(imgs/tq2.jpg);
+		background-size: cover;
+	}
+
+	/* Bottom menu
+	* --------------------------------------- */
+	#infoMenu li a {
+		color: #fff;
+	}
+
+
+	.column-left{ float: left; width: 33%; text-align: left; padding: 12px;}
+	.column-right{ float: right; width: 33%; text-align: left;padding: 12px}
+	.column-center{ display: inline-block; width: 33%; text-align: left;padding: 12px}
+
+	#section5 h2{
+		text-align: center;
+	}
+
+	.indent{
+		text-indent: 38px;
+	}
+
+	img{
+		text-align: center;
+		margin: 0 auto;
+		display:block;
+	}
+	.social{
+		display: inline-block !important;
+	}
+
+	</style>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="js/jquery.fullPage.js"></script>
+	<script type="text/javascript" src="js/examples.js"></script>
+	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			setupSocket();
+			$('#fullpage').fullpage({
+				verticalCentered: true,
+				sectionsColor: ['#1bbc9b', '#000', '#fff', '#fff', '#fff'],
+				afterRender: function(){
+					//playing the video
+					// $('video').get(0).play();
+				}
+			});
+		});
+
+		function choosePerson(i){
+			if(connect==true){
+				console.log(i);
+				socket.emit('choosePerson',i);
+			}
+		}
+		var connect = false;
+
+		var clientIP = null;
+		
+		function setupSocket() {
+			socket = io().connect('http://localhost:3000/');
+			socket.on('connect',function(){		
+				connect=true;
+				console.log("connect");
+
+		   		console.log(this);
+		   		socket.emit('requestip',1);
+
+		   		socket.on('requestip',function(ipadd){
+		   			console.log("clientIP"+clientIP);
+		   			clientIP = ipadd;
+		   			
+		   		});
+			});//on connect
+		}//setupSocket()
+
+	</script>
+
+</head>
+<body>
+
+<div id="fullpage">
+	<div class="section " id="section0">
+		<!-- <video autoplay loop muted id="myVideo">
+			<source src="imgs/tq4.mp4" type="video/mp4">
+			
+		</video> -->
+		<div class="layer">
+			<h1>#This is Real</h1>
+			<h2>Time Square Live Show<br>2016/1/29 11am-3pm</h2>
+		</div>
+	</div>
+	<div class="section" id="section1">
+	    <div class="slide" id="slide1" style="padding:70px"><h1>Media created an unrealistic body standard to profit off our insecurities</h1></div>
+	    <div class="slide" id="slide2" style="padding:70px"><h1> Beauty is a set of qualities that pleases the aesthetic senses; purely subjective"</h1></div>
+	    <div class="slide" id="slide3" style="padding:70px"><h1> Model someone who inspires you, not someone you can replicate on photoshop</h1></div>
+	</div>
+	<div class="section" id="section2">
+			<h1>SELECT A MODEL</h1>
+			<h2>start erasing<h2>
+				<br><br>
+			
+		  <a class="social" href="wintershow.html">
+		  	<img width="250" hspace="20" src=imgs/barbie.jpg onclick="choosePerson(0)"></a>
+		  <a class="social" href="wintershow.html">
+		  	<img width="250" hspace="25" src=imgs/fake.jpg onclick="choosePerson(1)"></a>
+		 <!--  <a class="social"><img  width="250" hspace="20" src=imgs/barbie.jpg></a> -->
+	</div>
+	<!-- <div class="section" id="section3"><h1>Time Square Live Show<br>2016/1/29 11am-3pm</h1></div> -->
+	<!-- <div class="section" id="section4">
+
+		<div class="slide" id="slide1"><a class="social"><img height="100%" width="100%" src=imgs/barbie.jpg></a></div>
+	    <div class="slide" id="slide2" ><a class="social"><img height="100%" width="100%" src=imgs/barbie.jpg></a></div>
+	    <div class="slide" id="slide3" ><a class="social"><img height="100%" width="100%" src=imgs/barbie.jpg></a></div>
+	</div> -->
+	<div class="section" id="section5">
+		  	<div class="container">
+			   <div class="column-center">
+			   	<img height="200" width="200" src=imgs/template-01.png>			   	
+			   	<h2>Maya Moosh</h2>
+			   	<br>
+				 <p class = "indent">aka Moosh is a creative technologist and designer. She is a student at ITP (Interactive Telecommunications Program) at Tisch School of the Arts, New York University where she's furthering her proficiency in user experience & interaction design. In her spare time Moosh enjoys running, reading, yoga and travel. See what work is made by Moosh: <a href= http://mayamoosh.com>http://mayamoosh.com</a><p>
+			   </div>
+			   <div class="column-left">
+			   	<img height="200" width="200" src=imgs/luke-01.png>			   	
+			   	<h2>Luke Kao</h2>
+			   	<br>
+			   	<p class = "indent">Luke is a former social entrepreneur from Taiwan. Now a hacker at ITP at NYU's Tisch School of the Arts, he is dedicated to making social impact using design & technology and his past experience in business model design. Take a peak into his portfolio: <a href=https://medium.com/luke-kao>https://medium.com/luke-kao</a></p>
+			   </div>
+			   <div class="column-right">
+			   	<img height="200" width="200"  src=imgs/stream-01.png>			   
+			   <h2>Stream Gao</h2>
+			   <br>
+			  	<p class = "indent">Stream is an entrepreneur, creative coder and interaction designer who specializes in web and mobile application. She's currently pursuing her master’s degree at ITP at Tisch School of the Arts, New York University and her interests range with a special focus in dance. Check out Stream's work here: <a href= http://www.streamgao.com>http://www.streamgao.com</a><p>
+			   </div>
+			</div>
+	</div>
+</div>
+	
+</body>
+</html>

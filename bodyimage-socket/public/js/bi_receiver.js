@@ -160,12 +160,13 @@ function dragflowcursor(dragdata0, dragdata1){
     if (  (currentpixel.data[0]+currentpixel.data[1]+currentpixel.data[2])>600 ){
         console.log(flowcursor);
         //flowcursor.style.background='url(img/cursorb.png), center center no-repeat !important';
-        $(flowcursor).css({'background':'url(img/cursorb.png),no-repeat center center', 'backgroundsize':'100% 100%'});
+        $(flowcursor).css({'background':'url(img/cursorb.png),no-repeat center center', 'backgroundsize':'100% 100% !important', 'background-repeat':'no'});
     }else{
         //flowcursor.style.background='url(img/cursor.png), center center no-repeat !important';
-        $(flowcursor).css({'background':'url(img/cursor.png),no-repeat center center', 'backgroundsize':'100% 100%'});
+        $(flowcursor).css({'background':'url(img/cursor.png),no-repeat center center', 'backgroundsize':'100% 100% !important','background-repeat':'no'});
     }
-    flowcursor.style.backgroundsize='100% 100%';
+    flowcursor.style.backgroundSize='100% 100%';
+    flowcursor.style.backgroundRepeat='no-repeat';
 }
 
 
