@@ -17,12 +17,12 @@ var alreadyondata = false;
 var ratioscreenx=1;
 var ratioscreeny=1;
 var flowcursor;
-// var tsscreenwidth=580;
-// var tsscreenheight=615;
 
 var img;
 var pathimg;
 
+
+/*-------------------inits-------------------*/
 function initpixandwipe(){
 	totalwiped = 0;
 	for(var i=0;i<dividenum; i++){
@@ -31,11 +31,16 @@ function initpixandwipe(){
     		pixmatrix[i][j] = -1;
     	}
     }
-    console.log("initpixandwipe");
+    console.log( pixmatrix );
 }
 
 
 function initvariables(){
+	maincanvas = document.getElementById("maincanvas");
+   	maincanvas.width = $(window).width();
+	maincanvas.height= $(window).height();
+    ctx = maincanvas.getContext("2d");
+
  	index = 1;
  	totalwiped = 0;
  	alreadyondata = false;
@@ -45,8 +50,6 @@ function initvariables(){
     wipex = 0; wipey = 0;
 	ratiox = maincanvas.width / $('#maincanvas').width();
 	ratioy = maincanvas.height / $('#maincanvas').height();
-	//ratioscreenx = tsscreenwidth/maincanvas.width;
-	//ratioscreeny = tsscreenheight/maincanvas.height;
  }
 
 
@@ -58,34 +61,8 @@ function initcursor () {
     flowcursor.style.height=brushsize*0.8+"px";
     document.getElementsByTagName('body')[0].appendChild(flowcursor);
 }
-/*
-function initimages(){
-	socket.on('choosePerson',function(j){
-			pathimg = j*3;
-			console.log(pathimg);
-    });//chooseperson
-
-
-    console.log(pathimg);
-	for(var i=0; i<3; i++){
-	    imgs[i] = new Image();
-	    var path = i+7;
-	    path = path+pathimg;
-		imgs[i].src='touchscreenimg/'+path+'.jpg';
-		console.log(imgs[i]);
-	}
-	console.log(imgs[0]);
-    imgs[0].width = maincanvas.width || $(window).width();
-    imgs[0].height = maincanvas.height || $(window).height();
-    imgs[0],onload = function(){
-        ctx.drawImage(imgs[0],0, 0, imgs[0].naturalWidth, imgs[0].naturalHeight,
-                   0,0,maincanvas.width, maincanvas.height);
-    };
-}//initimages*/
 
 function initimage(pathi){
-
-    console.log(pathimg);
 	for(var i=0; i<3; i++){
 	    imgs[i] = new Image();
 	    var path = i+7;
@@ -101,86 +78,55 @@ function initimage(pathi){
     };
 }//initimages
 
-var init = function() {   //receiver
+function init() {   //receiver
     setupSocket();
 
-	maincanvas = document.getElementById("maincanvas");
-   	maincanvas.width = $(window).width();
-	maincanvas.height= $(window).height();
-    ctx = maincanvas.getContext("2d");
-
     initvariables();
-   // initimages();
+    initmodels();
     initcursor();
     initpixandwipe();//init pix matrix
-//    initposter();
 
-   	maincanvas.addEventListener('mousedown', function(){mousedown =true;});
+	/*-------------------touch events-------------------*/  
+	maincanvas.addEventListener('mousedown', function(){mousedown =true;});
   	maincanvas.addEventListener('mouseup', function(){mousedown =false;});
-    maincanvas.addEventListener('mousemove', function(e){
-  		e.preventDefault(); 
-    	if (mousedown) { 
-    		if( alreadyondata ){
-    			var data = [e.clientX*ratioscreenx, e.clientY*ratioscreeny];
-    			socket.emit('ondragsender',data);
-    			dragwipe(e.clientX, e.clientY); 
+    maincanvas.addEventListener('mousemove', function(e){ e.preventDefault(); 
+  		mousedown = true; eventmove(e.clientX, e.clientY, mousedown); });//mousemove
 
-    			dragcursor(e.clientX, e.clientY);
-    		}else{//if not connecting to peers
-				console.log("haven't connect to anyone!");
-			}
-    	}//if draging, else do nothing 
-    });//mousemove
 
-    /*for mobile*/
     maincanvas.addEventListener('touchstart', function(){e.preventDefault(); touchdown =true; });
   	maincanvas.addEventListener('touchend', function(){e.preventDefault();touchdown =false;});
-  	maincanvas.addEventListener('touchmove', function(e){
-  		touchdown = true;
-  		e.preventDefault(); 
-    	if (touchdown) { 
-    		if( alreadyondata ){
-    			var data = [e.pageX*ratioscreenx, e.pageY*ratioscreeny];
-    			socket.emit('ondragsender',data);
-    			dragwipe(e.pageX, e.pageY); 
-
-    			dragflowcursor(e.pageX, e.pageY);
-    		}else{//if not connecting to peers
-				console.log("haven't connect to anyone!");
-			}
-    	}//if draging, else do nothing 
-    });//touchmove
-
+  	maincanvas.addEventListener('touchmove', function(e){ e.preventDefault(); 
+  		touchdown = true; eventmove(e.pageX, e.pageY, touchdown); });//touchmove
 
   	flowcursor.addEventListener('touchstart', function(){e.preventDefault(); touchdown =true;});
   	flowcursor.addEventListener('touchend', function(){e.preventDefault();touchdown =false;});
-    flowcursor.addEventListener('touchmove', function(e){
-  		touchdown = true;
-  		e.preventDefault(); 
-    	if (touchdown) { 
-    		if( alreadyondata ){
-    			var data = [e.pageX*ratioscreenx, e.pageY*ratioscreeny];
-    			socket.emit('ondragsender',data);
-    			dragwipe(e.pageX, e.pageY); 
-
-    			dragflowcursor(e.pageX, e.pageY);
-    		}else{//if not connecting to peers
-				console.log("haven't connect to anyone!");
-			}
-    	}//if draging, else do nothing 
-
-    });//mousemove
+    flowcursor.addEventListener('touchmove', function(e){e.preventDefault(); 
+	  	touchdown = true; eventmove(e.pageX, e.pageY, touchdown); });//mousemove
 }; //init
+
 
 $('document').ready(  init  );
 
 
-var dragwipe = function(evtx, evty){
+function eventmove(x,y,down){
+	if (down) { 
+		if( alreadyondata ){
+			var data = [x*ratioscreenx, y*ratioscreeny];
+			socket.emit('ondragsender',data);
+			dragwipe(x, y); 
+			dragflowcursor(x, y);
+		}else{//if not connecting to peers
+			console.log("haven't connect to anyone!");
+		}
+	}//if draging, else do nothing
+}
 
+
+var dragwipe = function(evtx, evty){
 		wipex = Math.floor( evtx / brushsize );
 		wipey = Math.floor( evty / brushsize );
 
-		if ( totalwiped < 0.6 * pixmatrix.length * pixmatrix[0].length ) {  //current image
+		if ( totalwiped < 0.7 * pixmatrix.length * pixmatrix[0].length ) {  //current image
 			if ( pixmatrix[wipex][wipey]==-1 ) { // if haven't draw this pixel
 				totalwiped++;
 				totalwiped = totalwiped% (pixmatrix.length * pixmatrix[0].length);
@@ -210,9 +156,6 @@ var dragwipe = function(evtx, evty){
 			
 			ctx.drawImage( tmpcanvas, 0,0, brushsize, brushsize,
 	 	   			evtx-brushsize*ratioimgx/8, evty-brushsize*ratioimgy/8, brushsize, brushsize);
-			// ctx.drawImage( tmpcanvas, 0,0,brushsize, brushsize);
-			// ctx.drawImage(tmpcanvas, 0, 0,100, 100, evtx, evty,100, 100);
-
 		}else{ //switch
 			console.log("index++: "+index);
 			index++;
@@ -222,54 +165,15 @@ var dragwipe = function(evtx, evty){
 				socket.emit('nextlayer',index);
 			}
 			if(index == 0){
-
 	            console.log("last one");
-	            setTimeout(function(){ 
-	                ctx.drawImage(imgs[0],0, 0, imgs[0].naturalWidth, imgs[0].naturalHeight,
-	                    0,0,maincanvas.width, maincanvas.height);
-	            }, 1000);
-	            setTimeout(function(){ 
-	                ctx.drawImage(imgs[2],0, 0, imgs[0].naturalWidth, imgs[0].naturalHeight,
-	                    0,0,maincanvas.width, maincanvas.height);
-	            }, 2000);
-	            setTimeout(function(){ 
-	                ctx.drawImage(imgs[0],0, 0, imgs[0].naturalWidth, imgs[0].naturalHeight,
-	                    0,0,maincanvas.width, maincanvas.height);
-	            }, 3000);
-	            setTimeout(function(){ 
-	                ctx.drawImage(imgs[2],0, 0, imgs[0].naturalWidth, imgs[0].naturalHeight,
-	                    0,0,maincanvas.width, maincanvas.height);
-	            }, 4000);
-	            setTimeout(function(){ 
-	                ctx.drawImage(imgs[0],0, 0, imgs[0].naturalWidth, imgs[0].naturalHeight,
-	                    0,0,maincanvas.width, maincanvas.height);
-	            }, 5000);
-	            setTimeout(function(){ 
-	                ctx.drawImage(imgs[2],0, 0, imgs[0].naturalWidth, imgs[0].naturalHeight,
-	                    0,0,maincanvas.width, maincanvas.height);
-	            }, 6000);
-	            setTimeout(function(){ 
-	                window.location.href ='../';
-	            }, 7000);
-	        
-			}
-
+	            finishcompare();
+	        }
 		}//else change to next image
+
+		progressbars();
 }//dragwipe
 
 
-
-var dragcursor = function(evts, evty){
-	var currentpixel = ctx.getImageData(evts,evty,brushsize,brushsize);
-	if (  (currentpixel.data[0]+currentpixel.data[1]+currentpixel.data[2])>600 ){
-		// flowcursor.style.background='url(img/cursorb.png), center center no-repeat';
-		// console.log(flowcursor.style.background);
-		maincanvas.style.cursor='url(img/cursorb.png),auto';
-	}else{
-		//flowcursor.style.background='url(img/cursor.png), center center no-repeat';
-		maincanvas.style.cursor='url(img/cursor.png),auto';
-	}
-}
 
 function dragflowcursor(dragdata0, dragdata1){
     var newx = dragdata0;
@@ -277,13 +181,11 @@ function dragflowcursor(dragdata0, dragdata1){
     flowcursor.style.opacity = "0.9";
     flowcursor.style.left=newx-brushsize/4+"px";
     flowcursor.style.top=newy-brushsize/4+"px";
-
     flowcursor.style.width=brushsize*0.8+"px";
     flowcursor.style.height=brushsize*0.8+"px";
 
     var currentpixel = ctx.getImageData(newx,newy,brushsize,brushsize);
     if (  (currentpixel.data[0]+currentpixel.data[1]+currentpixel.data[2])>600 ){
-        console.log(flowcursor);
         //flowcursor.style.background='url(img/cursorb.png), center center no-repeat !important';
         $(flowcursor).css({'background':'url(img/cursorb.png),no-repeat center center', 'backgroundsize':'100% 100% !important', 'background-repeat':'no'});
     }else{
@@ -293,6 +195,9 @@ function dragflowcursor(dragdata0, dragdata1){
     flowcursor.style.backgroundSize='100% 100%';
     flowcursor.style.backgroundRepeat='no-repeat';
 }
+
+
+
 
 var clientIP =null;
 
@@ -304,8 +209,8 @@ function setupSocket() {
 
    		console.log("session id:"+this.id);
    		console.log(this);
-   		//console.log(socket);
 
+		//if 2 devices connect to the same wifi, ip would be useless to distinguish them
    		socket.emit('requestip',1);
    		socket.on('requestip',function(ipadd){
    			clientIP = ipadd;

@@ -1,0 +1,212 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="description" content="Time Square interactive screen live show project. This is Real">
+		<meta name="keywords" content="HTML,CSS,XML,JavaScript,bodyimage,timesquare, ITP">
+		<meta name="author" content="Stream Gao">
+		<title> Touch Screen -- BODY IMAGE </title>
+
+		<link href='https://fonts.googleapis.com/css?family=Oswald|Righteous|Patua+One|Bevan|Puritan:700' rel='stylesheet' type='text/css'>
+
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	  	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+		<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+		<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+		<style type="text/css">
+			body{
+				overflow: hidden;
+			}
+			canvas, img {
+				overflow: hidden;
+			    image-rendering: optimizeQuality;
+			    image-rendering: -moz-crisp-edges;
+			    image-rendering: -webkit-optimize-contrast;
+			    image-rendering: optimize-contrast;
+			    -ms-interpolation-mode: nearest-neighbor;
+			}
+
+			#maincanvas, #home{
+				height: 100%;
+				width: 100%;
+				left:0;
+				top: 0;
+				position: absolute;
+				opacity:1;
+			}
+			#maincanvas{
+				z-index: 0;
+			}
+
+			#home{
+				height: auto;
+				display: block !important;
+				z-index: 1;
+				text-align: center;
+				background: #ddd;
+				overflow-y: scroll;
+			}
+
+			.model{
+				display: inline-block;
+				position: relative;
+				height: 400px;
+				width: 320px;
+				border: 5px;
+				background: grey;
+			}
+			.model div{
+				border:1px solid #F0F0E8;
+				background-color:#FFF;
+				padding:6px;
+				display:block;
+			}
+
+			.model div:hover{
+				border:1px solid #000;background-color:#333;text-decoration: none;
+			}
+			.model span{
+				display:none; text-align:center; font-size:12px;
+			}
+			.model:hover span{
+				color:#FFF;display:block;
+				background-color:#333;
+				width:114px;
+				position:absolute;top:94px;left:0px;
+				line-height:20px;
+			}
+
+			.model:hover{
+				cursor: pointer;
+				opacity: 0.7;
+				filter: blur(20px) grayscale(20%);
+			}
+
+			img{
+				height: 100%;
+				width: 100%;
+			}
+			
+
+			.footer{
+				position: fixed;
+				bottom: 2%;
+				left: 45%;
+				z-index: 11;
+				float: left;
+				font-ssize: 12px;
+				color: gray;
+			}
+
+			#flowcursor{
+				background: url(img/cursor.png), center center no-repeat;
+				background-size: 100% 100%;
+				width: 50px;
+				height: 50px;
+				position: absolute;
+				z-index: 100;
+				opacity: 0;
+			}
+
+			#instruction{
+				width: 24em;
+				height: 22em;
+				margin: -12em -11em;
+				left: -500%;
+				top: 50%; 
+				text-align: center;
+				z-index: 2 !important;
+				opacity: 0.8;
+				position: fixed;
+			}
+
+			#menu{
+				position: fixed;
+				top: -1000px;
+				left: 0;
+				width: 100%;
+				height: 7.5em;
+				z-index: 3;
+				background: red;
+				opacity: 0.7;
+			}
+
+			#backhome{
+				line-height: normal;
+				cursor: pointer;
+				color: white;
+				text-align: center;
+			}
+
+			#backhome span{
+				font: 1.1em 'Oswald', sans-serif;
+				line-height: normal;
+			}
+
+			.progressthumb{
+				height: 7em;
+				width: 4.8em;
+				display: inline-block;
+				position: relative;
+				margin: auto;
+				padding: 0.5em;
+				background: grey;
+				vertical-align: middle;
+			}
+
+			.bars{
+				width: 24em;
+				display: inline-block;
+				position: relative;
+				margin: auto;
+			}
+		</style>
+	</head>
+	
+	<body>
+		<div id="home">
+			<div class="model"> <div><img id="0" src="img/thumbnail/0.jpg"/><span>Select and Retouch</span></div></div>
+			<div class="model"><div> <img id="1" src="img/thumbnail/1.jpg"/><span>iza</span> </div></div>
+			<div class="model"><div> <img id="2" src="img/thumbnail/1.jpg"/><span>iza</span> </div></div>
+			<div class="model"><div> <img id="3" src="img/thumbnail/1.jpg"/><span>iza</span> </div></div>
+			<div class="model"><div> <img id="4" src="img/thumbnail/1.jpg"/><span>iza</span> </div></div>
+			<div class="model"><div> <img id="5" src="img/thumbnail/1.jpg"/><span>iza</span> </div></div>
+		</div>
+
+		<div id="menu" >
+
+			<div id="backhome" class="progressthumb"> 
+				<b style="font:1.8em Bevan;"><</b><br>
+				<span>SELECT MODEL</span> 
+			</div>
+			<div style="display:inline-block;position:relative">
+				<img class="progressthumb" id="progressthumb0"></img>
+
+				<div class="progress bars">
+				    <div id="bar0" class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0">
+				    </div>
+				</div>
+
+				<img class="progressthumb" id="progressthumb1"></img>
+
+				<div class="progress bars">
+				    <div id="bar1" class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0">
+				    </div>
+				</div>
+
+				<img class="progressthumb" id="progressthumb2"></img>
+			</div>
+		</div>
+		
+		<img src="img/instruct.png" id="instruction" width="500" height="500"></img>
+
+		<canvas id="maincanvas"></canvas>
+
+		<div class="footer">© Copyright 2015  Stream Gao</div>
+	</body>
+	<script type="text/javascript" src="js/bi_ipad.js"></script>
+	<script type="text/javascript" src="js/bi_ui.js"></script>
+</html>
+

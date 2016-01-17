@@ -171,7 +171,6 @@ var dragwipe = function(evtx, evty){
 	 	   			evtx-brushsize*ratioimgx/8, evty-brushsize*ratioimgy/8, brushsize, brushsize);
 			// ctx.drawImage( tmpcanvas, 0,0,brushsize, brushsize);
 			// ctx.drawImage(tmpcanvas, 0, 0,100, 100, evtx, evty,100, 100);
-
 		}else{ //switch
 			console.log("index++: "+index);
 			index++;

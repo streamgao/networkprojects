@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="description" content="This is Real">
+		<meta name="keywords" content="bodyimage,timesquare,ITP">
+		<meta name="author" content="Stream Gao">
+
+		<title> Touch Screen -- BODY IMAGE </title>
+		<link href='https://fonts.googleapis.com/css?family=Oswald|Righteous|Patua+One|Bevan|Puritan:700' rel='stylesheet' type='text/css'>
+
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+		<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	  	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+		<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+		<style type="text/css">
+			body{
+				overflow: hidden;
+			}
+			canvas, img {
+				overflow: hidden;
+			    image-rendering: optimizeQuality;
+			    image-rendering: -moz-crisp-edges;
+			    image-rendering: -webkit-optimize-contrast;
+			    image-rendering: optimize-contrast;
+			    -ms-interpolation-mode: nearest-neighbor;
+			}
+
+			#maincanvas, #home{
+				height: 100%;
+				width: 100%;
+				opacity:1;
+				top:0;
+				left:0;
+				position: absolute;
+			}
+
+			#home{
+				height: auto;
+				display: block !important;
+				z-index: 1;
+				text-align: center;
+				background: #ddd;
+				overflow-y: scroll !important;
+			}
+
+			.model{
+				display: inline-block;
+				position: relative;
+				height: 400px;
+				width: 320px;
+				border: 5px;
+				background: grey;
+			}
+			.model div{
+				border:1px solid #F0F0E8;
+				background-color:#FFF;
+				padding:6px;
+				display:block;
+			}
+
+			.model div:hover{
+				border:1px solid #000;background-color:#333;text-decoration: none;
+			}
+			.model span{
+				display:none; text-align:center; font-size:12px;
+			}
+			.model :hover span{
+				color:#FFF;display:block;
+				background-color:#333;
+				width:114px;
+				position:absolute;top:94px;left:0px;
+				line-height:20px;
+			}
+
+			.model :hover{
+				cursor: pointer;
+				opacity: 0.7;
+				filter: blur(20px) grayscale(20%);
+			}
+
+			img{
+				height: 100%;
+				width: 100%;
+			}
+
+			.footer{
+				position: fixed;
+				bottom: 2%;
+				left: 45%;
+				z-index: 11;
+				float: left;
+				font-ssize: 12px;
+				color: gray;
+			}
+
+			#flowcursor{
+				background: url(img/cursor.png), center center no-repeat;
+				background-size: 100% 100%;
+				width: 50px;
+				height: 50px;
+				position: absolute;
+				z-index: 100;
+				opacity: 0;
+			}
+			#backhome{
+				top: -1000%;
+				left: 12%;
+				position: fixed;
+				z-index: 2 !important;
+				display: block;
+				opacity: 0.7;
+				cursor: pointer;
+				background: black;
+				color: white;
+				width: 7.8em;
+				height: 2.4em;
+				text-align: center;
+			}
+			#backhome span{
+				line-height: normal; 
+				font: 1.1em 'Oswald', sans-serif;
+				display: inline-block;
+			  	vertical-align: middle !important;
+			}
+
+			#instruction{
+				width: 20em;
+				height: 16em;
+				margin: -8em -10em -8em -10em;
+				left: -500%;
+				top: 50%; 
+				text-align: center;
+				z-index: 2 !important;
+				opacity: 0.8;
+				position: fixed;
+			}
+		</style>
+	</head>
+	
+	<body>
+		<div id="home">
+			<div class="model"> <div><img id="0" src="img/thumbnail/0.jpg"/><span>iza</span></div></div>
+			<div class="model"><div> <img id="1" src="img/thumbnail/1.jpg"/><span>iza</span> </div></div>
+			<div class="model"><div> <img id="2" src="img/thumbnail/1.jpg"/><span>iza</span> </div></div>
+			<div class="model"><div> <img id="3" src="img/thumbnail/1.jpg"/><span>iza</span> </div></div>
+			<div class="model"><div> <img id="4" src="img/thumbnail/1.jpg"/><span>iza</span> </div></div>
+			<div class="model"><div> <img id="5" src="img/thumbnail/1.jpg"/><span>iza</span> </div></div>
+		</div>
+
+
+		<div id="backhome"> <b style="font:1.5em Bevan; vertical-align:middle;"><</b> <span>SELECT MODEL</span> </div>
+		<img src="img/instruct.png" id="instruction" width="400" height="300"></img>
+
+		<canvas id="maincanvas">
+		</canvas>
+		<div class="footer">© Copyright 2015  Stream Gao</div>
+	</body>
+	<!--script type="text/javascript" src="js/lib/progress.js"></script-->
+	<script type="text/javascript" src="js/bi_ipad.js"></script>
+	<script type="text/javascript" src="js/bi_ui.js"></script>
+</html>
+

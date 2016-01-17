@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>进度条插件progress.js</title>
+    <script src="js/lib/progress.js"></script>
+    <style>
+        body{
+            background: url("bg.png");
+        }
+
+        .pro,.result {
+            width: 200px;
+            margin: 100px auto;
+
+        }
+        .result{
+            text-align: center;
+            text-shadow: 0 0 5px #333333;
+            color:#FFFFFF;
+        }
+    </style>
+    <script>
+
+        window.onload = function(){
+
+            var result = document.getElementsByClassName('result')[0];
+
+            var pro = new progress({
+                width : 200,//进度条宽度
+                height: 30,//进度条高度
+                bgColor : "#3E4E5E",//背景颜色
+                proColor : "#009988",//前景颜色
+                fontColor : "#FFFFFF",//显示字体颜色
+                val : 10,//默认值
+                text:"当前进度为#*val*#%",//显示文字信息
+                showPresent : true,
+                completeCallback:function(val){
+                    console.log('已完成');
+                    result.innerHTML = '已完成';
+                },
+                changeCallback:function(val){
+                    console.log('当前进度为'+val+'%');
+                    result.innerHTML = '当前进度为'+val+'%';
+                }
+            });
+
+            document.getElementsByClassName('pro')[0].appendChild(pro.getBody());
+
+            setTimeout(function(){
+                pro.update(50);
+                setTimeout(function(){
+                    pro.update(10);
+                    setTimeout(function(){
+                        pro.update(100);
+                        setTimeout(function(){
+                            pro.update(0);
+                        },3000);
+                    },3000);
+                },3000);
+            },3000);
+        };
+
+    </script>
+</head>
+<body>
+    <div class="pro"></div>
+    <div class="result"></div>
+</body>
+</html>

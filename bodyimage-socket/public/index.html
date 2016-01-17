@@ -5,9 +5,8 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>This is Real</title>
 	<link rel="stylesheet" type="text/css" href="css/jquery.fullPage.css" />
-	<link rel="stylesheet" type="text/css" href="css/bootstrap-social.css" />
-	<link rel="stylesheet" type="text/css" href="css/examples.css" />
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+	<!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous"-->
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 	<style>
 
@@ -30,6 +29,7 @@
 	.section{
 		text-align:center;
 		overflow: hidden;
+		line-height: normal;
 	}
 
 	#myVideo{
@@ -64,9 +64,10 @@
 		overflow: hidden;
 		background-image: url(imgs/tq2.jpg);
 		background-size: cover;
+		opacity: 0.9;
 	}
 	#section0 h2{
-		color:#953a4a;
+		color:#ffaaaa;
 	}
 
 	#section2 h2{
@@ -105,7 +106,7 @@
 	}
 
 	.indent{
-		text-indent: 38px;
+		text-indent: 0px;
 	}
 
 	img{
@@ -120,8 +121,8 @@
 	</style>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="js/jquery.fullPage.js"></script>
-	<script type="text/javascript" src="js/examples.js"></script>
+	<script type="text/javascript" src="js/lib/jquery.fullPage.js"></script>
+	<!--script type="text/javascript" src="js/examples.js"></script-->
 	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
 
 	<script type="text/javascript">
@@ -144,8 +145,6 @@
 			}
 		}
 		var connect = false;
-
-		var clientIP = null;
 		
 		function setupSocket() {
 			socket = io().connect('http://localhost:3000/');
@@ -177,7 +176,7 @@
 		</video> -->
 		<div class="layer">
 			<h1>#This is Real</h1>
-			<h2>Time Square Live Show<br>2016/1/29 11am-3pm</h2>
+			<h2>Time Square Interactive Screen Live Show<br>2016/1/29 11am-3pm</h2>
 		</div>
 	</div>
 	<div class="section" id="section1">
@@ -189,27 +188,20 @@
 			<h1>SELECT A MODEL</h1>
 			<h2>start erasing<h2>
 				<br><br>
-			
-		  <a class="social" href="wintershow.html">
-		  	<img width="250" hspace="20" src=imgs/barbie.jpg onclick="choosePerson(0)"></a>
-		  <a class="social" href="wintershow.html">
-		  	<img width="250" hspace="25" src=imgs/fake.jpg onclick="choosePerson(1)"></a>
-		 <!--  <a class="social"><img  width="250" hspace="20" src=imgs/barbie.jpg></a> -->
+				
+		  <a class="social" href="bi_ipad_indie.html">
+		  	<img width="250" hspace="20" src=imgs/barbie.jpg></a>
+		  <a class="social" href="bi_ipad_indie.html">
+		  	<img width="250" hspace="25" src=imgs/fake.jpg></a> 
 	</div>
-	<!-- <div class="section" id="section3"><h1>Time Square Live Show<br>2016/1/29 11am-3pm</h1></div> -->
-	<!-- <div class="section" id="section4">
 
-		<div class="slide" id="slide1"><a class="social"><img height="100%" width="100%" src=imgs/barbie.jpg></a></div>
-	    <div class="slide" id="slide2" ><a class="social"><img height="100%" width="100%" src=imgs/barbie.jpg></a></div>
-	    <div class="slide" id="slide3" ><a class="social"><img height="100%" width="100%" src=imgs/barbie.jpg></a></div>
-	</div> -->
 	<div class="section" id="section5">
 		  	<div class="container">
 			   <div class="column-center">
 			   	<img height="200" width="200" src=imgs/template-01.png>			   	
 			   	<h2>Maya Moosh</h2>
 			   	<br>
-				 <p class = "indent">aka Moosh is a creative technologist and designer. She is a student at ITP (Interactive Telecommunications Program) at Tisch School of the Arts, New York University where she's furthering her proficiency in user experience & interaction design. In her spare time Moosh enjoys running, reading, yoga and travel. See what work is made by Moosh: <a href= http://mayamoosh.com>http://mayamoosh.com</a><p>
+				 <p class = "indent">Maya Moosh is a creative technologist and designer. She is a student at ITP (Interactive Telecommunications Program) at Tisch School of the Arts, New York University where she's furthering her proficiency in user experience & interaction design. In her spare time Moosh enjoys running, reading, yoga and travel. See what work is made by Moosh: <a href= http://mayamoosh.com>http://mayamoosh.com</a><p>
 			   </div>
 			   <div class="column-left">
 			   	<img height="200" width="200" src=imgs/luke-01.png>			   	
