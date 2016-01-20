@@ -4,6 +4,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var fs = require('fs');
 var connected = false;
+var os = require('os');
 
 app.use(express.static(__dirname + '/public'));
 //app.set(express.static(__dirname + '/public'));

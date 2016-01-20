@@ -11,8 +11,6 @@
 
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-	  	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-
 		<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 		<script type="text/javascript" src="/socket.io/socket.io.js"></script>
 		<style type="text/css">
@@ -63,7 +61,6 @@
 				padding:6px;
 				display:block;
 			}
-
 			.model div:hover{
 				border:1px solid #000;background-color:#333;text-decoration: none;
 			}
@@ -77,7 +74,6 @@
 				position:absolute;top:94px;left:0px;
 				line-height:20px;
 			}
-
 			.model:hover{
 				cursor: pointer;
 				opacity: 0.7;
@@ -122,6 +118,32 @@
 				position: fixed;
 			}
 
+			#nextinstruct{
+				width: 12em;
+				height: 6em;
+				margin:-6em -3em;
+				left: -500%;
+				top: 50%; 
+				position: fixed;
+				background: grey;
+				opacity: 0;
+				color: white;
+				z-index: 3;
+				vertical-align: middle;
+			}
+
+			#nextinstruct span{
+				position: relative;
+				vertical-align: middle;
+			}
+
+			#nextinstruct span h2{
+				font: 2em 'Oswald', sans-serif;
+				text-align: center;
+				vertical-align: middle;
+				line-height: normal;
+			}
+
 			#menu{
 				position: fixed;
 				top: -1000px;
@@ -129,7 +151,7 @@
 				width: 100%;
 				height: 7.5em;
 				z-index: 3;
-				background: red;
+				background: black;
 				opacity: 0.7;
 			}
 
@@ -147,41 +169,42 @@
 
 			.progressthumb{
 				height: 7em;
-				width: 4.8em;
+				width: 5.2em;
 				display: inline-block;
 				position: relative;
 				margin: auto;
-				padding: 0.5em;
+				padding: 0.3em;
 				background: grey;
 				vertical-align: middle;
 			}
 
 			.bars{
-				width: 24em;
+				width: 23em;
 				display: inline-block;
 				position: relative;
 				margin: auto;
 			}
+
+
 		</style>
 	</head>
 	
 	<body>
 		<div id="home">
-			<div class="model"> <div><img id="0" src="img/thumbnail/0.jpg"/><span>Select and Retouch</span></div></div>
-			<div class="model"><div> <img id="1" src="img/thumbnail/1.jpg"/><span>iza</span> </div></div>
-			<div class="model"><div> <img id="2" src="img/thumbnail/1.jpg"/><span>iza</span> </div></div>
-			<div class="model"><div> <img id="3" src="img/thumbnail/1.jpg"/><span>iza</span> </div></div>
-			<div class="model"><div> <img id="4" src="img/thumbnail/1.jpg"/><span>iza</span> </div></div>
-			<div class="model"><div> <img id="5" src="img/thumbnail/1.jpg"/><span>iza</span> </div></div>
+			<div class="model"> <div><img id="0" src="img/homeindex/0.jpg"/><span>Select and Retouch</span></div></div>
+			<div class="model"><div> <img id="1" src="img/homeindex/0.jpg"/><span>iza</span> </div></div>
+			<div class="model"><div> <img id="2" src="img/homeindex/1.jpg"/><span>iza</span> </div></div>
+			<div class="model"><div> <img id="3" src="img/homeindex/1.jpg"/><span>iza</span> </div></div>
+			<div class="model"><div> <img id="4" src="img/homeindex/1.jpg"/><span>iza</span> </div></div>
+			<div class="model"><div> <img id="5" src="img/homeindex/1.jpg"/><span>iza</span> </div></div>
 		</div>
 
 		<div id="menu" >
-
 			<div id="backhome" class="progressthumb"> 
 				<b style="font:1.8em Bevan;"><</b><br>
 				<span>SELECT MODEL</span> 
 			</div>
-			<div style="display:inline-block;position:relative">
+			<div style="display:inline-block; position:relative">
 				<img class="progressthumb" id="progressthumb0"></img>
 
 				<div class="progress bars">
@@ -199,9 +222,10 @@
 				<img class="progressthumb" id="progressthumb2"></img>
 			</div>
 		</div>
-		
-		<img src="img/instruct.png" id="instruction" width="500" height="500"></img>
+		<div id="compare"> Compare </div>
 
+		<img src="img/instruct.png" id="instruction" width="500" height="500"></img>
+		<div id="nextinstruct"> <span> <h2> Next Layer </h2>   </span></div>
 		<canvas id="maincanvas"></canvas>
 
 		<div class="footer">© Copyright 2015  Stream Gao</div>

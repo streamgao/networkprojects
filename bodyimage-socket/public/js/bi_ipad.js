@@ -65,8 +65,7 @@ function initcursor () {
 function initimage(pathi){
 	for(var i=0; i<3; i++){
 	    imgs[i] = new Image();
-	    var path = i+7;
-	    path = path+pathi;
+	    var path = pathi + i;
 		imgs[i].src='touchscreenimg/'+path+'.jpg';
 	}
 	console.log(imgs[0]);
@@ -87,29 +86,32 @@ function init() {   //receiver
     initpixandwipe();//init pix matrix
 
 	/*-------------------touch events-------------------*/  
-	maincanvas.addEventListener('mousedown', function(){mousedown =true;});
-  	maincanvas.addEventListener('mouseup', function(){mousedown =false;});
+	maincanvas.addEventListener('mousedown', function(){ mousedown =true;} );
+  	maincanvas.addEventListener('mouseup', function(){ mousedown =false;} );
     maincanvas.addEventListener('mousemove', function(e){ e.preventDefault(); 
   		mousedown = true; eventmove(e.clientX, e.clientY, mousedown); });//mousemove
 
 
-    maincanvas.addEventListener('touchstart', function(){e.preventDefault(); touchdown =true; });
-  	maincanvas.addEventListener('touchend', function(){e.preventDefault();touchdown =false;});
+    maincanvas.addEventListener('touchstart', function(e){e.preventDefault(); touchdown =true; });
+  	maincanvas.addEventListener('touchend', function(e){e.preventDefault(); touchdown =false;});
   	maincanvas.addEventListener('touchmove', function(e){ e.preventDefault(); 
   		touchdown = true; eventmove(e.pageX, e.pageY, touchdown); });//touchmove
 
-  	flowcursor.addEventListener('touchstart', function(){e.preventDefault(); touchdown =true;});
-  	flowcursor.addEventListener('touchend', function(){e.preventDefault();touchdown =false;});
-    flowcursor.addEventListener('touchmove', function(e){e.preventDefault(); 
-	  	touchdown = true; eventmove(e.pageX, e.pageY, touchdown); });//mousemove
+  	flowcursor.addEventListener('touchstart', function(e){	e.preventDefault(); touchdown =true;});
+  	flowcursor.addEventListener('touchend', function(e){	e.preventDefault();touchdown =false;});
+    flowcursor.addEventListener('touchmove', function(e){	e.preventDefault(); 
+	  	//touchdown = true; 
+	  	eventmove(e.pageX, e.pageY, touchdown); });//mousemove
 }; //init
 
 
 $('document').ready(  init  );
 
 
-function eventmove(x,y,down){
-	if (down) { 
+function eventmove(xx,yy,down){
+	var x = xx;
+	var y = yy;
+	if (down==true) { 
 		if( alreadyondata ){
 			var data = [x*ratioscreenx, y*ratioscreeny];
 			socket.emit('ondragsender',data);
@@ -129,8 +131,9 @@ var dragwipe = function(evtx, evty){
 		if ( totalwiped < 0.7 * pixmatrix.length * pixmatrix[0].length ) {  //current image
 			if ( pixmatrix[wipex][wipey]==-1 ) { // if haven't draw this pixel
 				totalwiped++;
-				totalwiped = totalwiped% (pixmatrix.length * pixmatrix[0].length);
+				//totalwiped = totalwiped% (pixmatrix.length * pixmatrix[0].length);
 				pixmatrix[wipex][wipey] = 1;
+				progressbars();
 			}
 
 			ctx.globalAlpha = 1;
@@ -158,9 +161,11 @@ var dragwipe = function(evtx, evty){
 	 	   			evtx-brushsize*ratioimgx/8, evty-brushsize*ratioimgy/8, brushsize, brushsize);
 		}else{ //switch
 			console.log("index++: "+index);
+			nextbar();
 			index++;
 			index = index % imgs.length;
 			initpixandwipe();
+
 			if (alreadyondata==true) {
 				socket.emit('nextlayer',index);
 			}
@@ -170,7 +175,6 @@ var dragwipe = function(evtx, evty){
 	        }
 		}//else change to next image
 
-		progressbars();
 }//dragwipe
 
 
