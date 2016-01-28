@@ -1,0 +1,376 @@
+			body{
+				background: red;
+				overflow: hidden !important;
+				-webkit-user-select: none;
+				-khtml-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				-o-user-select: none;
+				user-select: none;
+				-webkit-touch-callout: none;
+			}
+			a { -webkit-user-select: none !important; }
+			canvas, img {
+				overflow: hidden;
+			    image-rendering: optimizeQuality;
+			    image-rendering: -moz-crisp-edges;
+			    image-rendering: -webkit-optimize-contrast;
+			    image-rendering: optimize-contrast;
+			    -ms-interpolation-mode: nearest-neighbor;
+			}
+			.container #maincanvas #menu{
+				overflow: hidden !important;
+			}
+			#maincanvas, #home{
+				height: 1080px;
+				width: 868px;
+				left:0px;
+				top: 0;
+				opacity:1;
+				position: absolute;
+
+			}
+			#maincanvas{
+				z-index: 0;
+			}
+
+			#maincontainer{
+				width: 868px;
+				height: 1080px;
+				left: 530px;
+				position: absolute;
+				background: white;
+			}
+
+/* -----------------------Home, Model Selection---------------------------------*/
+
+			#home{
+				height: auto;
+				display: inline-block !important;
+				z-index: 1;
+				text-align: center;
+				overflow-y: scroll;
+			}
+			#home h3{
+				font:2.4em 'Pontano Sans',sans-serif; 
+				font-weight: 200; 
+				font-stretch: ultra-condensed;
+			}
+			#home h4{
+				font:1.5em bold 'Raleway',sans-serif;
+				font-weight: bold;
+			}
+			.model{
+				display: inline-block;
+				position: relative;
+				background: #FFF;
+
+				-webkit-transition: all 0.75s;
+			    -moz-transition: all 0.75s;
+			    -o-transition: all 0.75s;
+			    transition: all 0.75s;
+			}
+			.model img{
+				-webkit-transition: all 0.75s;
+			    -moz-transition: all 0.75s;
+			    -o-transition: all 0.75s;
+			    transition: all 0.75s;
+			}
+			.model div{
+				background-color:#FFF;
+				display:block;
+				padding: 6px;
+				box-shadow: 1px 1px 3px 3px #bbbbbb;
+			}
+			.model div:hover{
+				background-color:#333;
+				text-decoration: none;
+				vertical-align: middle !important; 
+			}
+			.model span{
+				display:none; text-align:center; font-size:12px;
+			}
+			.model:hover span{
+				position:absolute;  left:6px;
+				color:#FFF;		display:block;
+				background-color:#333;
+				line-height:20px;
+			}
+			/*
+			.model:hover{
+				cursor: pointer;
+				opacity: 0.7;
+
+				filter: blur(5px) grayscale(50%);
+				-moz-filter:blur(5px) grayscale(20%);
+				-webkit-filter:blur(5px) grayscale(20%);
+				-o-filter:blur(5px) grayscale(20%);
+				-ms-filter:blur(5px) grayscale(20%);
+			}*/
+			.paddingorange{
+				border:solid orange;
+				background: orange;
+			}
+			.modeljumping{
+				background: orange;
+				opacity: 0.7;
+
+				filter: blur(5px) grayscale(50%);
+				-moz-filter:blur(5px) grayscale(20%);
+				-webkit-filter:blur(5px) grayscale(20%);
+				-o-filter:blur(5px) grayscale(20%);
+				-ms-filter:blur(5px) grayscale(20%);
+			}
+			.spanmodel{
+				position:absolute; 
+				width: inherit;
+				height: inherit;
+				top: 50%; left: 37%;
+				display: block !important;
+				text-align:center !important;
+				font-size:9em !important; 
+				line-height:0;	
+				z-index: 10;
+				background-color:rgba(200,200,50,0.7);
+				color:rgba(253,173,0,0);	
+			}
+			.modeljumpingspan{
+				color:rgba(250,200,0,1);
+			}
+
+			.progress-bar-custom {background: rgba(173, 173, 173, 1);}
+
+			img{
+				height: 100%;
+				width: 100%;
+			}
+			
+/* -----------------------main canvas---------------------------------*/
+			.footer{
+				position: fixed;
+				margin: 0 auto;
+				text-align: center;
+				bottom: 2%;
+				left: 38%;
+				z-index: 11;
+				font-size: 12px;
+				color: gray;
+			}
+
+			#flowcursor{
+				background: url(../img/cursor.png), center center no-repeat;
+				background-size: 100% 100%;
+				position: absolute;
+				z-index: 100;
+				opacity: 0;
+			}
+
+			#instruction, #instruction1{
+				left: -500%;
+				text-align: center;
+				position: fixed;
+			}
+			#instruction{
+				top: 50%; 
+			}
+			#instruction1{
+				top: 20%; 
+			}
+
+			#nextinstruct{
+				width: 12em;
+				height: 6em;
+				margin:-6em -3em;
+				left: -500%;
+				top: 50%; 
+				position: fixed;
+				background: grey;
+				opacity: 0;
+				z-index: 3;
+				vertical-align: middle;
+			}
+
+			#nextinstruct span, #compare span{
+				position: relative;
+				vertical-align: middle;
+				color: white;
+			}
+
+			#nextinstruct span h2, #compare span{
+				font: 1.8em 'Oswald', sans-serif;
+				text-align: center;
+				vertical-align: middle;
+				line-height: normal;
+			}
+
+/* -----------------------MENU---------------------------------*/
+			#menu{
+				position: fixed;
+				top: -1000px;
+				left: 530px;
+				width: 868px;
+				z-index: 3;
+				background-color:rgba(0, 0, 0, 0.5);
+			}
+
+			#backhome{
+				line-height: normal;
+				cursor: pointer;
+				color: white;
+				text-align: center;
+			}
+
+
+			.progressthumb{
+				opacity: 0.9;
+				display: inline-block;
+				position: relative;
+				margin: auto;
+				background: grey;
+				vertical-align: middle;
+			}
+
+			.bars{
+				display: inline-block;
+				position: relative;
+				margin: auto;
+				opacity: 1;
+			}
+
+			.bars span{
+				float: right;
+				position: absolute;
+				right: 30% !important;
+				font: 2em 'Righteous', sans-serif;
+				line-height: 0.5em;
+				color: orange;
+			}
+
+			#compare{
+				position: relative;
+				width: 8em;
+				height: 4em;
+				margin: auto;
+				float: right;
+				background: black;
+				opacity: 0;
+			}
+
+
+/* -----------------------different screen---------------------------------*/		
+@media only screen and (min-width: 240px) {
+	.progressthumb{
+		width: 3.2em;
+		height: 4.2em;
+		padding: 0.15em;
+	}
+	.bars{
+		width:15em;
+	}
+	#menu{
+		height:4.2em;
+	}
+	.model{
+		height: 12em;
+		width: 7em;
+		border: 0.2em;
+		padding: 0.1em;
+	}
+	.model:hover span{
+		width: 6em;
+		top:5em;
+	}
+	#backhome b{
+		font:1.8em Bevan; line-height:1.2em;
+	}
+	#backhome span{
+		font: 1.1em 'Oswald', sans-serif;
+		line-height: normal;
+	}
+	#instruction, #instruction1{
+		width: 16em;
+		height: 12em;
+		margin: -8em -6em;
+	}
+	#flowcursor{
+		width: 8em;
+		height: 8em;
+	}
+}
+
+
+@media only screen and (min-width: 768px) {
+	.progressthumb{
+		width: 4.9em;
+		height: 6.3em;
+		padding: 0.3em;
+	}
+	.bars{
+		width:39em;
+	}
+	#menu{
+		height:6.3em;
+	}
+	.model{
+		height: 18em;
+		width: 14em;
+		border: 1em;
+		padding:0.5em;
+	}
+	.model:hover span{
+		width: 10em;
+		top:15em;
+	}
+	#backhome b{
+		font:2em Bevan; line-height:1.7em;
+	}
+	#backhome span{
+		font: 1.1em 'Oswald', sans-serif;
+		line-height: normal;
+	}
+	#instruction, #instruction1{
+		width: 24em;
+		height: 20em;
+		margin: -12em -10em;
+	}
+	#flowcursor{
+		width: 5em;
+		height: 5em;
+	}
+}
+@media only screen and (min-width: 992px) {
+	.model{
+		height: 298px;
+		width: 240px;
+		border: 5px;
+		padding:3px;
+	}
+
+	.progressthumb{
+		width: 6.2em;
+		height: 7.4em;
+		padding: 0.5em;
+	}
+	.bars{
+		width:580px;
+	}
+	#menu{
+		height:7.4em;
+	}
+	#backhome b{
+		font:2.4em 'Bevan'; line-height:1.7em;
+	}
+	#backhome span{
+		font: 1.5em 'Oswald', sans-serif;
+		line-height: normal;
+	}
+	#instruction, #instruction1{
+		width: 36em;
+		height: 28em;
+		margin: -18em -14em;
+	}
+	#flowcursor{
+		width: 5em;
+		height: 5em;
+	}
+}/*--big screen over--*/

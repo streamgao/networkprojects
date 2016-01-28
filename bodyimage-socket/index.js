@@ -1,3 +1,6 @@
+/**
+ * Created by Stream Gao on 12/20/15.
+ */
 var express = require('express');
 var app = require('express')();
 var http = require('http').Server(app);
@@ -18,24 +21,23 @@ app.use(express.static(__dirname + '/public'));
 //   // });
 //   res.render("index",{param:req.params.option})
 // });
-
 //{{param}}
 
 http.listen(3000, function(){
   console.log('listening on :3000');
-  GetLocalIPAddr();
+  //GetLocalIPAddr();
 });
 
 
-var singleone = function(id, name, postername, ori, retouched){
-    this.id=id;
-    this.name=name;
-    this.postername = postername;
-    this.original = ori;
-    this.retouched=retouched;
-};
-var peoples = [];
-var send = [];
+// var singleone = function(id, name, postername, ori, retouched){
+//     this.id=id;
+//     this.name=name;
+//     this.postername = postername;
+//     this.original = ori;
+//     this.retouched=retouched;
+// };
+// var peoples = [];
+// var send = [];
 
 
 io.on('connect', function(socket){
@@ -53,51 +55,54 @@ io.on('connect', function(socket){
 
   socket.on('ondrag',function(msg){
     socket.broadcast.emit('ondrag',msg); 
+    //io.sockets.emit('colors',msg);
   });//on colorchoice
  
-  socket.on('ondragsender',function(msg){
-    console.log('ondragsender:'+msg);
-    //io.sockets.emit('colors',msg);
-    socket.broadcast.emit('ondragsender',msg); 
-  });
-  socket.on('nextlayer',function(msg){
-    socket.broadcast.emit('nextlayer',msg); 
+  socket.on('nextlayerdone',function(msg){ 
+    console.log('nextlayerdone'+msg);
+    socket.broadcast.emit('nextlayerdone',msg);
+    //io.emit('jump', data);
   });
 
+  socket.on('hometocanvas',function(msg){
+    console.log('hometocanvas'+msg);
+    socket.broadcast.emit('hometocanvas',msg); 
+  });
 
-  socket.on('receiveprofile',function(){
-    console.log("ondrag");
-  });//receiveprofile
+  socket.on('backtoslectmodel',function(msg){
+    console.log('backtoslectmodel'+msg);
+    socket.broadcast.emit('backtoslectmodel',msg); 
+  });
+
+  socket.on('finalselect',function(msg){
+    console.log('finalselect'+msg);
+    socket.broadcast.emit('finalselect',msg); 
+  });
+
+  socket.on('disconnect', function () {
+    connected = false;
+    socket.broadcast.emit('backtoslectmodel',1);//if the sender reload the page 
+  });
 
   //if 2 devices connect to the same wifi, ip would be useless to distinguish them, change to one page applicaiton
-  socket.on('choosePerson',function(whichone){
-    console.log(socket.id);
-    var clientIp = socket.request.connection.remoteAddress;
-    console.log("chooseperson ip:",clientIp);
+  // socket.on('choosePerson',function(whichone){
+  //   console.log(socket.id);
+  //   var clientIp = socket.request.connection.remoteAddress;
+  //   console.log("chooseperson ip:",clientIp);
 
-    setTimeout(function(){ 
-        //io.sockets.connected[socket.id];
-        if(io.engine === io.eio ){// => true
-          console.log( Object.keys(io.engine.clients)  );
-          //console.log( Object.keys(io.eio.clients)   );
-          for (var i = 0; i< Object.keys(io.engine.clients).length ; i++) {
-               console.log( io.sockets.connected[ Object.keys(io.engine.clients)[i] ]['handshake']['address']);
-               if ( clientIp == io.sockets.connected[ Object.keys(io.engine.clients)[i] ]['handshake']['address'] ) {
-                  console.log('whichone'+whichone);
-                  io.sockets.connected[ Object.keys(io.engine.clients)[i] ].emit('choosePerson',whichone);
-               }
-          }//for
-        }//if true
-
-     }, 500);
-    
-     
-  });//on chooseperson
-
-
-    socket.on('disconnect', function () {
-        connected = false;
-    });
+  //   setTimeout(function(){ 
+  //       if(io.engine === io.eio ){// => true
+  //         console.log( Object.keys(io.engine.clients)  );
+  //         for (var i = 0; i< Object.keys(io.engine.clients).length ; i++) {
+  //              console.log( io.sockets.connected[ Object.keys(io.engine.clients)[i] ]['handshake']['address']);
+  //              if ( clientIp == io.sockets.connected[ Object.keys(io.engine.clients)[i] ]['handshake']['address'] ) {
+  //                 console.log('whichone'+whichone);
+  //                 io.sockets.connected[ Object.keys(io.engine.clients)[i] ].emit('choosePerson',whichone);
+  //              }
+  //         }//for
+  //       }//if true
+  //    }, 500);
+  // });//on chooseperson
 
 });//connect
 

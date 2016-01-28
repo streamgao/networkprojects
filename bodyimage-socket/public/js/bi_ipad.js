@@ -13,7 +13,6 @@ var ratioy = 1;
 var ratioimgx = 1;
 var ratioimgy = 1;
 var mousedown, touchdown;
-var alreadyondata = false;
 var ratioscreenx=1;
 var ratioscreeny=1;
 var flowcursor;
@@ -31,7 +30,8 @@ function initpixandwipe(){
     		pixmatrix[i][j] = -1;
     	}
     }
-    console.log( pixmatrix );
+    
+    //console.log( pixmatrix.length +","+pixmatrix[0].length );
 }
 
 
@@ -43,7 +43,6 @@ function initvariables(){
 
  	index = 1;
  	totalwiped = 0;
- 	alreadyondata = false;
 
     dividenum = 7;
     brushsize = Math.ceil(maincanvas.width/ dividenum)+10;   //50
@@ -78,48 +77,77 @@ function initimage(pathi){
 }//initimages
 
 function init() {   //receiver
-    setupSocket();
-
     initvariables();
-    initmodels();
+    initmodels(); // bi_ui.js
     initcursor();
     initpixandwipe();//init pix matrix
 
 	/*-------------------touch events-------------------*/  
-	maincanvas.addEventListener('mousedown', function(){ mousedown =true;} );
-  	maincanvas.addEventListener('mouseup', function(){ mousedown =false;} );
-    maincanvas.addEventListener('mousemove', function(e){ e.preventDefault(); 
-  		mousedown = true; eventmove(e.clientX, e.clientY, mousedown); });//mousemove
-
-
-    maincanvas.addEventListener('touchstart', function(e){e.preventDefault(); touchdown =true; });
-  	maincanvas.addEventListener('touchend', function(e){e.preventDefault(); touchdown =false;});
-  	maincanvas.addEventListener('touchmove', function(e){ e.preventDefault(); 
-  		touchdown = true; eventmove(e.pageX, e.pageY, touchdown); });//touchmove
-
-  	flowcursor.addEventListener('touchstart', function(e){	e.preventDefault(); touchdown =true;});
-  	flowcursor.addEventListener('touchend', function(e){	e.preventDefault();touchdown =false;});
-    flowcursor.addEventListener('touchmove', function(e){	e.preventDefault(); 
-	  	//touchdown = true; 
-	  	eventmove(e.pageX, e.pageY, touchdown); });//mousemove
+	addEvtListeners();
+    $('body').bind('copy paste',function(e){ e.preventDefault(); return false; });
+	$('body').nodoubletapzoom();
+	$(document.body).on("touchmove", function(e) {e.preventDefault(); e.stopPropagation();});
 }; //init
 
 
 $('document').ready(  init  );
 
+function addEvtListeners(){
+	console.log('addEvtListeners, index'+index);
 
+	maincanvas.addEventListener('mousedown', function(e){ e.preventDefault(); mousedown =true; });
+  	maincanvas.addEventListener('mouseup', function(e){ e.preventDefault(); mousedown =false; });
+    maincanvas.addEventListener('mousemove', function(e){ e.preventDefault(); 
+  		mousedown = true; eventmove(e.clientX, e.clientY, mousedown); });//mousemove
+
+
+    maincanvas.addEventListener('touchstart', function(e){e.preventDefault(); touchdown =true; });
+  	maincanvas.addEventListener('touchend', function(e){e.preventDefault(); touchdown =false; });
+  	maincanvas.addEventListener('touchmove', function(e){ e.preventDefault(); 
+  		touchdown = true; eventmove(e.pageX, e.pageY, touchdown); });//touchmove
+
+  	flowcursor.addEventListener('touchstart', function(e){	e.preventDefault(); touchdown =true; });
+  	flowcursor.addEventListener('touchend', function(e){	e.preventDefault(); touchdown =false; });
+    flowcursor.addEventListener('touchmove', function(e){	e.preventDefault(); 
+	  	eventmove(e.pageX, e.pageY, touchdown); });//mousemove
+
+    if ( compare!=null && compare.style.opacity!=0 ) {
+    	compare.addEventListener('touchstart', function(e){	e.preventDefault(); touchdown =true; });
+  		compare.addEventListener('touchend', function(e){	e.preventDefault(); touchdown =false; });
+    	compare.addEventListener('touchmove', function(e){	e.preventDefault(); 
+	  		eventmove(e.pageX, e.pageY, touchdown); });//mousemove
+    }
+}
+
+function removeEvtListeners(){
+	maincanvas.removeEventListener('mousedown', function(e){ e.preventDefault();} );
+  	maincanvas.removeEventListener('mouseup', function(e){ e.preventDefault();} );
+    maincanvas.removeEventListener('mousemove', function(e){ e.preventDefault(); });//mousemove
+
+
+    maincanvas.removeEventListener('touchstart', function(e){e.preventDefault(); });
+  	maincanvas.removeEventListener('touchend', function(e){e.preventDefault(); });
+  	maincanvas.removeEventListener('touchmove', function(e){ e.preventDefault(); });//touchmove
+
+  	flowcursor.removeEventListener('touchstart', function(e){ e.preventDefault(); });
+  	flowcursor.removeEventListener('touchend', function(e){	e.preventDefault(); });
+    flowcursor.removeEventListener('touchmove', function(e){ e.preventDefault(); });//mousemove
+
+    if (compare!=null) {
+    	compare.removeEventListener('touchstart', function(e){ e.preventDefault(); });
+  		compare.removeEventListener('touchend', function(e){	e.preventDefault(); });
+    	compare.removeEventListener('touchmove', function(e){ e.preventDefault(); });//mousemove
+    }
+}
+
+/*-------------------add event listeners-------------------*/
 function eventmove(xx,yy,down){
 	var x = xx;
 	var y = yy;
 	if (down==true) { 
-		if( alreadyondata ){
 			var data = [x*ratioscreenx, y*ratioscreeny];
-			socket.emit('ondragsender',data);
 			dragwipe(x, y); 
 			dragflowcursor(x, y);
-		}else{//if not connecting to peers
-			console.log("haven't connect to anyone!");
-		}
 	}//if draging, else do nothing
 }
 
@@ -128,7 +156,7 @@ var dragwipe = function(evtx, evty){
 		wipex = Math.floor( evtx / brushsize );
 		wipey = Math.floor( evty / brushsize );
 
-		if ( totalwiped < 0.7 * pixmatrix.length * pixmatrix[0].length ) {  //current image
+		if ( totalwiped < 0.6 * pixmatrix.length * pixmatrix[0].length && index!=0 ) {  //current image
 			if ( pixmatrix[wipex][wipey]==-1 ) { // if haven't draw this pixel
 				totalwiped++;
 				//totalwiped = totalwiped% (pixmatrix.length * pixmatrix[0].length);
@@ -159,20 +187,15 @@ var dragwipe = function(evtx, evty){
 			
 			ctx.drawImage( tmpcanvas, 0,0, brushsize, brushsize,
 	 	   			evtx-brushsize*ratioimgx/8, evty-brushsize*ratioimgy/8, brushsize, brushsize);
-		}else{ //switch
-			console.log("index++: "+index);
+		}else if( totalwiped >= 0.6 * pixmatrix.length * pixmatrix[0].length ){ //switch
 			nextbar();
-			index++;
-			index = index % imgs.length;
+			setTimeout( function(){
+				if(index == 0){
+					flowcursor.style.left="5000px";
+   					flowcursor.style.top="5000px";
+		        } 
+			}, 1200);
 			initpixandwipe();
-
-			if (alreadyondata==true) {
-				socket.emit('nextlayer',index);
-			}
-			if(index == 0){
-	            console.log("last one");
-	            finishcompare();
-	        }
 		}//else change to next image
 
 }//dragwipe
@@ -203,44 +226,25 @@ function dragflowcursor(dragdata0, dragdata1){
 
 
 
-var clientIP =null;
 
-function setupSocket() {
-	socket = io().connect('http://localhost:3000/');
 
-	socket.on('connect',function(){		
-		alreadyondata = true;
+/*-------------------prevent double click zoom-------------------*/
+(function($) {
+    $.fn.nodoubletapzoom = function() {
+        if($("html.touch").length == 0) return;
 
-   		console.log("session id:"+this.id);
-   		console.log(this);
-
-		//if 2 devices connect to the same wifi, ip would be useless to distinguish them
-   		socket.emit('requestip',1);
-   		socket.on('requestip',function(ipadd){
-   			clientIP = ipadd;
-   			requestip(ipadd);
-   			console.log("clientIP"+clientIP);
-   		});
-
-		socket.on('ondrag',function(dragdata){ // when receive color submission
-			dragwipe( dragdata[0], dragdata[1] );
-		});	//on colors	
-
-		socket.on('choosePerson',function(j){
-			pathimg = j*3;
-			console.log("chooseperson"+pathimg);
-			initimage(pathimg);
-		});//chooseperson
-		
-	});//on connect
-
-	socket.on('disconnect', function () {
-		console.log('client disconnected');
-		initpixandwipe();
-		//socket.emit('disconnect');
-	});
-}//setupSocket()
-
-function requestip(ip){
-	clientIP = ip;
-}
+        $(this).bind('touchstart', function preventZoom(e){
+            var t2 = e.timeStamp;
+            var t1 = $(this).data('lastTouch') || t2;
+            var dt = t2 - t1;
+            var fingers = e.originalEvent.touches.length;
+            $(this).data('lastTouch', t2);
+            if (!dt || dt > 500 || fingers > 1){
+                return; // not double-tap
+            }
+            e.preventDefault(); // double tap - prevent the zoom
+            // also synthesize click events we just swallowed up
+            $(this).trigger('click');
+        });
+    };
+})(jQuery);

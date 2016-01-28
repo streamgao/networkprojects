@@ -2,10 +2,12 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
+    	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
 		<meta name="description" content="Time Square interactive screen live show project. This is Real">
-		<meta name="keywords" content="HTML,CSS,XML,JavaScript,bodyimage,timesquare, ITP">
+		<meta name="keywords" content="bodyimage,timesquare, ITP">
 		<meta name="author" content="Stream Gao">
-		<title> Touch Screen -- BODY IMAGE </title>
+		<title> Touch Screen _ BODY IMAGE </title>
 
 		<link href='https://fonts.googleapis.com/css?family=Oswald|Righteous|Patua+One|Bevan|Puritan:700' rel='stylesheet' type='text/css'>
 
@@ -15,8 +17,16 @@
 		<script type="text/javascript" src="/socket.io/socket.io.js"></script>
 		<style type="text/css">
 			body{
-				overflow: hidden;
+				overflow: hidden !important;
+				-webkit-user-select: none;
+				-khtml-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				-o-user-select: none;
+				user-select: none;
+				-webkit-touch-callout: none;
 			}
+			a { -webkit-user-select: none !important; }
 			canvas, img {
 				overflow: hidden;
 			    image-rendering: optimizeQuality;
@@ -25,7 +35,9 @@
 			    image-rendering: optimize-contrast;
 			    -ms-interpolation-mode: nearest-neighbor;
 			}
-
+			.container #maincanvas #menu{
+				overflow: hidden !important;
+			}
 			#maincanvas, #home{
 				height: 100%;
 				width: 100%;
@@ -37,41 +49,36 @@
 			#maincanvas{
 				z-index: 0;
 			}
+/* -----------------------Home, Model Selection---------------------------------*/
 
 			#home{
 				height: auto;
 				display: block !important;
 				z-index: 1;
 				text-align: center;
-				background: #ddd;
 				overflow-y: scroll;
 			}
-
 			.model{
 				display: inline-block;
 				position: relative;
-				height: 400px;
-				width: 320px;
-				border: 5px;
-				background: grey;
+				background: #FFF;
 			}
 			.model div{
-				border:1px solid #F0F0E8;
 				background-color:#FFF;
 				padding:6px;
 				display:block;
 			}
 			.model div:hover{
-				border:1px solid #000;background-color:#333;text-decoration: none;
+				background-color:#333;
+				text-decoration: none;
 			}
 			.model span{
 				display:none; text-align:center; font-size:12px;
 			}
 			.model:hover span{
-				color:#FFF;display:block;
+				position:absolute; left:0px;
+				color:#FFF;		display:block;
 				background-color:#333;
-				width:114px;
-				position:absolute;top:94px;left:0px;
 				line-height:20px;
 			}
 			.model:hover{
@@ -79,19 +86,21 @@
 				opacity: 0.7;
 				filter: blur(20px) grayscale(20%);
 			}
+			.progress-bar-custom {background: rgba(173, 173, 173, 1);}
 
 			img{
 				height: 100%;
 				width: 100%;
 			}
 			
-
+/* -----------------------main canvas---------------------------------*/
 			.footer{
 				position: fixed;
+				margin: 0 auto;
+				text-align: center;
 				bottom: 2%;
-				left: 45%;
+				left: 38%;
 				z-index: 11;
-				float: left;
 				font-ssize: 12px;
 				color: gray;
 			}
@@ -127,32 +136,32 @@
 				position: fixed;
 				background: grey;
 				opacity: 0;
-				color: white;
 				z-index: 3;
 				vertical-align: middle;
 			}
 
-			#nextinstruct span{
+			#nextinstruct span, #compare span{
 				position: relative;
 				vertical-align: middle;
+				color: white;
 			}
 
-			#nextinstruct span h2{
-				font: 2em 'Oswald', sans-serif;
+			#nextinstruct span h2, #compare span{
+				font: 1.8em 'Oswald', sans-serif;
 				text-align: center;
 				vertical-align: middle;
 				line-height: normal;
 			}
 
+/* -----------------------MENU---------------------------------*/
 			#menu{
 				position: fixed;
 				top: -1000px;
 				left: 0;
 				width: 100%;
-				height: 7.5em;
 				z-index: 3;
 				background: black;
-				opacity: 0.7;
+				opacity: 0.8;
 			}
 
 			#backhome{
@@ -166,69 +175,158 @@
 				font: 1.1em 'Oswald', sans-serif;
 				line-height: normal;
 			}
+@media only screen and (min-width: 200px) {
+	.progressthumb{
+		width: 3em;
+		height: 4.2em;
+		padding: 0.15em;
+	}
+	.bars{
+		width:6.3em;
+	}
+	#menu{
+		height:4.5em;
+	}
+	.model{
+		height: 12em;
+		width: 7em;
+		border: 0.2em;
+	}
+	.model:hover span{
+		width: 6em;
+		top:5em;
+	}
+	#backhome b{
+		font:1.8em Bevan; line-height:1.2em;
+	}
+}
+
+@media only screen and (min-width: 768px) {
+	.progressthumb{
+		width: 4.7em;
+		height: 6.2em;
+		padding: 0.3em;
+	}
+	.bars{
+		width:17em;
+	}
+	#menu{
+		height:6.2em;
+	}
+	.model{
+		height: 21.3em;
+		width: 17em;
+		border: 0.5em;
+	}
+	.model:hover span{
+		width: 10em;
+		top:15em;
+	}
+	#backhome p{
+		font:1.8em Bevan; line-height:1.5em;
+	}
+}
+@media only screen and (min-width: 992px) {
+	.progressthumb{
+		width: 5em;
+		height: 6.4em;
+	}
+	.bars{
+		width:72em;
+	}
+	#menu{
+		height:6.4em;
+	}
+	.model:hover span{
+		width: 10em;
+		top:15em;
+	}
+}	
 
 			.progressthumb{
-				height: 7em;
-				width: 5.2em;
 				display: inline-block;
 				position: relative;
 				margin: auto;
-				padding: 0.3em;
 				background: grey;
 				vertical-align: middle;
 			}
 
 			.bars{
-				width: 23em;
 				display: inline-block;
 				position: relative;
 				margin: auto;
+				opacity: 1 !important;
 			}
 
+			.bars span{
+				float: right;
+				position: absolute;
+				right: 30% !important;
+				font: 2em 'Righteous', sans-serif;
+				line-height: 0.5em;
+				color: orange;
+			}
 
+			#compare{
+				position: relative;
+				width: 8em;
+				height: 4em;
+				margin: auto;
+				float: right;
+				background: black;
+				opacity: 0;
+			}
 		</style>
 	</head>
 	
 	<body>
+	<div class="container">
 		<div id="home">
 			<div class="model"> <div><img id="0" src="img/homeindex/0.jpg"/><span>Select and Retouch</span></div></div>
-			<div class="model"><div> <img id="1" src="img/homeindex/0.jpg"/><span>iza</span> </div></div>
-			<div class="model"><div> <img id="2" src="img/homeindex/1.jpg"/><span>iza</span> </div></div>
-			<div class="model"><div> <img id="3" src="img/homeindex/1.jpg"/><span>iza</span> </div></div>
-			<div class="model"><div> <img id="4" src="img/homeindex/1.jpg"/><span>iza</span> </div></div>
-			<div class="model"><div> <img id="5" src="img/homeindex/1.jpg"/><span>iza</span> </div></div>
+			<div class="model"><div> <img id="1" src="img/homeindex/0.jpg"/><span>Select and Retouch</span> </div></div>
+			<div class="model"><div> <img id="2" src="img/homeindex/1.jpg"/><span>Select and Retouch</span> </div></div>
+			<div class="model"><div> <img id="3" src="img/homeindex/1.jpg"/><span>Select and Retouch</span> </div></div>
+			<div class="model"><div> <img id="4" src="img/homeindex/1.jpg"/><span>Select and Retouch</span> </div></div>
+			<div class="model"><div> <img id="5" src="img/homeindex/1.jpg"/><span>Select and Retouch</span> </div></div>
 		</div>
 
-		<div id="menu" >
+		<div id="menu">
 			<div id="backhome" class="progressthumb"> 
-				<b style="font:1.8em Bevan;"><</b><br>
-				<span>SELECT MODEL</span> 
+				<b><</b><br>
+				<span>BACK</span> 
 			</div>
 			<div style="display:inline-block; position:relative">
 				<img class="progressthumb" id="progressthumb0"></img>
 
 				<div class="progress bars">
-				    <div id="bar0" class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0">
-				    </div>
+				    <div id="bar0" class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0">
+				    </div> 
+				    <span> | </span>
 				</div>
 
 				<img class="progressthumb" id="progressthumb1"></img>
 
 				<div class="progress bars">
-				    <div id="bar1" class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0">
+				    <div id="bar1" class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0">
 				    </div>
+				    <span> | </span>
 				</div>
 
 				<img class="progressthumb" id="progressthumb2"></img>
 			</div>
-		</div>
-		<div id="compare"> Compare </div>
 
-		<img src="img/instruct.png" id="instruction" width="500" height="500"></img>
-		<div id="nextinstruct"> <span> <h2> Next Layer </h2>   </span></div>
+			<div id="compare"> <span>&nbsp Compare <span> </div>
+		</div>
+
+		<div class='container-fluid' style="background:black; opacity:0.7; height:100%; width:100%; top:0; left:-500%; position:absolute; z-index:2;"> 
+			<img src="img/instruct.png" id="instruction" width="500" height="500"></img>
+		</div>
+
+		<div id="nextinstruct"> <span> <h2> Done </h2>   </span></div>
 		<canvas id="maincanvas"></canvas>
 
 		<div class="footer">© Copyright 2015  Stream Gao</div>
+	 </div>
 	</body>
 	<script type="text/javascript" src="js/bi_ipad.js"></script>
 	<script type="text/javascript" src="js/bi_ui.js"></script>
