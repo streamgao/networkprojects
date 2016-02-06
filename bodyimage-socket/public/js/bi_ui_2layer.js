@@ -25,9 +25,9 @@ function initmodels(){
 	backhome = document.getElementById('backhome');
 	bar = document.getElementById('bar0');
 
-	for(var i=0;i<2;i++){
-		progressthumbs[i]=document.getElementById('progressthumb'+i);
-	}
+	// for(var i=0;i<2;i++){
+	// 	progressthumbs[i]=document.getElementById('progressthumb'+i);
+	// }
 
 	for (var i = 0; i < model.length; i++) {
 		model[i].addEventListener('click', hometocanvas);//addEventListener click
@@ -55,10 +55,10 @@ function initmodels(){
 	});
 
 	//remove evt listeners
-	for (var i = 0; i < imgs.length; i++) {
-		progressthumbs[i].removeEventListener('touchend',function(e){e.preventDefault();} );//addEventListeners
-		progressthumbs[i].removeEventListener('click',function(e){e.preventDefault();} );
-	}//for
+	// for (var i = 0; i < imgs.length; i++) {
+	// 	progressthumbs[i].removeEventListener('touchend',function(e){e.preventDefault();} );//addEventListeners
+	// 	progressthumbs[i].removeEventListener('click',function(e){e.preventDefault();} );
+	// }//for
 	compare.removeEventListener('touchend', function(e){ e.preventDefault();} );
 	compare.removeEventListener('touchstart', function(e){ e.preventDefault();} );
 
@@ -88,23 +88,28 @@ function backtoslectmodel(e){
 	initpixandwipe();
 
 	//remove evt listeners
-	for (var i = 0; i < imgs.length; i++) {
-		progressthumbs[i].removeEventListener('touchend',function(e){e.preventDefault();} );//addEventListeners
-		progressthumbs[i].removeEventListener('click',function(e){e.preventDefault();} );
-	}//for
+	// for (var i = 0; i < imgs.length; i++) {
+	// 	progressthumbs[i].removeEventListener('touchend',function(e){e.preventDefault();} );//addEventListeners
+	// 	progressthumbs[i].removeEventListener('click',function(e){e.preventDefault();} );
+	// }//for
 	compare.removeEventListener('touchend',function(e){ e.preventDefault();} );
 	compare.removeEventListener('touchstart',function(e){ e.preventDefault();} );
+
+	/*--------footer pixel------------*/
+	$('footer').css({'color': 'gray'}); 
+	$('footer a').css({'color': 'gray'}); 
 }
 
 
 function hometocanvas(e){  
 	e.preventDefault();
 	addEvtListeners();
+	done=false;
 
 	var temp = parseInt(e.target.id)*2;
 	var firstins = imgs.length<1 ? true : false; 
 	initimage(temp);
-	inittumbnails(temp);
+	//inittumbnails(temp);
 
 	/*--------for sender---------*/
 	if (alreadyondata && typeof(socket) != "undefined") {
@@ -133,6 +138,16 @@ function hometocanvas(e){
 
 	 	}//complete funtion
 	});   //animate
+
+    $('footer').css({'color': 'white'});
+    $('footer a').css({'color': 'white'});  
+    	//remove evt listeners
+	// for (var i = 0; i < imgs.length; i++) {
+	// 	console.log('removeEventListener');
+	// 	progressthumbs[i].removeEventListener('touchend',function(e){e.preventDefault();} );//addEventListeners
+	// 	progressthumbs[i].removeEventListener('click',function(e){e.preventDefault();} );
+	// }//for
+
 }//hometocanvas
 
 function inittumbnails(temp){
@@ -143,6 +158,7 @@ function inittumbnails(temp){
 	}
 	progressthumbs[0].style.webkitFilter = "brightness(100%)";
 	progressthumbs[0].style.background = "red";
+	progressthumbs[1].style.background = "grey";
 }
 
 function progressbars(){
@@ -155,7 +171,7 @@ function progressbars(){
 
 function nextbar(){
     /*--------for sender---------*/
-    if (alreadyondata && typeof(socket) != "undefined") {
+    if (alreadyondata && typeof(socket) != "undefined" && done==true) {
         socket.emit('nextlayerdone',totalwiped);
     }
 
@@ -166,12 +182,12 @@ function nextbar(){
 	$(bar).animate({ 'width' : "100%" }, {
 	 	duration: 1000,
 	 	complete: function(){
-			progressthumbs[index].style.webkitFilter = "brightness(100%)";
-			progressthumbs[index].style.background = "red";
+			//progressthumbs[index].style.webkitFilter = "brightness(100%)";
+			//progressthumbs[index].style.background = "red";
 			$(bar).removeClass('progress-bar-striped active');
 
 			var rest=selectrest(index);
-			progressthumbs[ rest ].style.background = "grey";
+			//progressthumbs[ rest ].style.background = "grey";
 
 			ctx.drawImage(imgs[index],0, 0, imgs[0].naturalWidth, imgs[0].naturalHeight,
 	                    0,0,maincanvas.width, maincanvas.height);
@@ -191,8 +207,8 @@ function nextbar(){
 			 }});//nextinstruct
 	}});	
 
-
-	finishcompare();	
+	if (done==true)		finishcompare();
+	
 }//nextbar
 
 
@@ -222,37 +238,37 @@ function finishcompare () {
 	compare.addEventListener('touchend',function(e){ e.preventDefault();
 		if ( compare.style.opacity == 1) {
 			/*--------for sender---------*/
-			if (alreadyondata && typeof(socket) != "undefined") {
+			if (alreadyondata && typeof(socket) != "undefined" && done==true) {
 				socket.emit('finalselect',1);
 			}
 
 			ctx.drawImage(imgs[imgs.length-1 ],0, 0, imgs[0].naturalWidth, imgs[0].naturalHeight,
                 0,0,maincanvas.width, maincanvas.height);
-			compare.style.background = 'black';
+			compare.style.background = 'orange';
 		}
 	});
 
 
-	for (var i = 0; i < imgs.length; i++) {
-		progressthumbs[i].addEventListener('touchend',finalselect);//addEventListeners
-		progressthumbs[i].addEventListener('click',finalselect);
-	}//for
+	// for (var i = 0; i < imgs.length; i++) {
+	// 	progressthumbs[i].addEventListener('touchend',finalselect);//addEventListeners
+	// 	progressthumbs[i].addEventListener('click',finalselect);
+	// }//for
 
-	function finalselect(e){
-		e.preventDefault();
-		var x= parseInt( e.target.id.split('progressthumb')[1] );
+	// function finalselect(e){
+	// 	e.preventDefault();
+	// 	var x= parseInt( e.target.id.split('progressthumb')[1] );
 
-		/*--------for sender---------*/
-		if (alreadyondata && typeof(socket) != "undefined") {
-			socket.emit('finalselect',x);
-		}
+	// 	/*--------for sender---------*/
+	// 	// if (alreadyondata && typeof(socket) != "undefined" && done==true) {
+	// 	// 	socket.emit('finalselect',x);
+	// 	// }
 
-		var rest=selectrest(x);
-		progressthumbs[rest].style.background = "grey";
-		progressthumbs[x].style.background = "red";
-		ctx.drawImage(imgs[x],0, 0, imgs[0].naturalWidth, imgs[0].naturalHeight,
-        	0,0,maincanvas.width, maincanvas.height);
-	}
+	// 	var rest=selectrest(x);
+	// 	progressthumbs[rest].style.background = "grey";
+	// 	progressthumbs[x].style.background = "red";
+	// 	ctx.drawImage(imgs[x],0, 0, imgs[0].naturalWidth, imgs[0].naturalHeight,
+ //        	0,0,maincanvas.width, maincanvas.height);
+	// }
 
 }
 

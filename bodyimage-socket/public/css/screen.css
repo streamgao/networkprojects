@@ -1,5 +1,6 @@
 			body{
-				background: red;
+				background-image: url("../img/bk.jpg");
+				background-repeat: no-repeat;
 				overflow: hidden !important;
 				-webkit-user-select: none;
 				-khtml-user-select: none;
@@ -9,7 +10,6 @@
 				user-select: none;
 				-webkit-touch-callout: none;
 			}
-			a { -webkit-user-select: none !important; }
 			canvas, img {
 				overflow: hidden;
 			    image-rendering: optimizeQuality;
@@ -28,7 +28,6 @@
 				top: 0;
 				opacity:1;
 				position: absolute;
-
 			}
 			#maincanvas{
 				z-index: 0;
@@ -39,74 +38,45 @@
 				height: 1080px;
 				left: 530px;
 				position: absolute;
-				background: white;
+				padding: 0; margin: 0;
 			}
 
 /* -----------------------Home, Model Selection---------------------------------*/
 
 			#home{
-				height: auto;
 				display: inline-block !important;
 				z-index: 1;
 				text-align: center;
-				overflow-y: scroll;
-			}
-			#home h3{
-				font:2.4em 'Pontano Sans',sans-serif; 
-				font-weight: 200; 
-				font-stretch: ultra-condensed;
-			}
-			#home h4{
-				font:1.5em bold 'Raleway',sans-serif;
-				font-weight: bold;
-			}
-			.model{
-				display: inline-block;
-				position: relative;
-				background: #FFF;
+				overflow-y: hidden;
+				background: #424242;
 
-				-webkit-transition: all 0.75s;
-			    -moz-transition: all 0.75s;
-			    -o-transition: all 0.75s;
-			    transition: all 0.75s;
+				-webkit-perspective: 700px; 
+				-webkit-perspective-origin-x: 480px; 
 			}
-			.model img{
-				-webkit-transition: all 0.75s;
-			    -moz-transition: all 0.75s;
-			    -o-transition: all 0.75s;
-			    transition: all 0.75s;
-			}
-			.model div{
-				background-color:#FFF;
-				display:block;
-				padding: 6px;
-				box-shadow: 1px 1px 3px 3px #bbbbbb;
-			}
-			.model div:hover{
-				background-color:#333;
-				text-decoration: none;
-				vertical-align: middle !important; 
-			}
-			.model span{
-				display:none; text-align:center; font-size:12px;
-			}
-			.model:hover span{
-				position:absolute;  left:6px;
-				color:#FFF;		display:block;
-				background-color:#333;
-				line-height:20px;
-			}
-			/*
-			.model:hover{
-				cursor: pointer;
-				opacity: 0.7;
 
-				filter: blur(5px) grayscale(50%);
-				-moz-filter:blur(5px) grayscale(20%);
-				-webkit-filter:blur(5px) grayscale(20%);
-				-o-filter:blur(5px) grayscale(20%);
-				-ms-filter:blur(5px) grayscale(20%);
-			}*/
+	#view {  
+		width: 868px; 
+		height: 1080px;
+	}
+
+	#stack { position: relative; 
+		width: 100%; height: 100%; 
+		top: 300px;
+	}
+	#stack li { position: absolute; top: 0; left: 0; 
+		width: 800px; height: 996px; 
+		background: #424242; 
+
+		-webkit-transition: all .5s linear; 
+		-o-transition: all .5s linear; 
+		-ms-transition: all .5s linear; 
+		-moz-transition: all .5s linear; 
+		transition: all .5s linear;
+		/*-webkit-box-shadow: 5px #000;*/ 
+	}
+	#stack img { display: block; width: 100%; height: 100%;}
+
+
 			.paddingorange{
 				border:solid orange;
 				background: orange;
@@ -151,11 +121,17 @@
 				margin: 0 auto;
 				text-align: center;
 				bottom: 2%;
-				left: 38%;
+				float: right;
+				right: 30%;
 				z-index: 11;
-				font-size: 12px;
-				color: gray;
+				font: 20px 'Jacques Francois Shadow', cursive;
+				font-style: oblique;
+				direction: rtl !important;
+				color: white;
+				font-style: oblique;
 			}
+			a { color: white; text-decoration: none; border-bottom: 1px dotted white; 
+				 -webkit-user-select: none !important; }
 
 			#flowcursor{
 				background: url(../img/cursor.png), center center no-repeat;
@@ -218,8 +194,9 @@
 				cursor: pointer;
 				color: white;
 				text-align: center;
+				clear: none;
+				display: inline-block;
 			}
-
 
 			.progressthumb{
 				opacity: 0.9;
@@ -237,7 +214,7 @@
 				opacity: 1;
 			}
 
-			.bars span{
+			#percent{
 				float: right;
 				position: absolute;
 				right: 30% !important;
@@ -246,124 +223,63 @@
 				color: orange;
 			}
 
-			#compare{
+			.bars span {	
 				position: relative;
-				width: 8em;
-				height: 4em;
-				margin: auto;
-				float: right;
+				font: 1.5em 'Oswald', sans-serif;
+				line-height: 1em;
+				color: white;
+			}
+
+			.menubtn{
+				position: relative;
 				background: black;
+				margin: 0;
+			}
+			#compare{
 				opacity: 0;
+				float: right;
+				background: #f39c13;
 			}
 
 
+
 /* -----------------------different screen---------------------------------*/		
-@media only screen and (min-width: 240px) {
-	.progressthumb{
-		width: 3.2em;
-		height: 4.2em;
-		padding: 0.15em;
-	}
-	.bars{
-		width:15em;
-	}
-	#menu{
-		height:4.2em;
-	}
-	.model{
-		height: 12em;
-		width: 7em;
-		border: 0.2em;
-		padding: 0.1em;
-	}
-	.model:hover span{
-		width: 6em;
-		top:5em;
-	}
-	#backhome b{
-		font:1.8em Bevan; line-height:1.2em;
-	}
-	#backhome span{
-		font: 1.1em 'Oswald', sans-serif;
-		line-height: normal;
-	}
-	#instruction, #instruction1{
-		width: 16em;
-		height: 12em;
-		margin: -8em -6em;
-	}
-	#flowcursor{
-		width: 8em;
-		height: 8em;
-	}
-}
-
-
-@media only screen and (min-width: 768px) {
-	.progressthumb{
-		width: 4.9em;
-		height: 6.3em;
-		padding: 0.3em;
-	}
-	.bars{
-		width:39em;
-	}
-	#menu{
-		height:6.3em;
-	}
-	.model{
-		height: 18em;
-		width: 14em;
-		border: 1em;
-		padding:0.5em;
-	}
-	.model:hover span{
-		width: 10em;
-		top:15em;
-	}
-	#backhome b{
-		font:2em Bevan; line-height:1.7em;
-	}
-	#backhome span{
-		font: 1.1em 'Oswald', sans-serif;
-		line-height: normal;
-	}
-	#instruction, #instruction1{
-		width: 24em;
-		height: 20em;
-		margin: -12em -10em;
-	}
-	#flowcursor{
-		width: 5em;
-		height: 5em;
-	}
-}
 @media only screen and (min-width: 992px) {
-	.model{
-		height: 298px;
-		width: 240px;
-		border: 5px;
-		padding:3px;
-	}
-
 	.progressthumb{
 		width: 6.2em;
 		height: 7.4em;
 		padding: 0.5em;
 	}
-	.bars{
-		width:580px;
+
+
+	.menubtn{
+		height: 5em;
 	}
+	.bars{
+		width:600px;
+	}
+
 	#menu{
-		height:7.4em;
+		height:5em;
+	}
+	#backhome{
+		width: 5em; 
+		height:5.6em;
+		top: -10px; left: 0;
 	}
 	#backhome b{
-		font:2.4em 'Bevan'; line-height:1.7em;
+		font:2.4em 'Bevan'; line-height:2.7em;
 	}
 	#backhome span{
-		font: 1.5em 'Oswald', sans-serif;
+		font: 1.8em 'Oswald', sans-serif;
 		line-height: normal;
 	}
+	#compare{
+		width: 8em;
+		font: 1em Bevan !important;
+		line-height: normal;
+	}
+
 	#instruction, #instruction1{
 		width: 36em;
 		height: 28em;

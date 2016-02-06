@@ -1,4 +1,16 @@
-var replacejs= [{ "ceo":{
+var replacejs= [{ 
+	"business":{
+		"sentence":"People of all races and genders can be successful",
+		"link":[
+			"https://s-media-cache-ak0.pinimg.com/236x/cd/71/b2/cd71b287e6d134115afb5de4d5e2af07.jpg",
+			"https://www.ifh-worldwide.com/media/images/Business%20People%20applauding.jpg",
+			"https://allthingsd.com/files/2012/11/poqz5m50gk-1.jpeg",
+			"https://pbs.twimg.com/media/CAZTkWnUQAAA_cx.jpg",
+			"https://s.evbuc.com/https_proxy?url=http%3A%2F%2Fcreatingeffectiveorganizations.com%2Fwp-content%2Fuploads%2F2013%2F06%2FSmall-Business-Owners.jpg&sig=ADR2i7-N9QVefnp_xk9GBpqrgVcFNH0bUQ",
+			"https://s-media-cache-ak0.pinimg.com/originals/4a/b9/00/4ab900059026baedb2eceb107d35550d.jpg",
+			"http://image-store.slidesharecdn.com/374c93c7-68e1-469f-894b-7a16b0263e90-large.jpeg"
+	]},//business
+	"ceo":{
 		"sentence":"27% of the CEOs in the U.S. are female, but they are underrepresented here",
 		"link":[
 			"https://allthingsd.com/files/2012/11/poqz5m50gk-1.jpeg",
@@ -10,17 +22,6 @@ var replacejs= [{ "ceo":{
 			"https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTaAnfYPW688R3uXqd4Oo98G_gtsPnfpY2FXDYWw8xxl42O80cI",
 			"https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQRUtORZPrSJNMpA9nNmw5o5Ct0YJctblQIX9H0Scpbl5SOWEvP"
 	]},//ceo
-	"business":{
-		"sentence":"People of all races and genders can be successful",
-		"link":[
-			"https://s-media-cache-ak0.pinimg.com/236x/cd/71/b2/cd71b287e6d134115afb5de4d5e2af07.jpg",
-			"https://www.ifh-worldwide.com/media/images/Business%20People%20applauding.jpg",
-			"https://pbs.twimg.com/profile_images/661172811302617088/MOUhz4oN.jpg",
-			"https://pbs.twimg.com/profile_images/661172811302617088/MOUhz4oN.jpg",
-			"https://s.evbuc.com/https_proxy?url=http%3A%2F%2Fcreatingeffectiveorganizations.com%2Fwp-content%2Fuploads%2F2013%2F06%2FSmall-Business-Owners.jpg&sig=ADR2i7-N9QVefnp_xk9GBpqrgVcFNH0bUQ",
-			"https://s-media-cache-ak0.pinimg.com/originals/4a/b9/00/4ab900059026baedb2eceb107d35550d.jpg",
-			"http://image-store.slidesharecdn.com/374c93c7-68e1-469f-894b-7a16b0263e90-large.jpeg"
-	]},//business
 	"programmer":{
 		"sentence":"Women comprise 34% of web developers; 23% of programmers; 37% of database administrators; 20% of software developers.(Department of Labor Current Population Survey,2012)",
 		"link":[

@@ -21,6 +21,7 @@ var pathimg;
 
 var maincontainerleft;
 
+var atcanvasstate=false;
 
 function setupSocket() {
   socket = io().connect('http://159.203.85.109:3000/');
@@ -45,11 +46,13 @@ function setupSocket() {
 
   socket.on('hometocanvas',function(msg){
      hometocanvas(msg);
+
   });
 
   socket.on('backtoslectmodel',function(msg){
     console.log('backtoslectmodel'+msg);
     //先吧model hover的效果显示出来， 等1s再跳页
+    //if (atcanvasstate==true) {};
     backtoslectmodel();
   });
 
@@ -151,10 +154,13 @@ function eventmove(xx,yy,down){
   var x = xx;
   var y = yy;
 
-  if (down==true) { 
+  if (down==true && atcanvasstate==true) { 
       dragwipe(x, y); 
       dragflowcursor(x+maincontainerleft, y);
   }//if draging, else do nothing
+  else if (atcanvasstate==false) {
+      hometocanvas(12);
+  }
 }
 
 
@@ -249,9 +255,23 @@ var instruct1;
 var menu;
 var progressthumbs=[];
 var nextinstruct;
-//var compare=null;
-var modeljumpingindex;
-var modeljumpingindextemp;
+var compare=null;
+var y_space = 200,
+    z_space = 200;
+  
+var view = $('#view'),
+  lis = $('#stack li'),
+  prev = $('#controls .prev'),
+  next = $('#controls .next'),
+  left = $('#rotate_controls .left'),
+  centre = $('#rotate_controls .centre'),
+  right = $('#rotate_controls .right');
+
+var z_index = lis.length,
+  current_index = 1,
+  translate_y = y_space *-1,
+  translate_z = z_space *-1;
+
 
 function initmodels(){
   home=document.getElementById('home');
@@ -260,19 +280,32 @@ function initmodels(){
   instruct = document.getElementById('instruction');
   instruct1 = document.getElementById('instruction1');
   nextinstruct = document.getElementById('nextinstruct');
-  //compare = document.getElementById('compare');
+  compare = document.getElementById('compare');
 
   menu = document.getElementById('menu');
   backhome = document.getElementById('backhome');
   bar = document.getElementById('bar0');
 
-  for(var i=0;i<2;i++){
-    progressthumbs[i]=document.getElementById('progressthumb'+i);
-  }
+  atcanvasstate=false;
+  // for(var i=0;i<2;i++){
+  //   progressthumbs[i]=document.getElementById('progressthumb'+i);
+  // }
 
-  modeljumpingindex=0;
-  modeljumpingindextemp=0;
+  y_space = 200; z_space = 200;
+  view = $('#view');
+  lis = $('#stack li');
+  prev = $('#controls .prev');
+  next = $('#controls .next');
+  left = $('#rotate_controls .left');
+  centre = $('#rotate_controls .centre');
+  right = $('#rotate_controls .right');
 
+  z_index = lis.length;
+  current_index = 1;
+  translate_y = y_space *-1;
+  translate_z = z_space *-1;
+
+  sliderolling();
 /*
   for (var i = 0; i < model.length; i++) {
     model[i].addEventListener('click touchend', hometocanvas);//addEventListener click
@@ -305,36 +338,11 @@ function initmodels(){
 }//initmodels
 
 
-function modeljumping(){
-
-    setInterval(function(){ 
-
-        $(model[modeljumpingindextemp]).find('img').removeClass('modeljumping');
-        $(model[modeljumpingindex]).find('span').removeClass('modeljumpingspan');  
-        $(model[modeljumpingindex]).removeClass('paddingorange'); 
-
-        modeljumpingindex++;
-        modeljumpingindex = modeljumpingindex+randomnoise();
-        modeljumpingindex = modeljumpingindex%model.length;//0~8
-        modeljumpingindex = modeljumpingindex<0 ? (-1* modeljumpingindex) : modeljumpingindex;
-
-        modeljumpingindextemp = modeljumpingindex;
-
-        $(model[modeljumpingindex]).find('img').addClass('modeljumping');
-        $(model[modeljumpingindex]).find('span').addClass('modeljumpingspan');     
-        $(model[modeljumpingindex]).addClass('paddingorange'); 
-    }, 1500);
-
-    function randomnoise(){
-        var x = Math.random()>0.5 ? 1: -0.7;
-        return Math.round( x* Math.random()*model.length/2 );
-    }
-
-}
-
 
 /*-------------------For Models In The Home DIV-------------------*/
 function backtoslectmodel(){  
+    atcanvasstate=false;
+
     menu.style.top="-3000px";
     $("#home").animate({ top: "0px" }, {
           duration: 1000,
@@ -350,20 +358,23 @@ function backtoslectmodel(){
 
     nextinstruct.style.left = "-500% !important";
     nextinstruct.style.opacity = "0";
-    modeljumpingindex=0;
-    modeljumpingindextemp=0;
-    modeljumping();
+
+  /*--------footer pixel------------*/
+  // $('footer').css({'color': 'white'}); 
+  // $('footer a').css({'color': 'white'}); 
+
 }
 
 
 function hometocanvas(tem){
+  atcanvasstate=true;
   var temp = tem;
 //  var firstins = imgs.length<1 ? true : false; 
   initimage(temp);
-  inittumbnails(temp);
+ // inittumbnails(temp);
 
   home.style.top= maincanvas.height*2+2000+"px";
- // compare.style.opacity = 0;
+  compare.style.opacity = 0;
 
   $("#maincanvas").animate({ top: "0px" }, {
     duration: 1000,
@@ -382,10 +393,15 @@ function hometocanvas(tem){
       //   instruct.style.left = '50%';
       //   $('.container-fluid').css('left','0');
       // }//if instructions
+        /*--------footer pixel------------*/
+    // $('footer').css({'color': 'white'}); 
+    // $('footer a').css({'color': 'white'}); 
 
     }//complete funtion
   });   //animate
+
 }//hometocanvas
+
 
 function inittumbnails(temp){
   for(var i=0;i<imgs.length;i++){
@@ -413,20 +429,16 @@ function nextbar(){
   $(bar).animate({ 'width' : "100%" }, {
     duration: 1000,
     complete: function(){
-      progressthumbs[index].style.webkitFilter = "brightness(100%)";
-      progressthumbs[index].style.background = "red";
+      // progressthumbs[index].style.webkitFilter = "brightness(100%)";
+      // progressthumbs[index].style.background = "red";
       $(bar).removeClass('progress-bar-striped active');
-
-      var rest=selectrest(index);
-      progressthumbs[ rest ].style.background = "grey";
-
+      // var rest=selectrest(index);
+      // progressthumbs[ rest ].style.background = "grey";
       ctx.drawImage(imgs[index],0, 0, imgs[0].naturalWidth, imgs[0].naturalHeight,
                       0,0,maincanvas.width, maincanvas.height);
 
-      // index++;
-      // index = index % imgs.length;
+      // index++;// index = index % imgs.length;
       index=0;
-      //setTimeout( addEvtListeners, 500);
     }
   });//animate  
 
@@ -447,15 +459,27 @@ function nextbar(){
     } 
   }, 1000);
   initpixandwipe();
+
+  $(compare).animate({ 'opacity' : "1" }, {
+    duration: 1000,
+    complete: function(){
+      ctx.drawImage(imgs[ imgs.length-1 ],0, 0, imgs[0].naturalWidth, imgs[0].naturalHeight,
+                      0,0,maincanvas.width, maincanvas.height);
+  }});
   //finishcompare();
 }//nextbar
 
 
 function finalselect(x){
-    var rest=selectrest(x);
-    progressthumbs[rest].style.background = "grey";
+    // var rest=selectrest(x);
+    // progressthumbs[rest].style.background = "grey";
 
-    progressthumbs[x].style.background = "red";
+    // progressthumbs[x].style.background = "red";
+    if (x==0) {
+        compare.style.background = 'grey';
+    }else{
+        compare.style.background = '#f39c13';
+    }
     ctx.drawImage(imgs[x],0, 0, imgs[0].naturalWidth, imgs[0].naturalHeight,
           0,0,maincanvas.width, maincanvas.height);
 }
@@ -465,6 +489,66 @@ function selectrest(i){
     x = (i==0) ? 1: 0 ;
     return x;
 }
+
+
+function sliderolling(){
+    lis.each(function() {
+      $(this).css({
+        '-webkit-transform' : 'translate3d(0px,'+translate_y+'px,'+translate_z+'px)',
+        '-moz-transform'    : 'translate3d(0px,'+translate_y+'px,'+translate_z+'px)',
+        '-ms-transform'     : 'translate3d(0px,'+translate_y+'px,'+translate_z+'px)',
+        '-o-transform'      : 'translate3d(0px,'+translate_y+'px,'+translate_z+'px)',
+        'transform'         : 'translate3d(0px,'+translate_y+'px,'+translate_z+'px)',
+        'z-index'       : z_index
+      });
+
+      $(this).data('translate_y', translate_y);
+      $(this).data('translate_z', translate_z);
+      
+      z_index--;
+      translate_y -= y_space;
+      translate_z -= z_space;
+    });
+    
+    function animate_stack(obj, y, z) {
+      var new_y = $(obj).data('translate_y') + y;
+      var new_z = $(obj).data('translate_z') + z;
+    
+      $(obj).css({
+        '-webkit-transform' : 'translate3d(0px,'+new_y+'px,'+new_z+'px)',
+        '-moz-transform'    : 'translate3d(0px,'+new_y+'px,'+new_z+'px)',
+        '-ms-transform'     : 'translate3d(0px,'+new_y+'px,'+new_z+'px)',
+        '-o-transform'      : 'translate3d(0px,'+new_y+'px,'+new_z+'px)',
+        'transform'         : 'translate3d(0px,'+new_y+'px,'+new_z+'px)',
+      });
+      $(obj).data('translate_y', new_y).data('translate_z', new_z);
+    }//animate_stack
+
+    function rolling(){
+      lis.each(function() {
+        animate_stack(this, y_space, z_space);
+        this.style['z-index']++;
+
+        if ( $(this).data('translate_y')>0 && $(this).data('translate_z')>0 ) {//loop. put to the back of the queue
+          $(this).data('translate_y', -3400).data('translate_z', -3400);
+          $(this).css({'z-index': 0 });
+        }
+        if ( $(this).data('translate_y')==-3200 && $(this).data('translate_z')==-3200 ) {//loop. put to the back of the queue
+          $(this).css({'opacity': 1 });
+        }
+      });
+      lis.filter(':nth-child(' + current_index + ')').css('opacity', 0);
+      
+      current_index++;
+      current_index = current_index % lis.length;
+    }// rolling
+
+    setInterval(rolling,2000);
+}
+
+
+
+
 
 
 

@@ -12,69 +12,66 @@
 	* { margin: 0; padding: 0; list-style: none; }
 	img { display: block; }
 	html, body { width: 100%; height: 100%; overflow: hidden; }
-	body { color: #fff; background: #333 url('bg.jpg') no-repeat 50% 50%; font-family: Arial, sans-serif; }
+	body { color: #fff; 
+		background: #333 url('bg.jpg') no-repeat 50% 50%; 
+		font-family: Arial, sans-serif; }
 	
 	#view {  
 		-webkit-perspective: 700px; 
-		-webkit-perspective-origin-x: 400px; 
-		width: 800px; margin: 0 auto; 
-		height: 1000px; 
-		position: relative; }
-	#stack { position: relative; width: 100%; height: 100%; margin-top: 25%;; }
-	#stack li { position: absolute; top: 0; left: 0; 
-		width: 360px; height: 448px; 
-		background: #ccc; outline: 1px solid yellow; 
-		-webkit-transition: all .5s linear; -webkit-box-shadow: 0 0 10px #000; }
-	
-	#made { position: absolute; top: 30px; right: 30px; font-size: 10px; }
-	
-	#controls { position: absolute; bottom: 30px; left: 30px; font-size: 11px; }
-	button { padding: 10px; cursor: pointer	; }
-	a { color: #fff; text-decoration: none; border-bottom: 1px dotted white; }
+		-webkit-perspective-origin-x: 480px; 
+		width: 868px; margin: 0 auto; 
+		height: 1080px; top: 0;
+		position: absolute; 
+		background: #424242;
+	}
 
-	#rotate_controls { position: absolute; right: 30px; bottom: 30px; font-size: 11px; }
-	#rotate_controls button { background: transparent; color: #fff; border: none; text-decoration: underline; }
+	#stack { position: relative; 
+		width: 100%; height: 100%; 
+		top: 300px;
+	}
+	#stack li { position: absolute; top: 0; left: 0; 
+		width: 800px; height: 996px; 
+		background: white; 
+		-webkit-transition: all .5s linear; 
+		-webkit-box-shadow: 0 0 10px #000; 
+	}
+	
 	
 </style>
 
 </head>
 <body>
 	
-	<div id="made">
-		made by <a href="http://twitter.com/joecritchley">@joecritchley</a>
-	</div>
 	
 	<div id="view">
 		<ul id="stack">
-			<li><img src="img/homeindex/1.jpg" /></li>
-			<li><img src="img/homeindex/2.jpg" /></li>
-			<li><img src="img/homeindex/3.jpg" /></li>
-			<li><img src="img/homeindex/4.jpg" /></li>
-			<li><img src="img/homeindex/5.jpg" /></li>
-			<li><img src="img/homeindex/6.jpg" /></li>
-			<li><img src="img/homeindex/7.jpg" /></li>
-			<li><img src="img/homeindex/8.jpg" /></li>
+			<li><img src="img/homeindexs/0.jpg" /></li>
+			<li><img src="img/homeindexs/1.jpg" /></li>
+			<li><img src="img/homeindexs/2.jpg" /></li>
+			<li><img src="img/homeindexs/3.jpg" /></li>
+			<li><img src="img/homeindexs/4.jpg" /></li>
+			<li><img src="img/homeindexs/5.jpg" /></li>
+			<li><img src="img/homeindexs/6.jpg" /></li>
+			<li><img src="img/homeindexs/7.jpg" /></li>
+			<li><img src="img/homeindexs/8.jpg" /></li>
+			<li><img src="img/homeindexs/9.jpg" /></li>
+			<li><img src="img/homeindexs/10.jpg" /></li>
+			<li><img src="img/homeindexs/11.jpg" /></li>
+			<li><img src="img/homeindexs/12.jpg" /></li>
+			<li><img src="img/homeindexs/13.jpg" /></li>
+			<li><img src="img/homeindexs/14.jpg" /></li>
+			<li><img src="img/homeindexs/15.jpg" /></li>
+			<li><img src="img/homeindexs/16.jpg" /></li>
+			<li><img src="img/homeindexs/17.jpg" /></li>
 		</ul>
 	</div>
 	
-	<div id="controls">
-		<button class="prev" disabled="disabled">Prev</button>		
+	<div id="controls">	
 		<button class="next">Next</button>
 	</div>
-	
-	<div id="rotate_controls">
-		Change view
-		<button class="left">Left</button>
-		<button class="centre">Centre</button>
-		<button class="right">Right</button>
-	</div>
-	
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-	<script src="jquery.mousewheel.js"></script>
-	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 	<script>
 	(function($) {
-		
 		var y_space = 200,
 			z_space = 200;
 			
@@ -92,104 +89,68 @@
 			translate_z = z_space *-1;
 	
 		lis.each(function() {
+			$(this).css({
+			  '-webkit-transform' : 'translate3d(0px,'+translate_y+'px,'+translate_z+'px)',
+			  '-moz-transform'    : 'translate3d(0px,'+translate_y+'px,'+translate_z+'px)',
+			  '-ms-transform'     : 'translate3d(0px,'+translate_y+'px,'+translate_z+'px)',
+			  '-o-transform'      : 'translate3d(0px,'+translate_y+'px,'+translate_z+'px)',
+			  'transform'         : 'translate3d(0px,'+translate_y+'px,'+translate_z+'px)',
+			  'z-index'			  : z_index
+			});
 
-			this.style['-webkit-transform'] = 'translate3d(0px, ' + translate_y + 'px, ' + translate_z + 'px)';
-			this.style['z-index'] = z_index;
-			
 			$(this).data('translate_y', translate_y);
 			$(this).data('translate_z', translate_z);
 			
 			z_index--;
 			translate_y -= y_space;
 			translate_z -= z_space;
-			
-		});
-		
-		next.bind('click', function() {
-			if($(this).attr('disabled')) return false;
-			lis.each(function() {
-				animate_stack(this, y_space, z_space);	
-			});
-			lis.filter(':nth-child(' + current_index + ')').css('opacity', 0);
-			current_index ++;
-			check_buttons();
-		});
-		
-		prev.bind('click', function() {
-			if($(this).attr('disabled')) return false;
-			lis.each(function() {
-				animate_stack(this, -y_space, -z_space);	
-			});
-			lis.filter(':nth-child(' + (current_index - 1) + ')').css('opacity', 1);
-			current_index --;
-			check_buttons();	
-		});
-		
-		$(document).bind('mousewheel', function(event, delta, deltaX, deltaY) {
-			if(deltaY >= 0) {
-				next.trigger('click');
-			}
-			else {
-				prev.trigger('click');
-			}
-		});
-		
-		function check_buttons() {
-			if(current_index==1) {
-				prev.attr('disabled', true);
-			}
-			else {
-				prev.attr('disabled', false);
-			}
-			
-			if(current_index == lis.length) {
-				next.attr('disabled', true);				
-			}
-			else {
-				next.attr('disabled', false);
-			}
-		}
-		
-		left.bind('click', function() {
-			view.get(0).style['-webkit-perspective-origin-x'] = '-200px';
-			view.get(0).style['left'] = '100px';
-		});
-		
-		centre.bind('click', function() {
-			view.get(0).style['-webkit-perspective-origin-x'] = '400px';
-			view.get(0).style['left'] = '0'
-		});
-		
-		right.bind('click', function() {
-			view.get(0).style['-webkit-perspective-origin-x'] = '1000px';
-			view.get(0).style['left'] = '-200px'
 		});
 		
 		function animate_stack(obj, y, z) {
-			
 			var new_y = $(obj).data('translate_y') + y;
 			var new_z = $(obj).data('translate_z') + z;
-			
-			obj.style['-webkit-transform'] = 'translate3d(0px, ' + new_y + 'px, ' + new_z + 'px)';
-			
-			$(obj).data('translate_y', new_y)
-			.data('translate_z', new_z);
-			
-		}
 		
+			$(obj).css({
+			  '-webkit-transform' : 'translate3d(0px,'+new_y+'px,'+new_z+'px)',
+			  '-moz-transform'    : 'translate3d(0px,'+new_y+'px,'+new_z+'px)',
+			  '-ms-transform'     : 'translate3d(0px,'+new_y+'px,'+new_z+'px)',
+			  '-o-transform'      : 'translate3d(0px,'+new_y+'px,'+new_z+'px)',
+			  'transform'         : 'translate3d(0px,'+new_y+'px,'+new_z+'px)',
+			});
+
+			$(obj).data('translate_y', new_y).data('translate_z', new_z);
+	    }//animate_stack
+
+
+		//next.bind('click', function() {
+		function rolling(){
+			lis.each(function() {
+				animate_stack(this, y_space, z_space);
+				this.style['z-index']++;
+
+				if ( $(this).data('translate_y')>0 && $(this).data('translate_z')>0 ) {//loop. put to the back of the queue
+					$(this).data('translate_y', -3400).data('translate_z', -3400);
+					$(this).css({'z-index': 0 });
+				}
+				if ( $(this).data('translate_y')==-3200 && $(this).data('translate_z')==-3200 ) {//loop. put to the back of the queue
+					$(this).css({'opacity': 1 });
+				}
+			});
+			lis.filter(':nth-child(' + current_index + ')').css('opacity', 0);
+			
+			// var temp= (current_index-2) < 0 ? (current_index-2+lis.length) : (current_index-2);
+			// console.log(temp+","+lis.length);
+			// lis.filter(':nth-child(' + temp + ')').css('opacity', 1);
+			current_index++;
+			current_index = current_index % lis.length;
+		}// rolling
+		
+		setInterval(rolling,2000);
+		
+		// prev.trigger('click');
+		// next.trigger('click');
 		
 	})(jQuery);
-	</script>
-	
-	<script type="text/javascript">
-	var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-	document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-	</script>
-	<script type="text/javascript">
-	try {
-	var pageTracker = _gat._getTracker("UA-138384-13");
-	pageTracker._trackPageview();
-	} catch(err) {}
 	</script>
 
 </body>

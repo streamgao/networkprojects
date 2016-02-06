@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>CSS3 Time Machine</title>
+<!--[if IE]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<style>
+
+	* { margin: 0; padding: 0; list-style: none; }
+	img { display: block; }
+	html, body { width: 100%; height: 100%; overflow: hidden; }
+	body { color: #fff; 
+		background: #333 url('bg.jpg') no-repeat 50% 50%; 
+		font-family: Arial, sans-serif; }
+	
+	#view {  
+		-webkit-perspective: 700px; 
+		-webkit-perspective-origin-x: 480px; 
+		width: 868px; margin: 0 auto; 
+		height: 1080px; top: 0;
+		position: absolute; 
+		background: green;
+	}
+
+	#stack { position: relative; 
+		width: 100%; height: 100%; 
+		top: 300px;
+	}
+	#stack li { position: absolute; top: 0; left: 0; 
+		width: 800px; height: 996px; 
+		background: white; 
+		-webkit-transition: all .5s linear; 
+		-webkit-box-shadow: 0 0 10px #000; 
+	}
+	
+	#controls { position: absolute; bottom: 30px; left: 30px; font-size: 11px; }
+	button { padding: 10px; cursor: pointer	; }
+	a { color: #fff; text-decoration: none; border-bottom: 1px dotted white; }
+
+	#rotate_controls { position: absolute; right: 30px; bottom: 30px; font-size: 11px; }
+	#rotate_controls button { background: transparent; color: #fff; border: none; text-decoration: underline; }
+	
+</style>
+
+</head>
+<body>
+	
+	
+	<div id="view">
+		<ul id="stack">
+			<li><img src="img/homeindexs/0.jpg" /></li>
+			<li><img src="img/homeindexs/1.jpg" /></li>
+			<li><img src="img/homeindexs/2.jpg" /></li>
+			<li><img src="img/homeindexs/3.jpg" /></li>
+			<li><img src="img/homeindexs/4.jpg" /></li>
+			<li><img src="img/homeindexs/5.jpg" /></li>
+			<li><img src="img/homeindexs/6.jpg" /></li>
+			<li><img src="img/homeindexs/7.jpg" /></li>
+			<li><img src="img/homeindexs/8.jpg" /></li>
+			<li><img src="img/homeindexs/9.jpg" /></li>
+			<li><img src="img/homeindexs/10.jpg" /></li>
+			<li><img src="img/homeindexs/11.jpg" /></li>
+			<li><img src="img/homeindexs/12.jpg" /></li>
+			<li><img src="img/homeindexs/13.jpg" /></li>
+			<li><img src="img/homeindexs/14.jpg" /></li>
+			<li><img src="img/homeindexs/15.jpg" /></li>
+			<li><img src="img/homeindexs/16.jpg" /></li>
+			<li><img src="img/homeindexs/17.jpg" /></li>
+		</ul>
+	</div>
+	
+	<div id="controls">
+		<button class="prev" disabled="disabled">Prev</button>		
+		<button class="next">Next</button>
+	</div>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	<script src="jquery.mousewheel.js"></script>
+	
+	<script>
+	(function($) {
+		var y_space = 200,
+			z_space = 200;
+			
+		var view = $('#view'),
+			lis = $('#stack li'),
+			prev = $('#controls .prev'),
+			next = $('#controls .next'),
+			left = $('#rotate_controls .left'),
+			centre = $('#rotate_controls .centre'),
+			right = $('#rotate_controls .right');
+		
+		var z_index = lis.length,
+			current_index = 1,
+			translate_y = y_space *-1,
+			translate_z = z_space *-1;
+	
+		lis.each(function() {
+			$(this).css({
+			  '-webkit-transform' : 'translate3d(0px,'+translate_y+'px,'+translate_z+'px)',
+			  '-moz-transform'    : 'translate3d(0px,'+translate_y+'px,'+translate_z+'px)',
+			  '-ms-transform'     : 'translate3d(0px,'+translate_y+'px,'+translate_z+'px)',
+			  '-o-transform'      : 'translate3d(0px,'+translate_y+'px,'+translate_z+'px)',
+			  'transform'         : 'translate3d(0px,'+translate_y+'px,'+translate_z+'px)',
+			  'z-index'			  : z_index
+			});
+
+			$(this).data('translate_y', translate_y);
+			$(this).data('translate_z', translate_z);
+			
+			z_index--;
+			translate_y -= y_space;
+			translate_z -= z_space;
+		});
+		
+		function animate_stack(obj, y, z) {
+			var new_y = $(obj).data('translate_y') + y;
+			var new_z = $(obj).data('translate_z') + z;
+			console.log( $(obj).data());
+		
+			$(obj).css({
+			  '-webkit-transform' : 'translate3d(0px,'+new_y+'px,'+new_z+'px)',
+			  '-moz-transform'    : 'translate3d(0px,'+new_y+'px,'+new_z+'px)',
+			  '-ms-transform'     : 'translate3d(0px,'+new_y+'px,'+new_z+'px)',
+			  '-o-transform'      : 'translate3d(0px,'+new_y+'px,'+new_z+'px)',
+			  'transform'         : 'translate3d(0px,'+new_y+'px,'+new_z+'px)'
+			});
+
+			$(obj).data('translate_y', new_y).data('translate_z', new_z);
+	    }//animate_stack
+
+
+		next.bind('click', function() {
+			if($(this).attr('disabled')) return false;
+
+			lis.each(function() {
+				animate_stack(this, y_space, z_space);	
+				if ( $(this).data('translate_y')>0 && $(this).data('translate_z')>0 ) {//loop. put to the back of the queue
+					$(this).data('translate_y', -3400).data('translate_z', -3400);
+				}
+			});
+			lis.filter(':nth-child(' + current_index + ')').css('opacity', 0);
+			current_index ++;
+			check_buttons();
+		});
+		
+		prev.bind('click', function() {
+			if($(this).attr('disabled')) return false;
+			lis.each(function() {
+				animate_stack(this, -y_space, -z_space);	
+			});
+			lis.filter(':nth-child(' + (current_index - 1) + ')').css('opacity', 1);
+			current_index --;
+			check_buttons();	
+		});
+		
+		prev.trigger('click');
+		next.trigger('click');
+		
+		function check_buttons() {
+			if(current_index==1) 
+				prev.attr('disabled', true);
+			else 
+				prev.attr('disabled', false);
+
+			
+			if(current_index == lis.length) 
+				next.attr('disabled', true);				
+			else
+				next.attr('disabled', false);
+		}
+		
+
+		
+	})(jQuery);
+	</script>
+
+</body>
+</html>

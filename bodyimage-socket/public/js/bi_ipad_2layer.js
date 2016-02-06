@@ -24,6 +24,7 @@ var img;
 var pathimg;
 
 var alreadyondata=null;
+var done = false;
 
 /*-------------------inits-------------------*/
 function initpixandwipe(){
@@ -46,6 +47,7 @@ function initvariables(){
 
  	index = 1;
  	totalwiped = 0;
+    done = false;
 
     dividenum = 7;
     brushsize = Math.ceil(maincanvas.width/ dividenum);   //50
@@ -91,7 +93,7 @@ function init() {   //receiver
     initcursor();
     initpixandwipe();//init pix matrix
 
-
+    
 	/*-------------------touch events-------------------*/  
 	//addEvtListeners();
     $('body').bind('copy paste',function(e){ e.preventDefault(); return false; });
@@ -121,12 +123,10 @@ function addEvtListeners(){
     flowcursor.addEventListener('touchmove', function(e){	e.preventDefault(); 
 	  	eventmove(e.pageX, e.pageY, touchdown); });//mousemove
 
-    if ( compare!=null && compare.style.opacity!=0 ) {
-    	compare.addEventListener('touchstart', function(e){	e.preventDefault(); touchdown =true; });
-  		compare.addEventListener('touchend', function(e){	e.preventDefault(); touchdown =false; });
-    	compare.addEventListener('touchmove', function(e){	e.preventDefault(); 
-	  		eventmove(e.pageX, e.pageY, touchdown); });//mousemove
-    }
+    menu.addEventListener('touchstart', function(e){ e.preventDefault(); touchdown =true; });
+    menu.addEventListener('touchend', function(e){   e.preventDefault(); touchdown =false; });
+    menu.addEventListener('touchmove', function(e){  e.preventDefault(); 
+        eventmove(e.pageX, e.pageY, touchdown); });//mousemove
 }
 
 function removeEvtListeners(){
@@ -134,7 +134,6 @@ function removeEvtListeners(){
 	maincanvas.removeEventListener('mousedown', function(e){ e.preventDefault();} );
   	maincanvas.removeEventListener('mouseup', function(e){ e.preventDefault();} );
     maincanvas.removeEventListener('mousemove', function(e){ e.preventDefault(); });//mousemove
-
 
     maincanvas.removeEventListener('touchstart', function(e){e.preventDefault(); });
   	maincanvas.removeEventListener('touchend', function(e){e.preventDefault(); });
@@ -144,24 +143,22 @@ function removeEvtListeners(){
   	flowcursor.removeEventListener('touchend', function(e){	e.preventDefault(); });
     flowcursor.removeEventListener('touchmove', function(e){ e.preventDefault(); });//mousemove
 
-    if (compare!=null) {
-    	compare.removeEventListener('touchstart', function(e){ e.preventDefault(); });
-  		compare.removeEventListener('touchend', function(e){	e.preventDefault(); });
-    	compare.removeEventListener('touchmove', function(e){ e.preventDefault(); });//mousemove
-    }
+    menu.removeEventListener('touchstart', function(e){ e.preventDefault(); });
+    menu.removeEventListener('touchend', function(e){ e.preventDefault(); });
+    menu.removeEventListener('touchmove', function(e){ e.preventDefault(); });//mousemove
 }
 
 /*-------------------add event listeners-------------------*/
 function eventmove(xx,yy,down){
 	var x = xx;
 	var y = yy;
-	if ( down==true && index!=0 && instruct.style.left!="50%" ) { 
+	if ( down==true && index!=0 && instruct.style.left!="50%" && done==false ) { 
 			var data = [x*ratioscreenx, y*ratioscreeny];
 			dragwipe(x, y); 
 			dragflowcursor(x, y);
 
             if (alreadyondata) {
-                var data = [(x/maincanvas.width).toFixed(4), (y/maincanvas.height).toFixed(4)];
+                var data = [(x/maincanvas.width).toFixed(2), (y/maincanvas.height).toFixed(2)];
                 socket.emit('ondrag',data);
             }
 	}//if draging, else do nothing
@@ -178,6 +175,7 @@ function dragwipe(evtx, evty){
 				pixmatrix[wipex][wipey] = 1;
 				progressbars();
 			}
+            done = false;
 
 			ctx.globalAlpha = 1;
 			ratioimgx = imgs[index].naturalWidth / maincanvas.width; //naturalHeight
@@ -205,6 +203,7 @@ function dragwipe(evtx, evty){
                 evtx-brushsize*ratioimgx/8, evty-brushsize*ratioimgy/8, brushsize, brushsize);
 
 		}else { //switch
+            done = true;
 			nextbar();
 
 			setTimeout( function(){
@@ -214,6 +213,7 @@ function dragwipe(evtx, evty){
 		        } 
 			}, 1200);
 			initpixandwipe();
+
 		}//else change to next image
 
 }//dragwipe

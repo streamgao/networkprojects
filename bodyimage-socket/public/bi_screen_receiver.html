@@ -4,17 +4,19 @@
 		<meta charset="UTF-8">
     	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="description" content="Time Square interactive screen live show. #ThisIsReal">
+		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
 		<meta name="keywords" content="body image standard,times quare,ITP, interactive screen">
 		<meta name="author" content="Stream Gao">
 		<title> Big Screen _ BODY IMAGE </title>
 
-		<link href='https://fonts.googleapis.com/css?family=Oswald|Raleway|Bevan|PT+Sans+Narrow|Istok+Web|Pontano+Sans|Philosopher' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Oswald|Raleway|Bevan|PT+Sans+Narrow|Istok+Web|Jacques+Francois+Shadow|Pontano+Sans|Philosopher' rel='stylesheet' type='text/css'>
 
 
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 		<link rel="stylesheet" type="text/css" href="css/screen.css">
-		<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+		<!--script src="http://code.jquery.com/jquery-1.11.1.js"></script-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 		<script type="text/javascript" src="/socket.io/socket.io.js"></script>
 	</head>
 	
@@ -22,28 +24,37 @@
 	<div class="container" style="background:grey;"></div>
 		<div class="container" id='maincontainer'>
 		<div id="home">
-			<h3>it's time to erase unrealistic standards of beauty</h3>
-			<h4><b>Select A Model ⇣</b></h4>
-
-			<div class="model"> <div><img id="0" src="img/homeindex/0.jpg"/><span class='spanmodel'>?</span></div></div>
-			<div class="model"><div> <img id="1" src="img/homeindex/1.jpg"/><span class='spanmodel'>?</span> </div></div>
-			<div class="model"><div> <img id="2" src="img/homeindex/2.jpg"/><span class='spanmodel'>?</span> </div></div>
-			<div class="model"><div> <img id="3" src="img/homeindex/3.jpg"/><span class='spanmodel'>?</span> </div></div>
-			<div class="model"><div> <img id="4" src="img/homeindex/4.jpg"/><span class='spanmodel'>?</span> </div></div>
-			<div class="model"><div> <img id="5" src="img/homeindex/5.jpg"/><span class='spanmodel'>?</span> </div></div>
-			<div class="model"><div> <img id="6" src="img/homeindex/6.jpg"/><span class='spanmodel'>?</span> </div></div>
-			<div class="model"><div> <img id="7" src="img/homeindex/7.jpg"/><span class='spanmodel'>?</span> </div></div>
-			<div class="model"><div> <img id="8" src="img/homeindex/8.jpg"/><span class='spanmodel'>?</span> </div></div>
+			
+				<ul id="stack">
+					<li><img src="img/homeindexs/0.jpg" /></li>
+					<li><img src="img/homeindexs/1.jpg" /></li>
+					<li><img src="img/homeindexs/2.jpg" /></li>
+					<li><img src="img/homeindexs/3.jpg" /></li>
+					<li><img src="img/homeindexs/4.jpg" /></li>
+					<li><img src="img/homeindexs/5.jpg" /></li>
+					<li><img src="img/homeindexs/6.jpg" /></li>
+					<li><img src="img/homeindexs/7.jpg" /></li>
+					<li><img src="img/homeindexs/8.jpg" /></li>
+					<li><img src="img/homeindexs/9.jpg" /></li>
+					<li><img src="img/homeindexs/10.jpg" /></li>
+					<li><img src="img/homeindexs/11.jpg" /></li>
+					<li><img src="img/homeindexs/12.jpg" /></li>
+					<li><img src="img/homeindexs/13.jpg" /></li>
+					<li><img src="img/homeindexs/14.jpg" /></li>
+					<li><img src="img/homeindexs/15.jpg" /></li>
+					<li><img src="img/homeindexs/16.jpg" /></li>
+					<li><img src="img/homeindexs/17.jpg" /></li>
+				</ul>
+			
 		</div>
 
-		<div id="menu">
+		<!--div id="menu">
 			<div id="backhome" class="progressthumb"> 
 				<b><</b><br>
 				<span>BACK</span> 
 			</div>
 			<div style="display:inline-block; position:relative">
 				<img class="progressthumb" id="progressthumb0"></img>
-
 				<div class="progress bars">
 				    <div id="bar0" class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0">
 				    </div> 
@@ -52,8 +63,28 @@
 
 				<img class="progressthumb" id="progressthumb1"></img>
 			</div>
+			<div id="compare"> <span>&nbsp Compare <span> </div>
+		</div-->
+		<div id="menu">
+			<div id="backhome" class="menubtn"> 
+				<b><</b><br>
+				<!--span>BACK</span--> 
+			</div>
+			<div style="display:inline-block; position:relative; margin:0.5em; width:620px; vertical-aligen:middle; left:10px;">
+				<!--img class="progressthumb" id="progressthumb0"></img-->
+				<div class="progress bars">
+				    <div id="bar0" class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0">
+				    </div> 
+				    <span id="percent"> | </span>
+				</div>
 
-			<!--div id="compare"> <span>&nbsp Compare <span> </div-->
+				<div class="bars">						
+					<span style="float: left;">100% Fake</span>
+					<span style="float: right;">100% Real</span>
+				</div>
+				<!--img class="progressthumb" id="progressthumb1"></img-->
+			</div>
+			<div class="menubtn" id="compare"> <span>&nbsp Compare <span> </div>
 		</div>
 
 		<div class='container-fluid' style="background:black; opacity:0.7; height:100%; width:100%; top:0; left:-500%; position:absolute; z-index:5;"> 
@@ -64,7 +95,7 @@
 		<div id="nextinstruct"> <span> <h2> Done </h2>   </span></div>
 		<canvas id="maincanvas"></canvas>
 
-		<!--div class="footer">© Copyright 2015  Stream Gao</div-->
+		<footer class="footer">Find us at: <a href="http://thisisreal.me">http://thisisreal.me</a>  </footer>
 	 </div>
 	<div class="container" style="background:grey;" ></div>
 	</body>

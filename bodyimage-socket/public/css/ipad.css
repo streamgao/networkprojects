@@ -1,5 +1,6 @@
 			body{
 				overflow: hidden !important;
+				text-indent: 0;
 				-webkit-user-select: none;
 				-khtml-user-select: none;
 				-moz-user-select: none;
@@ -40,15 +41,7 @@
 				text-align: center;
 				overflow-y: scroll;
 			}
-			#home h3{
-				font:2.4em 'Pontano Sans',sans-serif; 
-				font-weight: 200; 
-				font-stretch: ultra-condensed;
-			}
-			#home h4{
-				font:1.5em bold 'Raleway',sans-serif;
-				font-weight: bold;
-			}
+
 			.model{
 				display: inline-block;
 				position: relative;
@@ -140,11 +133,13 @@
 				margin: 0 auto;
 				text-align: center;
 				bottom: 2%;
-				left: 38%;
+				float: right;  right: 15%;
 				z-index: 11;
-				font-size: 12px;
+				font-size: 20px Oswald sans-serif;
+				font-style: oblique;
 				color: gray;
 			}
+			a { color: gray; text-decoration: none; border-bottom: 1px dotted white; }
 
 			#flowcursor{
 				background: url(../img/cursor.png), center center no-repeat;
@@ -183,11 +178,11 @@
 				position: relative;
 				vertical-align: middle;
 				color: white;
+				text-align: center;
 			}
 
-			#nextinstruct span h2, #compare span{
+			#nextinstruct span h2{
 				font: 1.8em 'Oswald', sans-serif;
-				text-align: center;
 				vertical-align: middle;
 				line-height: normal;
 			}
@@ -200,6 +195,7 @@
 				width: 100%;
 				z-index: 3;
 				background-color:rgba(0, 0, 0, 0.5);
+				color: white;
 			}
 
 			#backhome{
@@ -207,16 +203,31 @@
 				cursor: pointer;
 				color: white;
 				text-align: center;
+				clear: none;
+				display: inline-block;
+			}
+
+			.menubtn{
+				position: relative;
+				background: black;
+				margin: 0;
+			}
+			#compare{
+				opacity: 0;
+				float: right;
+				background: #f39c13;
+				line-height: normal;
+				vertical-align: middle;
+				text-align: center;
 			}
 
 
 			.progressthumb{
-				opacity: 0.9;
 				display: inline-block;
 				position: relative;
 				margin: auto;
-				background: grey;
-				vertical-align: middle;
+				background: grey;  opacity: 0.9;
+				top: 0;				
 			}
 
 			.bars{
@@ -224,9 +235,11 @@
 				position: relative;
 				margin: auto;
 				opacity: 1;
+				vertical-align: middle;
+				top: 30%;
 			}
 
-			.bars span{
+			#percent{
 				float: right;
 				position: absolute;
 				right: 30% !important;
@@ -235,19 +248,42 @@
 				color: orange;
 			}
 
-			#compare{
+			.bars span {	
 				position: relative;
-				width: 8em;
-				height: 4em;
-				margin: auto;
-				float: right;
-				background: black;
-				opacity: 0;
+				font: 1em 'Oswald', sans-serif;
+				line-height: 0.5em;
+				color: white;
 			}
+
 
 
 /* -----------------------different screen---------------------------------*/		
 @media only screen and (min-width: 240px) {
+			#home h3{
+				font:1.4em 'Pontano Sans',sans-serif;  
+				font-stretch: ultra-condensed;
+			}
+			#home h4{
+				font:0.7em 'Raleway',sans-serif;
+				font-weight: bold;
+				color:#232a8a;
+			}
+	
+	.menubtn{
+		height: 4em;
+	}
+	#backhome{
+		width: 3em; top:-8px; left: 0;
+	}
+	#backhome b{
+		font:1.8em Bevan; line-height:2em;
+	}
+	#compare{
+		width: 6.4em;
+		font: 1em Bevan,sans-serif;
+		line-height: 3.3em;
+	}
+
 	.progressthumb{
 		width: 3.2em;
 		height: 4.2em;
@@ -260,18 +296,18 @@
 		height:4.2em;
 	}
 	.model{
-		height: 12em;
-		width: 7em;
+		height: 10em;
+		width: 7.5em;
 		border: 0.2em;
 	}
 	.model:hover span{
 		width: 6em;
 		top:5em;
 	}
-	#backhome b{
+	.progressthumb b{
 		font:1.8em Bevan; line-height:1.2em;
 	}
-	#backhome span{
+	.progressthumb span{
 		font: 1.1em 'Oswald', sans-serif;
 		line-height: normal;
 	}
@@ -287,18 +323,52 @@
 }
 
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 765px) {
+	#home h3{
+		font:2.4em 'Pontano Sans',sans-serif; 
+		font-weight: 200; 
+		font-stretch: ultra-condensed;
+	}
+	#home h4{
+		font:1.5em bold 'Raleway',sans-serif;
+		font-weight: bold;
+		color:#232a8a;
+	}
 	.progressthumb{
 		width: 4.9em;
-		height: 6.3em;
+		height: 4em;
 		padding: 0.3em;
 	}
+
 	.bars{
 		width:39em;
+		height: 20px;
+		margin:0.5em 0.5em 0 0.5em;
 	}
+
 	#menu{
-		height:6.3em;
+		height:4em;
 	}
+	.menubtn{
+		height: 4em;
+	}
+	#backhome{
+		width: 3em; top: -18px; left: 0;
+	}
+	#backhome b{
+		font:2em Bevan; line-height:1.7em;
+	}
+	#backhome span{
+		font: 1.1em 'Oswald', sans-serif;
+		line-height: normal;
+	}
+
+	#compare{
+		width: 8em;		height: 3.3em;
+		font: 1.2em Bevan,sans-serif;
+		line-height: 3em;
+	}
+
 	.model{
 		height: 18em;
 		width: 14em;
@@ -309,13 +379,7 @@
 		width: 10em;
 		top:15em;
 	}
-	#backhome b{
-		font:2em Bevan; line-height:1.7em;
-	}
-	#backhome span{
-		font: 1.1em 'Oswald', sans-serif;
-		line-height: normal;
-	}
+
 	#instruction, #instruction1{
 		width: 24em;
 		height: 20em;
@@ -325,6 +389,7 @@
 		width: 5em;
 		height: 5em;
 	}
+
 }
 @media only screen and (min-width: 992px) {
 	.model{

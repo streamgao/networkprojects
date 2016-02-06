@@ -68,7 +68,7 @@
 		opacity: 0.8;
 	}
 	#section0 h2{
-		color:#d0818f;
+		color:#953a4a;
 	}
 
 
@@ -135,17 +135,47 @@
     	text-align:left;
     /* inline-block space fix */
     	margin-right:-4px;
-	}	
+	}
+	/*textoverimganimation*/
+	#section6 a.hovertext {
+    position: relative;
+    text-decoration: none !important;
+    text-align: center;
+  	}
+   	#section6 a.hovertext:after {
+    content: attr(title);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding: 0.5em 20px;
+    background: rgba(0,0,0,0.8);
+    text-decoration: none !important;
+    color: #fff;
+    opacity: 0;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -o-transition: 0.5s;
+    -ms-transition: 0.5s;
+    }
+  	#section6 a.hovertext:hover:after, a.hovertext:focus:after {
+    opacity: 1.0;
+  	}
 
 	</style>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="js/lib/jquery.fullPage.js"></script>
-	<!--script type="text/javascript" src="js/examples.js"></script-->
+	 <!--script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/umd/tooltip.js"></script-->
 	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
 
 	<script type="text/javascript">
 		$(document).ready(function() {
+			//moveSectionDown
+				$('.moveSectionDown').click(function(e){
+				e.preventDefault();
+				$.fn.fullpage.moveSectionDown();
+				});
+			 //socket
 			setupSocket();
 			$('#fullpage').fullpage({
 				verticalCentered: true,
@@ -155,6 +185,7 @@
 					// $('video').get(0).play();
 				}
 			});
+
 		});
 
 		function choosePerson(i){
@@ -189,14 +220,19 @@
 
 <div id="fullpage">
 	<div class="section " id="section0">
+	<div class="container">
 		<!-- <video autoplay loop muted id="myVideo">
 			<source src="imgs/tq4.mp4" type="video/mp4">
 			
 		</video> -->
 		<div class="layer">
 			<h1>#ThisIsReal</h1>
-			<h2>Time Square Interactive Screen Live Show<br>2016/1/29 11am-3pm</h2>
+			<h2>it's time to create a new standard of beauty</h2>
 		</div>
+	</div>
+	<div style="position:absolute; bottom:5%;left:0; right:0; margin-left:auto;margin-right:auto;">
+		<a class="moveSectionDown" href=#><img style="width:5%" src="imgs/arrow.png"></a>
+	</div>
 	</div>
 	<!-- <div class="section" id="section1">
 	    <div class="slide" id="slide1" style="padding:70px"><h1>Media created an unrealistic body standard to profit off our insecurities</h1></div>
@@ -210,7 +246,7 @@
 			<br>
 			<br>
 			<div id="start">
-				<a class="social" href="bi_ipad_indie2layer.html">
+				<a class="social" href="play.html">
 					<img src=imgs/start.png>
 				</a>
 			</div>
@@ -224,86 +260,97 @@
 		  	<img width="250" hspace="25" src=imgs/fake.jpg></a>
  -->		
 		</div>
+		<div style="position:absolute; bottom:5%;left:0; right:0; margin-left:auto;margin-right:auto;">
+			<a class="moveSectionDown" href=#><img style="width:5%" src="imgs/arrow.png"></a>
+			</div>
+
+
+
 	</div>
 
 	<div class="section" id="section5">
 		  	<div class="container">
+		  	<h2>Meet the Artists!<h2>
 			   <div class="column-center">
-			   	<img height="200" width="200" src=imgs/template-01.png>			   	
-			   	<h2>Maya Moosh</h2>
+			   	<img height="200" width="200" src=imgs/template-01.png>	
+			   	<h2>Maya Moosh/ Design</h2>
 			   	<br>
-				 <p class = "indent">Maya Moosh is a creative technologist and designer. She is a student at ITP (Interactive Telecommunications Program) at Tisch School of the Arts, New York University where she's furthering her proficiency in user experience & interaction design. In her spare time Moosh enjoys running, reading, yoga and travel. See what work is made by Moosh: <a href= http://mayamoosh.com>http://mayamoosh.com</a><p>
+				 <p class = "indent">Maya Moosh is a creative technologist and designer. She is a student at ITP (Interactive Telecommunications Program) at Tisch School of the Arts, New York University where she's furthering her proficiency in user experience & interaction design. In her spare time Moosh enjoys running, reading, yoga and travel. See what work is made by Moosh: <a href= http://mayamoosh.com>http://mayamoosh.com</a></p>
 			   </div>
-			   <div class="column-left">
+			   <div class="column-right">
 			   	<img height="200" width="200" src=imgs/luke-01.png>			   	
-			   	<h2>Luke Kao</h2>
+			   	<h2>Luke Kao/ Web</h2>
 			   	<br>
 			   	<p class = "indent">Luke is a former social entrepreneur from Taiwan. Now a hacker at ITP at NYU's Tisch School of the Arts, he is dedicated to making social impact using design & technology and his past experience in business model design. Take a peak into his portfolio: <a href=https://medium.com/luke-kao>https://medium.com/luke-kao</a></p>
 			   </div>
-			   <div class="column-right">
+			   <div class="column-left">
 			   	<img height="200" width="200"  src=imgs/stream-01.png>			   
-			   <h2>Stream Gao</h2>
+			   <h2>Stream Gao/ Engineer</h2>
 			   <br>
-			  	<p class = "indent">Stream is an entrepreneur, creative coder and interaction designer who specializes in web and mobile application. She's currently pursuing her master’s degree at ITP at Tisch School of the Arts, New York University and her interests range with a special focus in dance. Check out Stream's work here: <a href= http://www.streamgao.com>http://www.streamgao.com</a><p>
+			  	<p class = "indent">Stream is an entrepreneur, creative coder and interaction designer who specializes in web and mobile application. She's currently pursuing her master’s degree at ITP at Tisch School of the Arts, New York University and her interests range with a special focus in dance. Check out Stream's work here: <a href= http://www.streamgao.com>http://www.streamgao.com</a></p>
 			   </div>
+			</div>
+
+			<div style="position:absolute; bottom:5%;left:0; right:0; margin-left:auto;margin-right:auto;">
+			<a class="moveSectionDown" href=#><img style="width:5%" src="imgs/arrow2.png"></a>
 			</div>
 	</div>
 
 	<div class="section" id="section6">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-2 col-centered">
+				<div class="col-md-2 col-xs-3  col-centered">
 					<h2 style="color:white;">Photoshopers</h2>
-					<img src="imgs/yurika.jpg" class="img-responsive" >
+				<a class="hovertext" href=http://yurikamulase.com title="YuriKa Mulase"> <img src="imgs/artists/yurika1.jpg" class="img-responsive"></a>
 				</div>
-				<div class="col-md-2 col-centered">
+				<div class="col-md-2 col-xs-3 col-centered">
 					<h2> Heading</h2>
-					<img src="imgs/yurika.jpg" class="img-responsive" >
+				<a class="hovertext" href=http://patshiu.com title="Pat Shiu"><img src="imgs/artists/pat.jpg" class="img-responsive" ></a>
 				</div>
-				<div class="col-md-2 col-centered">
+				<div class="col-md-2 col-xs-3 col-centered">
 					<h2 style="color:white;">Photographers</h2>
-					<img src="imgs/yurika.jpg" class="img-responsive" >
+					<a class="hovertext" href= http://www.royrochlin.com/ title="Roy Rochlin"><img src="imgs/artists/roy1.jpg" class="img-responsive" ></a>
 				</div>
-				<div class="col-md-2 col-centered">
+				<div class="col-md-2 col-xs-3 col-centered">
 					<h2>_</h2>
-					<img src="imgs/yurika.jpg" class="img-responsive" >
+					<a class="hovertext" href=http://www.joeysolomonphoto.com/ title="Joey Solomon"><img src="imgs/artists/joey1.jpg" class="img-responsive" ></a>
 				</div>
 			</div>
 
 			<div class="row row-centered">
-				<div class="col-md-2 col-centered">
+				<div class="col-md-2 col-xs-3 col-centered">
 					<h2 style="color:white;" >Models</h2>
-					<img src="imgs/yurika.jpg" class="img-responsive" >
+					<a href=# class="hovertext" title="Cole" > <img src="imgs/artists/cole1.jpg" class="img-responsive"></a>
 				</div>
-				<div class="col-md-2 col-centered">
+				<div class="col-md-2 col-xs-3 col-centered">
 					<h2>Heading</h2>
-					<img src="imgs/yurika.jpg" class="img-responsive" >
+					<a href=# class="hovertext" title="Becca"><img src="imgs/artists/becca1.jpeg" class="img-responsive"  ></a>
 				</div>
-				<div class="col-md-2 col-centered">
+				<div class="col-md-2 col-xs-3 col-centered">
 					<h2>Heading</h2>
-					<img src="imgs/yurika.jpg" class="img-responsive" >
+					<a href=# class="hovertext" title="Iza"><img src="imgs/artists/iza1.jpg" class="img-responsive"  ></a>
 				</div>
-				<div class="col-md-2 col-centered">
+				<div class="col-md-2 col-xs-3 col-centered">
 					<h2>Heading</h2>
-					<img src="imgs/yurika.jpg" class="img-responsive" >
+					<a href=# class="hovertext" title="Michelle"><img src="imgs/artists/michelle1.jpg" class="img-responsive" ></a>
 				</div>
 			</div>
 				<div class="row">
-				<div class="col-md-2 col-centered">
+				<div class="col-md-2 col-xs-3 col-centered">
 					<br>
-					<img src="imgs/yurika.jpg" class="img-responsive" >
+					<a href=# class="hovertext" title="Ondian" ><img src="imgs/artists/Ordina1.jpg" class="img-responsive"></a>
 				</div>
-				<div class="col-md-2 col-centered">
+				<div class="col-md-2 col-xs-3 col-centered">
 					<br>
-					<img src="imgs/yurika.jpg" class="img-responsive" >
+					<a href=# class="hovertext" title="Sean"><img src="imgs/artists/sean1.jpg" class="img-responsive"></a>
 				</div>
-				<div class="col-md-2 col-centered">
+				<div class="col-md-2 col-xs-3 col-centered">
 					<br>
-					<img src="imgs/yurika.jpg" class="img-responsive" >
+					<a href=# class="hovertext" title="Soni"><img src="imgs/artists/soni1.jpg" class="img-responsive" ></a>
 				</div>
-				<div class="col-md-2 col-centered">
+				<div class="col-md-2 col-xs-3 col-centered">
 					<br>
-					<img src="imgs/yurika.jpg" class="img-responsive" >
+					<a href=# class="hovertext" title="Skylar"><img src="imgs/artists/skylar1.jpg" class="img-responsive" ></a>
 				</div>
 			</div>
 
@@ -315,6 +362,5 @@
 
 
 </div>
-	
 </body>
 </html>
