@@ -1,0 +1,11 @@
+{
+  "name": "class3",
+  "version": "1.0.0",
+  "description": "scrddddddd",
+  "main": "httpserver.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "stream",
+  "license": "ISC"
+}

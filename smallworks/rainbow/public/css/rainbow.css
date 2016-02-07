@@ -1,0 +1,204 @@
+/** { margin: 0; padding: 0; box-sizing: border-box; }  
+*/
+body { font: 14px Helvetica, Arial; 
+font-family: 'Cabin', sans-serif !important;}
+h2{
+	text-align: center;
+}
+h3{
+	position: relative;
+	display:inline;
+	top: 0;
+	margin: 2px;
+}
+h4{
+	margin: 1px;
+}
+ul{
+	list-style-type: none;
+}
+
+canvas, img {
+    image-rendering: optimizeQuality;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: optimize-contrast;
+    -ms-interpolation-mode: nearest-neighbor;
+}
+
+#container{
+	height: 100%;
+	width: 100%;
+	float: left;
+	overflow: auto; 
+	/*word-break:break-all;
+	cursor: */
+}
+
+#maincanvas{
+	height: 100%;
+	width: 100%;
+	opacity:0.5;
+	position: absolute;
+}
+
+
+#submission{
+	width: 50%;
+	height: auto;	
+	right: 0;
+	top: 50%;
+    left: 0;
+	margin: auto;
+	position: fixed;
+	opacity: 0.5;
+	transform: translateY(-50%);
+	-webkit-transition: all 1s ease-in-out;
+}
+
+form { 
+	background: #111; 
+	padding: 24px;
+	margin: auto; 
+	color: white;
+}
+
+form input { 
+	width:9%; 
+	margin-top: 12px; 
+	text-align: left;
+}
+
+form button { 
+	text-align: center;
+	opacity: 1 !important;
+}
+
+#iconchoice{
+	background: url(../img/submit1.png) center center no-repeat;
+	background-size: 100%, 100%;
+	height: 40px;
+	width: 40px;
+	position: fixed;
+	margin: auto; 
+	float: left;
+	left: 5%;
+	top: 5%;
+	z-index: 10;
+	cursor: pointer !important;
+}
+
+#myvideo{
+	z-index: -100 !important;
+	width: 0;
+	height: 0;
+}
+
+.videoelements{
+	height: 100% !important;
+	width: 0;
+	top: 0 !important;
+	left: 0 !important;
+	z-index: -1;
+	float: left;
+	position: relative;
+	overflow: hidden;
+	background-size: 100% 100%;
+}
+
+.truevideos{
+    position: absolute;
+    z-index: 0;
+    background-size: 100% 100%;
+    top: 0px;
+    left: 0px;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+}
+
+
+#restart{
+	position: fixed;
+	z-index: 2;
+	color: white;
+	bottom: 2%;
+	right:2%;
+	cursor: pointer;
+}
+
+
+/*
+.swipout {
+  animation-duration: 2s;
+  animation-name: slideout;
+  animation-iteration-count: 1;
+}
+
+.swipin {
+  animation-duration: 2s;
+  animation-name: slidein;
+  animation-iteration-count: 1;
+}
+
+@keyframes slidein {
+  from {
+    left: -1000px;
+    margin: 0px;
+  }
+  to {
+    right: 0px;
+    left: 0px;
+	margin: auto;
+	position: fixed;
+  }
+}
+@keyframes slideout {
+  from {
+    right: 0px;
+    left: 0px;
+	margin: auto;
+	position: fixed;
+  }
+  to {
+    left: -1000px;
+    margin: 0px;
+  }
+}/*keyframe slideout  	*/
+
+
+.footer{
+	position: absolute;
+	bottom: 2%;
+	left: 45%;
+	z-index: 11;
+	float: left;
+	font-size: 12px;
+	color: white;
+}
+
+
+
+
+.bodyimage{
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	top: 10%;
+	left: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

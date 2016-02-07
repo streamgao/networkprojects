@@ -1,0 +1,81 @@
+<html>
+<head>
+	<title>RAINBOW</title>
+	<link rel="stylesheet" type="text/css" href="css/rainbow.css">
+	<link href='https://fonts.googleapis.com/css?family=Cabin' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript" src="js/peer.min.js"></script>
+	<script type="text/javascript" src="js/rainbow2.js"></script>	
+</head>
+
+
+
+<body>
+	<div id="container">
+		<canvas id="maincanvas" >
+		</canvas>
+
+		<div id="iconchoice" class="hidden"></div>
+
+		<div id="submission">
+		<H2> &nbsp RAINBOW! </H2><br>
+		<form id='form1' action="" >
+		<ul><b>Choose A Color Channel Where You Want To Appear &nbsp:</br></b>
+			<li><input type="radio" name="site" value="1">Red</input></li>
+			<li><input type="radio" name="site" value="2">Orange</input></li>
+			<li><input type="radio" name="site" value="3">Yellow</input></li>
+			<li><input type="radio" name="site" value="4">Green</input></li>
+			<li><input type="radio" name="site" value="5">Indigo</input></li>
+			<li><input type="radio" name="site" value="6">Blue</input></li>
+			<li><input type="radio" name="site" value="7">Violet</input></li>
+			<br>
+			<button type="submit" method="post" class="btn btn-info" id="button2">Send</button>
+		</ul>
+		</form>
+	</div>  <!--submit_form-->
+
+	<div id="videodiv0" class='videoelements'>
+		<video id='video0' class="truevideos" ></video>
+	</div>
+	<div id="videodiv1" class='videoelements'>
+		<video id='video1' class="truevideos" ></video>
+	</div>
+	<div id="videodiv2" class='videoelements'>
+		<video id='video2' class="truevideos" ></video>
+	</div>
+	<div id="videodiv3" class='videoelements'>
+		<video id='video3' class="truevideos" ></video>
+	</div>
+	<div id="videodiv4" class='videoelements'>
+		<video id='video4' class="truevideos" ></video>
+	</div>
+	<div id="videodiv5" class='videoelements'>
+		<video id='video5' class="truevideos" ></video>
+	</div>
+	<div id="videodiv6" class='videoelements'>
+		<video id='video6' class="truevideos" ></video>
+	</div>
+	<!--video id='video1' class='videoelements'></video>
+	<video id='video2' class='videoelements'></video>
+	<video id='video3' class='videoelements'></video>
+	<video id='video4' class='videoelements'></video>
+	<video id='video5' class='videoelements'></video>
+	<video id='video6' class='videoelements'></video-->
+
+	</div>
+	<video id="myvideo"></video>
+	<div id="restart" > Restart </div>
+
+
+	<div class="footer">© Copyright 2015  Stream Gao</div>
+</body>
+</html>
+
+
+
+
+
+

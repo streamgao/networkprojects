@@ -1,0 +1,78 @@
+<html>
+<head>
+	<title>RAINBOW VOTE</title>
+	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+	<style>
+		* { margin: 0; padding: 0; box-sizing: border-box; }
+		body { font: 13px Helvetica, Arial; }
+		form { background: #dddddd; padding: 3px; }
+		form input { width:9%; padding: 10px; margin-right: .5%; margin:10px;text-align: left;}
+		form button { width:9%; background: rgb(130, 200, 200); border: 10px; padding: 10px; }
+		#container{
+			position: relative;
+			display: block;
+			height: 100%;
+			width: 100%;
+			float: left;
+			overflow: auto; 
+			word-break:break-all;
+		}
+
+		h3{
+			position: relative;
+			display:inline;
+			top: 0;
+			margin: 2px;
+		}
+		
+		h4{
+			margin: 1px;
+		}
+
+	</style>
+	<script type="text/javascript">
+		console.log(haha);
+		var socket = io().connect('http://localhost:8000/');
+
+		socket.on('connect',function(){
+			//connected=true;
+			$('#button2').submit(function(e){ // not #form2
+				e.preventDefault();
+
+				var site =document.querySelector('input[name="site"]:checked').value;
+				socket.emit('colorchoice',site);
+			});//form submit
+		});//on connect
+
+
+		socket.on('disconnect', function () {
+			console.log('client disconnected');
+		});
+
+	</script>	
+</head>
+<body>
+	<div id="container">
+	<br>
+	<H1> &nbsp Collborate drawing </H1><br>
+	<div id="submit_form">
+	<form id='form1' action="" >
+		<ul><b>Submit your favourite color:</b>
+			<li><input type="radio" name="site" value="1">Red</input></li>
+			<li><input type="radio" name="site" value="2">Orange</input></li>
+			<li><input type="radio" name="site" value="3">Yellow</input></li>
+			<li><input type="radio" name="site" value="4">Green</input></li>
+			<li><input type="radio" name="site" value="5">Indigo</input></li>
+			<li><input type="radio" name="site" value="6">Blue</input></li>
+			<li><input type="radio" name="site" value="7">Violet</input></li>
+			<li>
+				<button type="submit" method="post" id="button2">Send</button>
+			</li>
+			<input type="submit" name="submit" class="button" id="submit_btn" value="Send" />
+		</ul>
+	</form>
+	</div>
+</div>
+</body>
+</html>

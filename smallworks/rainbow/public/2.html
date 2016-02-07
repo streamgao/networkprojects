@@ -1,0 +1,108 @@
+<<!DOCTYPE html>
+<html>
+<head>
+	<title>bubble</title>
+<script type="text/javascript">
+var bubbles = new Array();
+var canvas = null;
+var context = null;
+var w = 1200;
+var h = 700;
+
+//Starts the animation when the page is loaded.
+window.onload = function(){
+	//Retrieves the canvas and creates a context.
+	canvas = document.getElementById("canvas");
+	context = canvas.getContext("2d");
+	//Creates 20 new bubbles.
+	for(var i = 0; i < 20; i++){
+		var bubble = new Object;
+		//The size is randomized: 10, 20 or 30px.
+		bubble.size = Math.ceil(Math.random()*3) * 10;
+
+		//The starting position is randomized.
+		bubble.x = Math.floor(Math.random()*(w-2*bubble.size))+bubble.size;
+		bubble.y = Math.floor(Math.random()*(h-2*bubble.size))+bubble.size;
+
+		//The direction and speed is randomized.
+		bubble.dirX = Math.random()*3;
+		bubble.dirY = Math.random()*3;
+
+		//Creates an array for each color and an array for each color changing speed.
+		bubble.colorValue = new Array();
+		bubble.colorDir = new Array();
+		bubble.colorValue[1] = Math.floor(Math.random()*150)+50;
+		bubble.colorValue[2] = Math.floor(Math.random()*150)+50;
+		bubble.colorValue[3] = Math.floor(Math.random()*150)+50;
+		bubble.colorDir[1] = Math.ceil(Math.random()*2);
+		bubble.colorDir[2] = Math.ceil(Math.random()*2);
+		bubble.colorDir[3] = Math.ceil(Math.random()*2);
+
+		//A function that generated the output for the color.
+		bubble.toColor = function(){
+			return this.colorValue[1]+","+this.colorValue[2]+","+this.colorValue[3];
+		}
+		//A function that changes each color according to their speed. When it reaches max, it reverts the direction.
+		bubble.changeColor = function(){
+			for(var c = 1; c <= 3; c++){
+				this.colorValue[c] += this.colorDir[c];
+				if(this.colorValue[c] >= 200 || this.colorValue[c] <= 50){
+					this.colorDir[c] = -(this.colorDir[c]);
+				}
+			}
+		}
+
+		//This function moves the bubbles, and it works the same way as the color changing function.
+		bubble.move = function(){
+			this.x += this.dirX;
+			this.y += this.dirY;
+			if(this.x <= this.size || this.x >= w-this.size){this.dirX = -(this.dirX);}
+			if(this.y <= this.size || this.y >= h-this.size){this.dirY = -(this.dirY);}
+		}
+		//Add the new bubble to the array.
+		bubbles.push(bubble);
+	}
+	//Starts the animation, runs animate() with 33 milliseconds interval (~30 FPS) if possible.
+	window.setInterval("animate()", 33);
+}
+
+function animate(){
+	context.save();
+	//Fills the canvas with black.
+	context.fillStyle = "#000000";
+	context.fillRect(0, 0, w, h);
+	//For each bubble, change the color, move it and call the function to draw it.
+	for(var i = 0; i < bubbles.length; i++){
+		bubbles[i].changeColor();
+		bubbles[i].move();
+		draw_circle(context, bubbles[i].x, bubbles[i].y, bubbles[i].size, "rgba("+bubbles[i].toColor()+",0.25)", "rgba("+bubbles[i].toColor()+",1)");
+	}
+
+	context.restore();
+}
+
+function draw_circle(context, x, y, w, color, border){
+	context.save();
+	//Set the bubble's fill color to the selected color.
+	context.fillStyle = color;
+	//Set the bubble's border width to 2px.
+	context.lineWidth = 2;
+	//Begin a path, draw a full circle, close the path.
+	context.beginPath();
+	context.arc(x, y, w, 0, Math.PI*2, true);
+	context.closePath();
+	//Fill the bubble with the selected color.
+	context.fill();
+	//If a border is set, then draw it around the bubble.
+	if(border!=""){
+		context.strokeStyle = border;
+		context.stroke();
+	}
+}
+</script>	
+</head>
+<body>
+
+	<canvas id="canvas" width="1000" height="700" style="border: 1px solid rgb(0, 0, 0);" ></canvas>
+</body>
+</html>

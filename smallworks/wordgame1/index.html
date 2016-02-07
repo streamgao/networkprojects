@@ -1,0 +1,158 @@
+<html>
+<head>
+	<title>WORD GAME</title>
+	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+	<style>
+		* { margin: 0; padding: 0; box-sizing: border-box; }
+		body { font: 13px Helvetica, Arial; }
+		form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+		form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+		form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+
+		#messages { list-style-type: none; margin: 0; padding: 0; }
+		#messages li { padding: 5px 10px; }
+		#messages li:nth-child(odd) { background: #eee; }
+
+		#wordarea{
+			position: relative;
+			display: block;
+			height: 100%;
+			width: 60%;
+			float: left;
+			overflow: auto; 
+			word-break:break-all;
+		}
+
+		h3{
+			position: relative;
+			display:inline;
+			top: 0;
+			margin: 2px;
+		}
+		h4{
+			margin: 1px;
+		}
+
+
+		#scorearea{
+			position: relative;
+			height: 100%;
+			width: 40%;
+			float: right;
+			background-color: #dddddd;
+			padding: 10px;
+		}
+
+		#restart{
+			position: fixed;
+			z-index: 2;
+			color: gray;
+			top: 2%;
+			right:2%;
+			cursor: pointer;
+		}
+	</style>
+	<script type="text/javascript">
+		var whole =[];
+		var sessionName=false;
+
+		var socket = io().connect('http://localhost:8000/');
+		//var socket = io.connect('http://159.203.85.109:8001/');
+		socket.on('connect',function(){
+			socket.emit('session',io().id);
+			$('#form2').submit(function(){
+					var reg1=/\d+/g;
+					var reg2 =/\W+/g;
+
+					if( $('#m').val().match(reg1) || $('#m').val().match(reg2) ){
+						window.alert('the word cannot contain any number or mark.\nPlease submit a valid word!');
+						$('#m').val('');
+						return false;
+					}else if ( $('#m').val().match(" ") ) {
+						window.alert('You can only input one word(without space).\nPlease try again!');
+						$('#m').val('');
+						return false;
+               		}else{// the right format
+               			
+
+               			whole.push( $('#m').val() );
+
+               			var mysubmit = [io().id, $('#m').val()];
+               			console.log(mysubmit);
+               			socket.emit('chat', mysubmit);
+               			$('#m').val('');
+               			return false;
+               	}
+            });//form submit
+
+			$('#restart').click(function(){ 
+				socket.emit('restartall',function(){
+				});
+			});//restart click
+});
+
+
+socket.on('wholeword',function(message){
+	var h33 = $("<h3></h3>").text(message[0]);
+	var color ="rgb(" + Math.floor(message[1][0])+","+Math.floor(message[1][1])+","+ Math.floor(message[1][2])+")" ;
+	h33.css("color" , color);
+
+	$('#wordarea').append(h33);
+});
+
+
+socket.on('scores',function(msg){
+	$('#scores').empty();
+	for (var i = 0; i < msg.length; i++) {
+		var singletext=msg[i].NickName+": "+msg[i].score;
+
+		var singlescore=$("<h4></h4>").text(singletext);
+		singlescore.css("color","rgb(" + Math.floor(msg[i].color[0])+","+Math.floor(msg[i].color[1])+","+ Math.floor(msg[i].color[2])+")")
+
+		$('#scores').append(singlescore);
+	}
+
+});
+
+socket.on('disconnect', function () {
+	console.log('client disconnected');
+});
+
+
+</script>	
+</head>
+<body>
+	<br>
+	<H1> &nbsp Word Linking Game </H1><br>
+	<h3> &nbsp Start by Typing A Word</h3><br><br>
+	<p> &nbsp &nbsp Rules: Submit a word that start with the last letter of the existing words </p> <br><br>
+
+	<div id="wordarea">	
+	</div>
+
+	<div id="scorearea">	
+		<h1>Scroes</h1><br>	
+		<div id="scores"></div>
+	</div>
+
+	<!--form style="bottom:35px !important;">
+		<input id="name" autocomplete="off" />
+			<button id="button1" onclick="	
+				console.log("ad");
+				var info=[io().id,$('#name').val()];
+				socket.emit('sessionName',info);
+				console.log('name'+$('#name').val());
+				$('#form1').css("bottom","0 !important");">
+
+			Your Name</button-->
+	</form>
+
+	<form id="form2" action="">
+		<input id="m" autocomplete="off" /><button type="submit" id="button2">Send</button>
+	</form>
+
+	<div id="restart" > Restart </div>
+
+</body>
+</html>
